@@ -1,0 +1,13 @@
+<meta>
+    <info author="Saml1er" version="1.0.0" description="Demo for testing various IFP animations with synchronization." />
+	<min_mta_version client="1.5.5" server="1.3.0-9.04570" />
+
+    <file src="Animations/gangnam.ifp" /> 
+    <file src="Animations/karisik.ifp" /> 
+    <file src="Animations/gitar.ifp" /> 
+
+    <script src="animations_client.lua" type="client" cache="false"/>
+    <script src="client.lua" type="client" cache="false"/>
+    <script src="sync_animations_server.lua" type="server" />
+	
+</meta>

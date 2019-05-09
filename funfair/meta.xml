@@ -1,0 +1,17 @@
+<meta>
+  <min_mta_version client="1.2.0-9.03618" server="1.2.0-9.03618" />
+  
+  <script src="donmedolap_s.lua" type="server" />
+  <script src="donmedolap_data_pos.lua" type="server" />
+  <script src="donmedolap.lua" type="client" />
+  
+  <script src="balon_c.lua" type="client" />
+  <script src="balon_s.lua" type="server" />
+  
+  <file src="dosyalar/donmedolap.col" />
+  <file src="dosyalar/balon.col" />
+  <file src="dosyalar/balon.dff" />
+  <file src="dosyalar/balon.txd" />
+  
+  <map src="balon-map.map" dimension="0" />
+</meta>

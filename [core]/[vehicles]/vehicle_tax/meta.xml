@@ -1,0 +1,7 @@
+<meta>
+    <script src="personal/server.lua" type="server" />
+    <script src="personal/client.lua" type="client" cache="false" />
+
+    <script src="faction/server.lua" type="server" />
+    <script src="faction/client.lua" type="client" cache="false" />
+</meta>

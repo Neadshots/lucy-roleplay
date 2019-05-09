@@ -1,0 +1,10 @@
+<meta>
+    <info author="EWes Ep (Rio)" name="Roleplay Tezgah Sistemi" type="script" version="1.0.0" />
+    
+	<script src="vendor_S.lua" type="server"/>
+	<script src="vendor_C.lua" type="client" cache="false"/>
+	
+	
+	
+	<script src="vendor_Utils.lua" type="shared"/>
+</meta>

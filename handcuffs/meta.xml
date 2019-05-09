@@ -1,0 +1,9 @@
+<meta>
+	<script src="s.lua" type="server" />
+	<script src="sangle.lua" type="server" />
+	<script src="c.lua" type="client" />
+
+	<file src="files/cuff.txd"/>
+	<file src="files/cuff.dff"/>
+	<oop>true</oop>
+</meta>

@@ -1,0 +1,28 @@
+<meta>
+	<script src="async.lua" type="shared" />
+	<!--
+	<script src="create_s.lua" type="server" />
+	<script src="create_c.lua" type="client" cache="false" />-->
+
+	<script src="faction_g.lua" type="shared" />
+	<script src="faction_s.lua" type="server" />
+	<script src="faction_c.lua" type="client" cache="false" />
+	
+	<script src="manager_s.lua" type="server" />
+	<script src="manager_c.lua" type="client" cache="false" />
+	<script src="license.lua" type="client" />
+
+	<export function="isPlayerInFaction" type="shared"/>
+	<export function="getFactionName" type="shared"/>
+	<export function="getFactionFromID" type="shared"/>
+	<export function="getPlayerFactionRank" type="shared"/>
+	<export function="isPlayerFactionLeader" type="shared"/>
+	<export function="getTeamFromFactionID" type="shared"/>
+	<export function="getFactionName" type="server"/>
+	<export function="getFactionType" type="server"/>
+	<export function="getFactionFromName" type="server"/>
+	<export function="getFactionIDFromName" type="server"/>
+	<export function="sendNotiToAllFactionMembers" type="server"/>
+	<export function="getAllPlayersFromFactionId" type="server"/>
+	<export function="canAccessFactionManager" type="shared" />
+</meta>

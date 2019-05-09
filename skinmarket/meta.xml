@@ -1,0 +1,14 @@
+<meta>
+    <info author="Erdem(XiVirtue)"/>
+    <script src="server.lua" cache="false"/>
+	<script src="client.lua" type="client" cache="false"/>
+	 <file src="resimler/sagok.png" />
+	 <file src="resimler/solok.png" />
+     <file src="resimler/soldon.png" />
+	 <file src="resimler/sagdon.png" />
+	 <file src="resimler/erkek.png" />
+	 <file src="resimler/kadin.png" />
+	 <file src="resimler/hepsi.png" />
+   <file src="resimler/bos.png" />
+	 <file src="fontlar/font.ttf" />
+</meta>

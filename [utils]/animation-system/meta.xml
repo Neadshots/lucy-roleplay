@@ -1,0 +1,19 @@
+<meta>
+   	<file src="custom/owl.ifp" />
+   	<file src="custom/gta_online.ifp" />
+   	<file src="assets/Roboto.ttf" />
+	<script src="anim_s.lua" type="server"/>
+	<script src="anim_c.lua" type="client" cache="false"/>
+<!--
+	<script src="custom_s.lua" type="server"/>
+	<script src="custom_c.lua" type="client" cache="false"/>
+-->
+	<config src="animations.xml" type="client" />
+	
+	<script src="list_s.lua" type="server" />
+	<script src="list_c.lua" type="client" cache="false"/>
+
+	<export function="serverToAnim" type="client" />
+	<min_mta_version client="1.3.1-9.04935" server="1.3.1-9.04935" /> 
+	<oop>true</oop>
+</meta>

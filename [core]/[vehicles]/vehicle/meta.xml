@@ -1,0 +1,71 @@
+<meta>
+    <info name="Projecte - vehicle class" author="yourpalenes and foreigner26" version="rc0.9" type="script"/>
+    <min_mta_version server="1.3.4-0.00000" client="1.5.4-9.11342" />
+    <oop>true</oop>
+
+    <!-- 
+        @classlib.lua
+        @async.lua
+        @author: sbx320
+
+        @json.lua
+        @author: rxi
+
+        @encrypt.lua
+        @author: foreiger26
+
+        @webwindow.lua
+        @frameweb.lua
+        @webuimanager.lua
+        @author: Jusonex
+    -->
+    <script src="packages/classlib.lua" type="shared"/>
+    <script src="packages/async.lua" type="shared"/>
+    <script src="packages/encrypt.lua" type="shared"/>
+    <script src="packages/json.lua" type="server"/>
+    <script src="packages/webwindow.lua" type="client"/>
+    <script src="packages/frameweb.lua" type="client"/>
+    <script src="packages/webuimanager.lua" type="client"/>
+
+    <!-- 
+        @client.lua
+        @server.lua
+        @shared.lua
+        @author: yourpalenes & foreigner26
+    -->
+    <script src="shared.lua" type="server" />
+    <script src="shared.lua" type="client" />
+    <script src="server.lua" type="server" />
+    <script src="client.lua" type="client" />
+
+    <file src="components/sound/engine.wav" />
+    <file src="components/sound/engineoff.mp3" />
+
+    <export function="saveVehicle" type="server"/>
+    <export function="saveVehicleMods" type="server"/>
+    <export function="isVehicleWindowUp" type="server" />
+    <export function="hasVehicleWindows" type="server" />
+    <export function="hasVehicleRoof" type="server" />
+    <export function="hasVehiclePlates" type="server" />
+    <export function="isVehicleWindowUp" type="client" />
+    <export function="hasVehicleWindows" type="client" />
+    <export function="hasVehicleRoof" type="client" />
+    <export function="hasVehiclePlates" type="client" />
+    <export function="isVehicleImpounded" type="client" />
+    <export function="hasVehicleEngine" type="client" />
+    <export function="hasVehicleLights" type="client" />
+    <export function="createShopVehicle" type="server" />
+    <export function="clearCharacterName" type="server" />
+    <export function="getCharacterName" type="server" />
+    <export function="getCharacterName" type="server" />
+    <export function="reloadVehicle" type="server" http="true" />
+    <export function="loadOneVehicle" type="server" />
+    <export function="addSafe" type="server" />
+    <export function="getSafe" type="server" />
+    <export function="getRandomVariant" type="server" />
+    <export function="isValidVariant" type="server" />    
+    <export function="isActive" type="client" />
+    <export function="isActive" type="server" />
+    <export function="isProtected" type="client" />
+    <export function="isProtected" type="server" />
+</meta>

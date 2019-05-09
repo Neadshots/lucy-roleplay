@@ -1,0 +1,12 @@
+<meta> 
+	<script src="global.lua" type="shared" />
+    <script src="client.lua" type="client" cache="false" />
+    <script src="server.lua" type="server" />
+
+    <file src="files/fuelgun.dff" />
+    <file src="files/fuelgun.txd" />
+    <file src="files/fuelling.mp3" />
+    
+    <export function="getMaxFuel" type="shared" />
+    <oop>true</oop>
+</meta>

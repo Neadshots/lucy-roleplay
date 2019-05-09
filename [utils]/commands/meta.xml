@@ -1,0 +1,4 @@
+<meta>
+	<script src="draw.lua" type="client" cache="false" />
+	<script src="include.lua" type="server" />
+</meta>

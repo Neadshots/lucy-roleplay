@@ -1,0 +1,16 @@
+<meta>
+    <info description="PedroLanges" version="1.0" author="" type="script" />
+	
+    <script src="server/server.lua" type="server" />
+	
+	<script src="shared/shared.lua" type="server" />
+	<script src="shared/shared.lua" type="client" />
+	
+    <script src="client/client.lua" type="client" cache="false" />
+
+    <script src="colorpicker/client.lua" type="client" />
+	<file src="colorpicker/cursor.png" />
+	<file src="colorpicker/h.png" />
+	<file src="colorpicker/sv.png" />
+	<file src="colorpicker/blank.png" />
+</meta>

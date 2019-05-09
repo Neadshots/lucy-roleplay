@@ -1,0 +1,121 @@
+local resX, resY = guiGetScreenSize()
+local comboCategories = {"Server info", "Lua timing", "Lua time recordings", "Lua memory", "Packet usage", "Sqlite timing", "Bandwidth reduction", "Bandwidth usage", "Server timing", "Function stats", "Debug info", "Debug table", "Help", "Lib memory"}
+local optionsAndFilterTyping = nil
+
+function onStart()
+	window = guiCreateWindow((resX / 2) - 400, (resY / 2) - 259, 800, 518, "Sunucu Performans Kontrol Arayüzü", false)
+	guiSetAlpha(window, 0.97)
+	guiSetVisible(window, false)
+	guiWindowSetSizable(window, false)
+
+	labelCategory = guiCreateLabel(11, 28, 56, 19, "Kategori:", false, window)
+	labelOptions = guiCreateLabel(295, 30, 56, 19, "Ayarlar:", false, window)
+	labelFilter = guiCreateLabel(296, 59, 35, 21, "Filtre:", false, window)
+	
+	comboCategory = guiCreateComboBox(77, 28, 150, 300, "Server info", false, window)
+	for i, cat in ipairs(comboCategories) do
+		guiComboBoxAddItem(comboCategory, cat)
+	end
+	addEventHandler("onClientGUIComboBoxAccepted", comboCategory, askForAnotherCategory, false)
+	
+	grid = guiCreateGridList(12, 91, 774, 410, false, window)
+	guiGridListSetSelectionMode(grid, 0)
+	guiGridListSetSortingEnabled(grid, false)
+
+	optionsBox = guiCreateEdit(356, 28, 122, 21, "", false, window)
+	filterBox = guiCreateEdit(356, 56, 122, 21, "", false, window)
+	addEventHandler("onClientGUIChanged", optionsBox, chooseOptionsAndFilter)
+	addEventHandler("onClientGUIChanged", filterBox, chooseOptionsAndFilter)
+	
+	closeButton = guiCreateButton(730, 30, 56, 30, "Kapat", false, window)
+	addEventHandler("onClientGUIClick", closeButton, closeStats, false)
+end
+addEventHandler("onClientResourceStart", resourceRoot, onStart)
+
+function chooseOptionsAndFilter()
+	if (isTimer(optionsAndFilterTyping)) then
+		killTimer(optionsAndFilterTyping)
+	end
+	optionsAndFilterTyping = setTimer(optionsAndFilterUpdate, 1000, 1)
+end
+
+function optionsAndFilterUpdate()
+	local options = guiGetText(optionsBox)
+	local filter = guiGetText(filterBox)
+	triggerServerEvent("ipb.changeOptionsAndFilter", root, options, filter)
+end
+
+function askForAnotherCategory()
+	local item = guiComboBoxGetSelected(comboCategory)
+	local text = guiComboBoxGetItemText(comboCategory, item)
+	triggerServerEvent("ipb.changeCat", root, text)
+end
+
+function closeStats()
+	guiSetVisible(window, false)
+	showCursor(false)
+end
+
+function receiveStats(rtype, stat1, stat2)
+	if (rtype == 1) then
+		-- We're opening IPB
+		guiSetVisible(window, true)
+		showCursor(true)
+		-- Clear out any old columns
+		guiGridListClear(grid)
+		removeColumns()
+		-- Add columns
+		for index, data in pairs(stat1) do
+			guiGridListAddColumn(grid, stat1[index], 0.2)
+		end
+	elseif (rtype == 2) then
+		-- We're changing category
+		guiGridListClear(grid)
+		removeColumns()
+		-- Add columns
+		for index, data in pairs(stat1) do
+			guiGridListAddColumn(grid, data, 0.2)
+		end
+	end
+	-- We're adding IPB stats
+	for index, data in pairs(stat2) do
+		-- See if we need to add a new row
+		if (guiGridListGetRowCount(grid) < index) then
+			guiGridListAddRow(grid)
+		end
+		for index2, data2 in pairs(data) do
+			if (#tostring(data2) < 2) then
+				-- Make it so we can actually see column titles as auto size column ignores size of column title
+				guiGridListSetItemText(grid, index - 1, index2, tostring(data2).."            ", false, false)
+			else
+				guiGridListSetItemText(grid, index - 1, index2, tostring(data2).."   ", false, false)
+			end
+		end
+	end
+	-- Make columns short
+	for index, data in pairs(stat1) do
+		guiGridListAutoSizeColumn(grid, index)
+	end
+end
+addEvent("ipb.recStats", true)
+addEventHandler("ipb.recStats", root, receiveStats)
+
+function removeColumns()
+	-- Hack fix for #5620 (guiGridListAddColumn returns wrong index after deleting Columns)
+	-- Delete all the columns many times
+	for i=0, guiGridListGetColumnCount(grid) do
+		guiGridListRemoveColumn(grid, i)
+	end
+	for i=0, guiGridListGetColumnCount(grid) do
+		guiGridListRemoveColumn(grid, i)
+	end
+	for i=0, guiGridListGetColumnCount(grid) do
+		guiGridListRemoveColumn(grid, i)
+	end
+	for i=0, guiGridListGetColumnCount(grid) do
+		guiGridListRemoveColumn(grid, i)
+	end
+	for i=0, guiGridListGetColumnCount(grid) do
+		guiGridListRemoveColumn(grid, i)
+	end
+end

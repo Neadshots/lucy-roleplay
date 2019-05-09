@@ -1,0 +1,7 @@
+<meta>
+  <info author="Orhan Kalkan" version="1" type="script"/>
+
+    <script src="venom.lua" type="client" cache="false"/>   
+    <script src="arac.lua" type="client"/>   
+
+</meta>

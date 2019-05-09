@@ -1,0 +1,8 @@
+<meta>
+    <info author="Enkanet" name="Modifiye Sistemi" description="Modifiye Sistemi" type="script" version="1.5" />
+
+    <script src="c_modifiye.lua" type="client" cache="false" />
+    <script src="s_modifiye.lua" type="server" cache="false" />
+
+	<file src="spray.fx" />
+</meta>

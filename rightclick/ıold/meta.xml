@@ -1,0 +1,14 @@
+<meta>
+
+	<script src="rightclick_c.lua" type="client" cache="false"/>
+	
+	<file src="0.png" type="client" />
+	<file src="0_a90.png" type="client" />
+
+	
+	<export function="create" type="client" />
+	<export function="destroy" type="client" />
+	<export function="addRow" type="client" />
+	<export function="addrow" type="client" />
+	<export function="isrcOpen" type="client" />
+</meta>

@@ -1,0 +1,30 @@
+<meta>
+	<script src="thread.lua" type="server" />
+	<script src="permissions_g.lua" type="shared" cache="false"/>
+
+	<script src="mdc_s.lua" type="server"/>
+	<script src="mdc_c.lua" type="client" cache="false"/>
+
+	<script src="apbbox/s_apb_box.lua" type="server"/>
+	<script src="apbbox/c_apb_box.lua" type="client" cache="false"/>
+	
+	<script src="gui/main.lua" type="client" cache="false"/>
+	<script src="gui/search.lua" type="client" cache="false"/>
+	<script src="gui/display_person.lua" type="client" cache="false"/>
+	<script src="gui/display_vehicle.lua" type="client" cache="false"/>
+	<script src="gui/display_property.lua" type="client" cache="false"/>
+	<script src="gui/system_admin.lua" type="client" cache="false"/>
+	<script src="gui/account_settings.lua" type="client" cache="false"/>
+	<script src="gui/add_apb.lua" type="client" cache="false"/>
+	<script src="gui/tolls.lua" type="client" cache="false"/>
+	
+	<file src="img/red.png"/>
+	<file src="img/green.png"/>
+	<file src="img/add.png"/>
+	<file src="img/settings.png"/>
+	<file src="img/search.png"/>
+	<file src="img/tolls.png"/>
+	<oop>true</oop>
+	<export function="getPlayerPilotLicenses" type="server" cache="false"/>
+	<export function="hasMDCPermissions" type="client" cache="false"/>
+</meta>

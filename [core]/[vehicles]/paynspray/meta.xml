@@ -1,0 +1,4 @@
+<meta>
+	<script src="c_paynspray_system.lua" type="client" cache="false" />
+	<script src="s_paynspray_system.lua" type="server" />
+</meta>

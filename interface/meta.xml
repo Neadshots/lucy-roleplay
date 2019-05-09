@@ -1,0 +1,44 @@
+<meta>
+	<script src='array.lua' type='client' />
+	<script src='draw.lua' type='client' cache='false' />
+
+	<!-- Fonts -->
+    <file src='fonts/Yantramanav-Regular.ttf' type='client' />
+    <file src='fonts/Yantramanav-Black.ttf' type='client' />
+    <file src='fonts/gotham_light.ttf' type='client' />
+    <file src='fonts/Roboto.ttf' type='client' />
+    <file src='fonts/FontAwesome.ttf' type='client' />
+
+    <export function='drawRectangle' type='client' />
+    <export function='drawText' type='client' />
+    <export function='drawImage' type='client' />
+    <export function='drawButton' type='client' />
+    <export function='drawPanel' type='client' />
+    <export function='drawTable' type='client' />
+
+    <export function='drawBrowser' type='client' />
+    <export function='sendJS' type='client' />
+
+    <export function='getSize' type='client' />
+    <export function='setSize' type='client' />
+    
+    <export function='getPosition' type='client' />
+    <export function='setPosition' type='client' />
+    
+    <export function='centerElement' type='client' />
+    <export function='attachArray' type='client' />
+    <export function='updateTable' type='client' />
+    <export function='sort' type='client' />
+
+    <export function='destroy' type='client' />
+    <export function='isElement' type='client' />
+    
+    <export function='getParent' type='client' />
+
+    <export function='setText' type='client' />
+    <export function='setColor' type='client' />
+    <export function='setCursor' type='client' />
+	<export function='getVisible' type='client' />
+    <export function='setVisible' type='client' />
+    <oop>true</oop>
+</meta>

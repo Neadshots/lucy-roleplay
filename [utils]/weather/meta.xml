@@ -1,0 +1,21 @@
+<meta>
+	<info name="projecte - weather" author="foreigner26" version="0.9.1" type="script"/>
+	<min_mta_version server="1.5.4-9.11342" client="1.5.4-9.11342" />
+	<oop>true</oop>
+
+	<!-- 
+		@classlib.lua
+		@author: sbx320
+
+		@json.lua
+		@author:rxi
+	-->
+	<script src="packages/classlib.lua"/>
+	<script src="packages/json.lua"/>
+
+	<!-- 
+		@server.lua
+		@author: foreigner26
+	-->
+	<script src="server.lua" type="server" cache="false"/>
+</meta>

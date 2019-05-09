@@ -1,0 +1,36 @@
+<meta>
+	<info author="Lucifer" version="1.0" type="script" name="ShaderTexture" description="" />
+	<file src="shader/texreplace.fx"/>
+	<script src="shader.lua" type="client"/>
+	<file src="generic/2222.png"/>
+	<file src="generic/tabela.png"/>
+	<file src="generic/tabela2.png"/>
+	<file src="generic/banka.png"/>
+	<file src="generic/lsbankgiris.png"/>
+	<file src="generic/lsbankafis.png"/>
+	<file src="generic/lsbankkampanya.png"/>
+	<file src="generic/hangar.png"/>
+	<file src="generic/zemin.jpg"/>
+	<file src="generic/pavyonzemin.png"/>
+	<file src="generic/pavyonduvar.png"/>
+	<file src="generic/marijuanaparkgang.png"/>
+	<file src="generic/cityhallfloor.jpg"/>
+	<file src="generic/cityhallwall.jpg"/>
+	<file src="generic/cityhalllogo.png"/>
+	<!---->
+	<file src="models/bassguitar01.dff"/>
+	<file src="models/bassguitar01.txd"/>
+	<file src="models/bassguitar01.col"/>
+	<file src="models/DrumKit1.dff"/>
+	<file src="models/DrumKit1.col"/>
+	<file src="models/dr_gsstudio.txd"/>
+	<file src="models/GuitarAmp5.dff"/>
+	<file src="models/GuitarAmp5.col"/>
+    <file src="models/Microphone1.txd"/>
+	<file src="models/Microphone1.dff"/>
+	<file src="models/Microphone1.col"/>
+	<file src="models/MicrophoneStand1.dff"/>
+	<file src="models/MicrophoneStand1.col"/>
+	<file src="models/ciggy.dff"/>
+	<file src="models/ciggyx.txd"/>
+</meta>
