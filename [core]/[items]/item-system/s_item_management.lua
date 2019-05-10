@@ -173,31 +173,25 @@ function loadItems( element, force )
 		return false, "Invalid Element ID"
 	elseif force or not saveditems[element] then
 		saveditems[element] = {}
-		dbQuery(
-			function(qh, element)
-				local result, rows, err = dbPoll(qh, -1);
-				if rows > 0 then
-					for index, row in ipairs(result) do
-						if saveditems then 
-							saveditems[element][#saveditems[element] + 1] = { tonumber( row.itemID ) or -1, (tonumber( row.itemValue ) or row.itemValue) or 0, tonumber( row.index ) or 0, tonumber( row.protected ) or 0}
-						end
-					end
-					if not subscribers[ element ] then
-						subscribers[ element ] = {}
-						if getElementType( element ) == "player" then
-							subscribers[ element ][ element ] = true
-						end
-					end
-					notify( element, true )
-					if (getElementType(element) == 'player') then
-						triggerEvent("updateLocalGuns", element)
-					end
-				end
-			end,
-		{element}, mysql:getConnection(), "SELECT * FROM items WHERE type = " .. getType( element ) .. " AND owner = " .. getID( element ) .. " ORDER BY `index` ASC")
-		
-		
-		return true, "Success!"
+
+		local result = dbPoll(dbQuery(mysql:getConnection(), "SELECT * FROM items WHERE type = " .. getType( element ) .. " AND owner = " .. getID( element ) .. " ORDER BY `index` ASC"), -1)
+
+		for index, row in ipairs(result) do
+			if saveditems then 
+				saveditems[element][#saveditems[element] + 1] = { tonumber( row.itemID ) or -1, (tonumber( row.itemValue ) or row.itemValue) or 0, tonumber( row.index ) or 0, tonumber( row.protected ) or 0}
+			end
+		end
+		if not subscribers[ element ] then
+			subscribers[ element ] = {}
+			if getElementType( element ) == "player" then
+				subscribers[ element ][ element ] = true
+			end
+		end
+		notify( element, true )
+		if (getElementType(element) == 'player') then
+			triggerEvent("updateLocalGuns", element)
+		end
+		return saveditems, "Success!"
 	else
 		return true, "Success!"
 	end
@@ -558,8 +552,6 @@ function countItems( element, itemID, itemValue )
 		for key, value in pairs(saveditems[element]) do
 			if value[1] == itemID and ( not itemValue or itemValue == value[2] ) then
 				count = count + 1
-				-- EnesBayraktar
-				if (itemID == 134 and count == 2) then count = 1 return false end
 			end
 		end
 		return count

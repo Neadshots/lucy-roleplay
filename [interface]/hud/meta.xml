@@ -51,8 +51,13 @@
     <file src="fonts/old_school_united_stencil.ttf" />
     <file src="fonts/Roboto.ttf"/>
     <file src="fonts/gtaFont.ttf"/>
+    <file src="fonts/semibold.ttf"/>
     <file src="fonts/font.ttf"/>
     <file src="fonts/FontAwesome.ttf"/>
+
+    <file src="images/hunger.png"/>
+    <file src="images/thirst.png"/>
+    <file src="images/level.png"/>
 
     <file src="images/samp/a1_on.png" type="client"/>
     <file src="images/samp/a2_on.png" type="client"/>

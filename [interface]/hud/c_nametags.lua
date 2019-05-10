@@ -281,7 +281,15 @@ function renderNametags()
 		local distance = getDistanceBetweenPoints3D(lx, ly, lz, rx, ry, rz)
 		local limitdistance = 20
 		local reconx = streamedPlayers[localPlayer]['reconx'] and (data['admin_level'] >= 2)
-		if isElementOnScreen(player) and player ~= localPlayer then
+		local shown_player = true
+		if (player == localPlayer) then
+			if interface_mode ~= 1 then
+				shown_player = true
+			else
+				shown_player = false
+			end
+		end
+		if isElementOnScreen(player) and (shown_player) then
 			if (aimsAt(player) or distance<limitdistance or reconx) then
 				if not data['reconx'] and not data["freecam:state"] and getElementAlpha(player) >= 255 then
 					local lx, ly, lz = getCameraMatrix()

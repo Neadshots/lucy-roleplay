@@ -1,9 +1,18 @@
-
+local sx, sy = guiGetScreenSize()
+local colors = {
+	[1] = {207,170,81},
+	[2] = {58,175,223},
+	[3] = {200,200,200},
+}
+local icons = {
+	[1] = "hunger", [2] = "thirst", [3] = "level",
+}
 SAMP = {
     screen = Vector2(guiGetScreenSize()),
     extraY = -1,
 	moneyY = 0,
-	opened = false,
+	opened_2 = false,
+	opened_3 = false,
 
     dxDrawShadowText = function(self,text, x1, y1, x2, y2, color, scale, font, alignX, alignY)
         dxDrawText(text, x1 - 1, y1, x2 - 1, y2, tocolor(0, 0, 0, 150), scale, font, alignX, alignY)
@@ -18,6 +27,17 @@ SAMP = {
 
         dxDrawText(text, x1, y1, x2, y2, color, scale, font, alignX, alignY)
     end,
+
+    _speed = function()
+		
+		if isPedInVehicle(localPlayer) then
+			local vx, vy, vz = getElementVelocity(getPedOccupiedVehicle(localPlayer))
+
+		return math.sqrt(vx^2 + vy^2 + vz^2) * 161
+		end
+
+	return 0
+	end,
 
     drawhealth = function()
     SAMP = instance
@@ -118,23 +138,56 @@ SAMP = {
         dxDrawImage(dX, dY, dW, dH, img)	
     end,
 
-	create = function(self)
-		if not self.opened then 
-			addEventHandler("onClientRender", root, self.drawhealth,true,"low-10")
-			addEventHandler("onClientRender", root, self.drawmoney,true,"low-10")
-			addEventHandler("onClientRender", root, self.draweapon,true,"low-10")
+    drawhud = function()
+    SAMP = instance
+    	local x, y = sx*0.715,sy*0.022
+    	local w, h = sx*0.0567,sy*0.022
+    	for i=1, 3 do
 
-			self.opened = true
+    		dxDrawRectangle(x+((w+5)*i), y, w, h, tocolor(0, 0, 0, 200))
+
+
+    		dxDrawRectangle(x+((w+5)*i)+3, y+3, w-6, h-6, tocolor(colors[i][1], colors[i][2], colors[i][3], 80))
+    		if (i == 1) then data = localPlayer:getData('hunger') or 100 elseif (i == 2) then data = localPlayer:getData('thirst') or 100 elseif (i == 3) then data = 1 end
+    		dxDrawRectangle(x+((w+5)*i)+3, y+3, (w-6)*data/100, h-6, tocolor(colors[i][1], colors[i][2], colors[i][3], 160))
+    		dxDrawImage(x+((w+5)*i)-5, y, 16, 16, "images/"..icons[i]..".png")
+    	end
+    	local vehicle = localPlayer.vehicle
+    	local x, y = sx*0.770, sy*0.35
+    	if vehicle then
+    		instance:dxDrawShadowText("Hız: "..math.floor(instance:_speed()).." km/h\nYakıt: "..vehicle:getData("fuel").." lt", x, y, w, h, tocolor(58,115,43), 1, "pricedown", "left", "top")
+    	end
+	end,
+
+	create = function(self,id)
+		if (id == 2) then
+			if not self.opened_2 then 
+				addEventHandler("onClientRender", root, self.drawhealth,true,"low-10")
+				addEventHandler("onClientRender", root, self.drawmoney,true,"low-10")
+				addEventHandler("onClientRender", root, self.draweapon,true,"low-10")
+
+				self.opened_2 = true
+			end
+		elseif (id == 3) then
+			if not self.opened_3 then
+				addEventHandler("onClientRender", root, self.drawhud,true,"low-10")
+
+				self.opened_3 = true
+			end
 		end
     end,
 
 	destroy = function(self)
-		if self.opened then
+		if self.opened_2 then
 			removeEventHandler("onClientRender", root, self.drawhealth,true,"low-10")
 			removeEventHandler("onClientRender", root, self.drawmoney,true,"low-10")
 			removeEventHandler("onClientRender", root, self.draweapon,true,"low-10")
 			
-			self.opened = false
+			self.opened_2 = false
+		elseif self.opened_3 then
+			removeEventHandler("onClientRender", root, self.drawhud,true,"low-10")
+
+			self.opened_3 = false
 		end
     end,
 
@@ -192,6 +245,7 @@ addEventHandler("onClientResourceStart", resourceRoot,
     function()
         local data = jsonGET("@variables.json")
         saveJSON = data
+        --triggerEvent('hud:changeInterface', localPlayer, saveJSON['mode'])
     end
 )
 
@@ -287,7 +341,7 @@ function isInSlot(dX, dY, dSZ, dM)
 	end
 end
 
-local components = { "weapon", "ammo", "health", "clock", "money", "breath", "armour", "wanted"}
+local components = { "weapon", "ammo", "health", "clock", "money", "breath", "armour", "wanted", "radar"}
 addEvent('hud:changeInterface', true)
 addEventHandler('hud:changeInterface', root, function(data)
 	if (tonumber(data) == 1) then
@@ -302,12 +356,14 @@ addEventHandler('hud:changeInterface', root, function(data)
             setPlayerHudComponentVisible(v, false)
 		end
 
-		instance:create()
-	else
+		instance:destroy()
+		instance:create(2)
+	elseif (tonumber(data) == 3) then 
   		for i, v in ipairs(components) do
             setPlayerHudComponentVisible(v, true)
 		end
 		
 		instance:destroy()
+		instance:create(3)
 	end
 end)

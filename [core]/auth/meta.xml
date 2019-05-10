@@ -62,7 +62,6 @@
 				<file src="components/jquery.js" cache="false"/>
 				<file src="components/framework.js" cache="false"/>
 				<file src="components/underscore.js" cache="false"/>
-				<file src="components/popper.js" cache="false"/>
 
 					<file src="components/images/logo.png" cache="false"/>
 

@@ -15,11 +15,11 @@ end)
 
 
 addCommandHandler("sethunger",
-	function(player, cmd, targetPlayer, value)
+	function(player, cmd, target, value)
 		if exports.integration:isPlayerSeniorAdmin(player) then
 			value = tonumber(value)
-			if value and targetPlayer then
-				local targetPlayer, targetPlayerName = exports.global:findPlayerByPartialNick(thePlayer, targetPlayer)
+			if value and target then
+				local targetPlayer, targetPlayerName = exports.global:findPlayerByPartialNick(thePlayer, target)
 				if targetPlayer then
 					outputChatBox(exports.pool:getServerSyntax(false, "s").. "Kişinin açlık değeri başarıyla değiştirildi. ("..getElementData(targetPlayer, "hunger").." - > "..value..")", player, 255, 255, 255, true)
 					setElementData(targetPlayer, "hunger", value)
@@ -34,11 +34,11 @@ addCommandHandler("sethunger",
 )
 
 addCommandHandler("setthirst",
-	function(player, cmd, targetPlayer, value)
+	function(player, cmd, target, value)
 		if exports.integration:isPlayerSeniorAdmin(player) then
 			value = tonumber(value)
-			if value and targetPlayer then
-				local targetPlayer, targetPlayerName = exports.global:findPlayerByPartialNick(thePlayer, targetPlayer)
+			if value and target then
+				local targetPlayer, targetPlayerName = exports.global:findPlayerByPartialNick(thePlayer, target)
 				if targetPlayer then
 					outputChatBox(exports.pool:getServerSyntax(false, "s").. "Kişinin susuzluk değeri başarıyla değiştirildi. ("..getElementData(targetPlayer, "thirst").." - > "..value..")", player, 255, 255, 255, true)
 					setElementData(targetPlayer, "thirst", value)
@@ -48,6 +48,15 @@ addCommandHandler("setthirst",
 			else
 				outputChatBox(exports.pool:getServerSyntax(false, "e").. "Geçersiz değer girdiniz.", player, 255, 255, 255, true)
 			end
+		end
+	end
+)
+
+addCommandHandler("fulht",
+	function(player, cmd)
+		if exports.integration:isPlayerDeveloper(player) then
+			setElementData(player, "hunger", 100)
+			setElementData(player, "thirst", 100)
 		end
 	end
 )

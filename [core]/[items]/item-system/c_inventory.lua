@@ -9,6 +9,8 @@ local tooltip_background_color = tocolor( 0, 0, 0, 190 )
 local tooltip_background_delete_color = tocolor( 127, 0, 0, 190 )
 local active_tab_color = tocolor( 0, 0, 0, 70) --127, 255, 127, 127 )
 
+local font = dxCreateFont(":hud/fonts/Roboto.ttf", 10)
+local semibold = dxCreateFont(":hud/fonts/semibold.ttf", 10)
 local splittableItem = {[30]=" gram(lar)", [31]=" gram(lar)", [32]=" gram(lar)", [33]=" gram(lar)", [34]=" gram(lar)", [35]=" ml(ler)", [36]=" tablet(ler)", [37]=" gram(lar)", [38]=" gram(lar)", [39]=" gram(lar)", [40]=" ml(ler)", [41]=" tab(lar)", [42]=" shroom(s)", [43]=" tablet(ler)", [134] = " money" }
 local calibreWeapons = {[22]=true, [23]=true, [24]=true, [25]=true, [26]=true, [27]=true, [28]=true, [29]=true, [30]=true, [31]=true, [32]=true, [33]=true, [34]=true}
 
@@ -16,7 +18,7 @@ local calibreWeapons = {[22]=true, [23]=true, [24]=true, [25]=true, [26]=true, [
 
 local rows = 5
 
-local box = 90
+local box = 70
 local spacer = 1
 local sbox = spacer + box
 
@@ -49,14 +51,14 @@ local activeTabItem = nil
 local hoverAction = false
 local actionIcons =
 {
-	[TAB_WALLET] = { -48, tocolor( 255, 255, 255, 50 ), "Wallet" },
-	[TAB_ITEMS] = { 48, tocolor( 255, 255, 255, 50 ), "Items" },
-	[TAB_KEYS] = { -203, tocolor( 255, 255, 255, 50 ), "Keys" },
-	[TAB_WEAPONS] = { -204, tocolor( 255, 255, 255, 50 ), "Weapons" },
+	[TAB_WALLET] = { -48, tocolor( 255, 255, 255, 50 ), "Cüzdan" },
+	[TAB_ITEMS] = { 48, tocolor( 255, 255, 255, 50 ), "Envanter" },
+	[TAB_KEYS] = { -203, tocolor( 255, 255, 255, 50 ), "Anahtarlar" },
+	[TAB_WEAPONS] = { -204, tocolor( 255, 255, 255, 50 ), "Silahlar" },
 	
-	[ACTION_DROP] = { -202, tocolor( 127, 255, 127, 63 ), "Drop Item", "Press CTRL while selecting an item to automatically drop it." },
-	[ACTION_SHOW] = { -201, tocolor( 127, 127, 255, 63 ), "Show Item" },
-	[ACTION_DESTROY] = { -200, tocolor( 255, 127, 127, 63 ), "Destroy Item", "Press DELETE while selecting an item to automatically delete it." },
+	[ACTION_DROP] = { -202, tocolor( 127, 255, 127, 63 ), "Eşyayı Bırak", "Press CTRL while selecting an item to automatically drop it." },
+	[ACTION_SHOW] = { -201, tocolor( 127, 127, 255, 63 ), "Eşyayı Göster" },
+	[ACTION_DESTROY] = { -200, tocolor( 255, 127, 127, 63 ), "Eşyayı Sil", "Press DELETE while selecting an item to automatically delete it." },
 	--[ACTION_SPLIT] = { -203, tocolor( 255, 127, 127, 63 ), "Destroy Item", "Press DELETE while selecting an item to automatically delete it." }
 }
 
@@ -121,9 +123,9 @@ local function tooltip( x, y, text, text2, to_delete )
 		text = 'DELETE ' .. text
 	end
 	
-	local width = dxGetTextWidth( text, 1, "clear" ) + 20
+	local width = dxGetTextWidth( text, 1, font ) + 20
 	if text2 then
-		width = math.max( width, dxGetTextWidth( text2, 1, "clear" ) + 20 )
+		width = math.max( width, dxGetTextWidth( text2, 1, font ) + 20 )
 		text = text .. "\n" .. text2
 	end
 	local height = 10 * ( text2 and 5 or 3 )
@@ -131,7 +133,7 @@ local function tooltip( x, y, text, text2, to_delete )
 	y = math.max( 10, math.min( y, sy - height - 10 ) )
 	
 	dxDrawRectangle( x, y, width, height, not to_delete and tooltip_background_color or tooltip_background_delete_color, true )
-	dxDrawText( text, x, y, x + width, y + height, tooltip_text_color, 1, "clear", "center", "center", false, false, true )
+	dxDrawText( text, x, y, x + width, y + height, tooltip_text_color, 1, font, "center", "center", false, false, true )
 end
 
 local function isInBox( x, y, xmin, xmax, ymin, ymax )
@@ -357,8 +359,8 @@ addEventHandler( "onClientRender", getRootElement( ),
 			
 			local isMove = clickDown and clickItemSlot and not clickItemSlot.group and ( getTickCount( ) - clickDown >= 200 ) -- dragging items from inv
 			local columns = math.ceil( #inventory / 5 )
-			local x = sx - columns * sbox - spacer
-			local y = ( sy - rows * sbox - spacer ) / 2 + sbox + spacer
+			local x = sx/2-(box*2)/2
+			local y = sy-box*2-5
 			
 			if show then
 				-- inventory buttons
@@ -366,14 +368,20 @@ addEventHandler( "onClientRender", getRootElement( ),
 				local irows = isMove and ACTION_DROP or TAB_WALLET
 				local jrows = isMove and ACTION_DESTROY or TAB_WEAPONS
 				local y2 = y + sbox
-				dxDrawRectangle( x2, y2, sbox, ( jrows - irows + 1 ) * sbox + spacer, background_color )
+				--dxDrawRectangle( x2, y2, sbox, ( jrows - irows + 1 ) * sbox + spacer, background_color )
 				for i = irows, jrows do
 					local icon = actionIcons[ i ]
-					local boxx = x2 + spacer
+					local boxx = x2 + spacer + sbox * ( i - irows )
 					--local boxy = y2 + spacer + sbox * ( i - irows + -1 )
-					local boxy = y2 + spacer + sbox * ( i - irows )
-					dxDrawRectangle( boxx, boxy, box, box, i == activeTab and active_tab_color or icon[2] )
-					dxDrawImage( boxx, boxy, box, box, getImage( icon[1] ) )
+					local boxy = y2 + spacer
+					--dxDrawRectangle( boxx, boxy, box, box, i == activeTab and tocolor(0,0,0,250) or tocolor(0,0,0,200) )
+					if i == activeTab then
+						exports.draw:shadow(boxx,boxy,box,box,0,0,0,200,5,true)
+					else
+						exports.draw:shadow(boxx,boxy,box,box,0,0,0,200,1,true)
+					end
+					dxDrawRectangle(boxx,boxy+box-1,box,1,tocolor(241, 196, 15))
+					dxDrawImage( boxx+10, boxy+10, box-20, box-20, getImage( icon[1] ) )
 					
 					if not clickWorldItem and isInBox( cursorX, cursorY, boxx, boxx + box, boxy, boxy + box ) then
 						if i <= 6 then
@@ -388,27 +396,27 @@ addEventHandler( "onClientRender", getRootElement( ),
 					end
 				end
 				
-				isCursorOverInventory = isInBox( cursorX, cursorY, x, sx, y, y + rows * sbox + spacer ) or isInBox( cursorX, cursorY, x2, x2 + sbox, y2, y2 + ( jrows - irows + 1 ) * sbox + spacer )
+				isCursorOverInventory = true --isInBox( cursorX, cursorY, x, sx, y, y + rows * sbox + spacer ) or isInBox( cursorX, cursorY, x2, x2 + sbox, y2, y2 + ( jrows - irows + 1 ) * sbox + spacer )
 				
 				-- actual inv
-				dxDrawRectangle( x, y, columns * sbox + spacer, rows * sbox + spacer, background_color )
-				for i = 1, columns * 5 do
-					local col = math.floor( ( i - 1 ) / 5 )
-					local row = ( i - 1 ) % 5
-					
-					local boxx = x + col * sbox + spacer
-					local boxy = y + row * sbox + spacer
+				--dxDrawRectangle( x, y, columns * sbox + spacer, rows * sbox + spacer, background_color )
+				for i = 1, columns * 6 do
+					local col = math.floor( ( i - 1 ) / 6 )
+					local row = ( i - 1 ) % 6
+
+					local boxx = x + row * sbox + spacer - box*2
+					local boxy = y - col * sbox + spacer
 					
 					local item = inventory[ i ]
 					if item then
 						if not isMove or item[4] ~= clickItemSlot.id then
-							dxDrawRectangle( boxx, boxy, box, box, full_color )
-							dxDrawImage( boxx, boxy, box, box, getImage( item[1], item[2] ) )
+							dxDrawRectangle( boxx, boxy, box, box, tocolor(20,20,20,200) )	
+							dxDrawImage( boxx+10, boxy+10, box-20, box-20, getImage( item[1], item[2] ) )
 							
 							-- overlay text for some items
 							local text = getOverlayText( item[1], item[2], item[5] )
 							if #text > 0 then
-								dxDrawText( text, boxx + 2, boxy + 2, boxx + box - 2, boxy + box - 2, tooltip_text_color, 1, "clear", "right", "bottom", true, true, true )
+								dxDrawText( text, boxx + 2, boxy + 2, boxx + box - 2, boxy + box - 2, tooltip_text_color, 1, font, "right", "bottom", true, true, true )
 							end
 							
 							if not isMove and not clickWorldItem and isInBox( cursorX, cursorY, boxx, boxx + box, boxy, boxy + box ) then
@@ -418,7 +426,8 @@ addEventHandler( "onClientRender", getRootElement( ),
 							end
 						end
 					else
-						dxDrawRectangle( boxx, boxy, box, box, empty_color )
+						dxDrawRectangle( boxx, boxy, box, box, tocolor(20,20,20,200) )
+						dxDrawText("BOŞ", boxx,boxy,boxx+box,boxy+box,tocolor(255,255,255,100),1,semibold,"center","center")
 					end
 				end
 			end
@@ -538,7 +547,7 @@ addEventHandler( "onClientRender", getRootElement( ),
 							name = "Shelf"
 						elseif getElementModel ( hoverElement ) == 2942 then -- ATM card into ATM/MAXIME
 							name = "ATM"
-						elseif getElementModel ( hoverElement ) == 2203 then -- irp-plant // OzulusTR
+						elseif getElementModel ( hoverElement ) == 2203 then
 							name = "Saksı"
 						elseif hoverElementItemID == 166 then --Video System
 							name = "Video Player"

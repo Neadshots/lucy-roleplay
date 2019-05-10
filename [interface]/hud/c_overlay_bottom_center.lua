@@ -68,7 +68,7 @@ function clientRender()
 	if ( getPedWeapon( localPlayer ) ~= 43 or not getPedControlState( localPlayer, "aim_weapon" ) ) then
 		local h = 16*(#content)+30
 		local posX = (sx/2)-(toBeDrawnWidth/2)+woffset
-		local posY = sy-(h+30)+hoffset
+		local posY = 20
 		x, y, w, h = posX, posY , toBeDrawnWidth, h
 		dxDrawRectangle(x, y, w, h, tocolor(0, 0, 0, 80))
 		w, h = w-4, h-4
