@@ -1,0 +1,12 @@
+<meta>
+	<info name="projecte - playerlist" author="yourpalenes" version="rc0.9" type="script"/>
+    <oop>true</oop>
+
+     <!-- 
+        @draw.lua
+        @array.lua
+        @author:yourpalenes
+    -->
+	<script src="events.lua" type="server"/>
+	<script src="draw.lua" type="client" cache="false"/>
+</meta>

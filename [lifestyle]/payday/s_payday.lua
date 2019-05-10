@@ -144,7 +144,8 @@ function payWage(player, pay, faction, tax)
 
 	-- let the client tell them the (bad) news
 	local grossincome = pay+profit+donatormoney-rent-vtax-ptax
-	triggerClientEvent(player, "cPayDay", player, faction, noWage and -1 or pay, profit, donatormoney, tax, incomeTax, vtax, ptax, rent, grossincome, cP)
+	outputChatBox(exports.pool:getServerSyntax(false, "s").."Tebrikler! Başarıyla "..grossincome.."$ kazandınız. ( Para banka hesabınızda. )", player, 255, 255, 255, true)
+	--triggerClientEvent(player, "cPayDay", player, faction, noWage and -1 or pay, profit, donatormoney, tax, incomeTax, vtax, ptax, rent, grossincome, cP)
 	return governmentIncome
 end
 local chars = "1,2,3,4,5,6,7,8,9,0,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,R,S,Q,T,U,V,X,W,Z"
@@ -258,6 +259,7 @@ function doPayDayPlayer(value, isForcePayday)
 		setPlayerAnnounceValue ( value, "score", hoursplayed+1 )
 		setElementData(value, "hoursplayed", hoursplayed+1, false, true)
 		dbExec(mysql:getConnection(), "UPDATE characters SET hoursplayed = hoursplayed + 1, bankmoney = " .. getElementData( value, "bankmoney" ) .. sqlupdate .. " WHERE id = " .. dbid )
+		
 	elseif (logged==1) and (timeinserver) and (timeinserver<60) then
 		outputChatBox("You have not played long enough to receive a payday. (You require another " .. 60-timeinserver .. " minutes of play.)", value, 255, 0, 0)
 	end
@@ -300,7 +302,7 @@ function adminDoPaydayOne(thePlayer, commandName, targetPlayerName)
 		end
 	end
 end
-addCommandHandler("pavlovyarrakverir", adminDoPaydayOne)
+addCommandHandler("givepayday", adminDoPaydayOne)
 
 function timeSaved(thePlayer)
 	local logged = getElementData(thePlayer, "loggedin")

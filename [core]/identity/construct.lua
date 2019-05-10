@@ -1,5 +1,5 @@
 idsystem = {
-	servername = 'LucyRPG',
+	servername = 'Belirsiz',
 	debug = false,
 	ids = {},
 
@@ -17,7 +17,9 @@ idsystem = {
 			]]--
 			self.ids[slot] = source 
 			source:setData('playerid',slot)
-
+			exports.anticheat:changeProtectedElementDataEx(source, "playerid", slot)
+			exports.pool:allocateElement(source, slot)
+	
 			--[[
 				@change
 				changes player name on join
@@ -33,7 +35,7 @@ idsystem = {
 		if source:getData('playerid') then 
 
 				if self.debug then 
-					outputDebugString('[IDENTITY-INFO]: Çıkan oyuncu ID: '..source:getData('playerid'),0,210,210,210)
+					outputDebugString('[IDENTITY-INFO]: Çıkan oyuncu ID: '..source:getData('identity'),0,210,210,210)
 				end	
 
 			self.ids[tonumber(source:getData('playerid'))] = nil
@@ -45,6 +47,8 @@ idsystem = {
 		for key, value in ipairs(self.players) do
 			self.ids[key] = value
 			value:setData('playerid',key)
+			exports.anticheat:changeProtectedElementDataEx(value, "playerid", key)
+			exports.pool:allocateElement(value, key)
 
 			if self.debug then 
 				outputDebugString('[IDENTITY-INFO]: Tanımlanan oyuncu ID: '..key,0,210,210,210)

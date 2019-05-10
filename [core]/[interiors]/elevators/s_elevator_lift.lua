@@ -180,18 +180,6 @@ function loadAllLifts(res)
 				for index, row in ipairs(res) do
 					loadOneLiftFloor(row["id"])
 				end
-			else
-				local result = dbExec(mysql:getConnection(), "CREATE TABLE IF NOT EXISTS `lifts` (`id` int(11) NOT NULL AUTO_INCREMENT, `disabled` tinyint(1) NOT NULL DEFAULT '0', `comment` varchar(255) DEFAULT NULL, PRIMARY KEY (`id`));")
-				if result then
-					local result2 = dbExec(mysql:getConnection(), "CREATE TABLE IF NOT EXISTS `lift_floors` (`id` int(11) NOT NULL AUTO_INCREMENT, `lift` int(11) NOT NULL, `x` float(10,6) DEFAULT '0.000000', `y` float(10,6) DEFAULT '0.000000', `z` float(10,6) DEFAULT '0.000000', `dimension` int(5) DEFAULT '0', `interior` int(5) DEFAULT '0', `floor` varchar(3) NOT NULL, `name` varchar(100) NOT NULL, PRIMARY KEY (`id`));")
-					if result2 then
-						loadAllLifts(res)
-					else
-						outputDebugString("elevators/s_elevator_lift.lua: loadAllLifts failed")
-					end
-				else
-					outputDebugString("elevators/s_elevator_lift.lua: loadAllLifts failed")
-				end
 			end
 		end,
 	mysql:getConnection(), "SELECT id FROM `lift_floors` ORDER BY `id` ASC")

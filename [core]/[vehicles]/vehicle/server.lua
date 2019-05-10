@@ -1503,7 +1503,7 @@ function lockUnlockInside(vehicle)
 					local locked = isVehicleLocked(vehicle)
 					local seat = getPedOccupiedVehicleSeat(source)
 					if seat == 0 or exports.global:hasItem( source, 3, dbid ) then
-						playCarToglockSoundFxInside(vehicle, not locked)
+						
 						if (locked) then
 							setVehicleLocked(vehicle, false)
 							triggerEvent('sendAme', source, "aracın kapılarını açar.")
@@ -1527,7 +1527,6 @@ local storeTimers = { }
 function lockUnlockOutside(vehicle)
 	if (not source or exports.integration:isPlayerTrialAdmin(source)) or ( getElementData(vehicle, "Impounded") or 0 ) == 0 then
 		local dbid = getElementData(vehicle, "dbid")
-		blinkLightsAndSoundOnLockUnlock(vehicle) -- maxime
 
 		if (isVehicleLocked(vehicle)) then
 			setVehicleLocked(vehicle, false)

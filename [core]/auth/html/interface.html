@@ -1,0 +1,454 @@
+<!DOCTYPE html lang="en">
+  <head>
+
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta name="description" content="#">
+    <meta name="keywords" content="#">
+    <meta name="author" content="Enes Bayraktar">
+
+	<!-- Mobile Spesific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Stylesheets -->
+    <link href="http://mta/auth/components/icons.css" rel="stylesheet"/>
+    <link href="http://mta/auth/components/fonts.css" rel="stylesheet"/>
+    <link href="http://mta/auth/components/framework.css" rel="stylesheet"/>
+    <link href="http://mta/auth/components/animate.css" rel="stylesheet"/>
+    <link href="http://mta/auth/components/project.css" rel="stylesheet"/>
+
+  </head>
+  <body>
+    <section class="overlay-effect animated05 fadeIn"> 
+        <div class="container-fluid no-padding">
+            <div class="row no-gutters">
+        
+                <div class="col-xl-12">
+
+                        <nav id="nav" style="display:none;">
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="false"></a>
+                                <a class="nav-item nav-link" id="nav-home-2-tab" data-toggle="tab" href="#nav-home-2" role="tab" aria-controls="nav-home-2" aria-selected="false"></a>
+                                <a class="nav-item nav-link" id="nav-select-tab" data-toggle="tab" href="#nav-home-2" role="tab" aria-controls="nav-select" aria-selected="false"></a>
+                                <a class="nav-item nav-link" id="nav-login-tab" data-toggle="tab" href="#nav-login" role="tab" aria-controls="nav-login" aria-selected="false"></a>
+                                <a class="nav-item nav-link" id="nav-login-2-tab" data-toggle="tab" href="#nav-login-2" role="tab" aria-controls="nav-login-2" aria-selected="false"></a>
+                                <a class="nav-item nav-link" id="nav-character-none-tab" data-toggle="tab" href="#nav-character-none" role="tab" aria-controls="nav-character-none" aria-selected="false"></a>
+                                <a class="nav-item nav-link" id="nav-character-none-list" data-toggle="tab" href="#nav-character-list" role="tab" aria-controls="nav-character-list" aria-selected="false"></a>
+                            </div>
+                        </nav>
+
+                        <div class="tab-content" id="nav-tabContent" style="overflow-y:scroll; height:100%">
+                            
+                            <div class="tab-pane animated fadeIn" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                <div class="container-fluid">
+                                    <div class="row h-100 justify-content-center">
+                                        <div class="col-12 text-center" style="margin-top:auto; margin-bottom:auto; margin-left:auto; margin-right:auto;">
+                                        
+                                            <div class="center-container">
+                                                <img tag="center-logo" src="http://mta/auth/components/images/logo.png"/>
+                                                <p class="dialog">Merhaba, öncelikle belirtmek isterim ki aramıza katılmandan gurur duyuyorum dostum ancak bu sunucuya ilk defa giriş yapmış
+                                                    gibisin, tabii bu sadece minik bir sistemsel hatada olabilir bu yüzden alta bir buton koyduk buna basarak benden kurtulabilirsin eğer kayıt olmak
+                                                    istiyorsan <font color="d32727" style="opacity:0.8"><i>http://www.lucyrpg.com/kayitol</i></font> adresinden aramıza katılabilirsin.
+                                                </p>
+
+                                                <a tag="next-step" onClick="set('5')">Yine de ilerle!</a>
+                                            </div>
+
+                                        </div>
+                                        <div style="top:97%; display:inline-block; position:absolute; transform:translateY(-100%); color:rgba(240,240,240,0.4); font-family:'SF Pro'; font-size:1.1vh;">© 2019 - Lucy RPG</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane animated fadeIn" id="nav-home-2" role="tabpanel" aria-labelledby="nav-home-tab">
+                                <div class="container-fluid">
+                                    <div class="row h-100 justify-content-center">
+                                        <div class="col-12 text-center" style="margin-top:auto; margin-bottom:auto; margin-left:auto; margin-right:auto;">
+                                        
+                                            <div class="center-container">
+                                                <img tag="center-logo" src="http://mta/auth/components/images/logo.png"/>
+                                                <p class="dialog">Merhaba, aramıza tekrardan hoşgeldin senin için birkaç yenilik hazırladık; açıkcası yenilikden ziyade her girişin de
+                                                     burada "Enter" tuşuna basarak geçişler yapıcağını unutmamanı istedik.
+                                                </p>
+
+                                                <a tag="next-step" onClick="set('6');">Anladım, ileri!</a>
+                                            </div>
+
+                                        </div>
+                                        <div style="top:97%; display:inline-block; position:absolute; transform:translateY(-100%); color:rgba(240,240,240,0.4); font-family:'SF Pro'; font-size:1.1vh;">© 2019 - Lucy RPG</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane animated fadeIn" id="nav-select" role="tabpanel" aria-labelledby="nav-home-tab">
+                                <div class="container-fluid">
+                                    <div class="row h-100 justify-content-center">
+                                        <div class="col-12 text-center" style="margin-top:auto; margin-bottom:auto; margin-left:auto; margin-right:auto;">
+                                        
+                                            <div class="center-container">
+                                                <img tag="center-logo" src="http://mta/auth/components/images/logo.png"/>
+                                                <p class="dialog"><span class="chname"></span> adlı karakter olarak oyunamak istiyormusun?</p>
+                                                <div class="inline-character-select-2"></div>
+                                                
+                                            </div>
+
+                                        </div>
+                                        <div style="top:97%; display:inline-block; position:absolute; transform:translateY(-100%); color:rgba(240,240,240,0.4); font-family:'SF Pro'; font-size:1.1vh;">© 2019 - Lucy RPG</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane animated fadeIn" id="nav-login" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                <div class="container-fluid">
+                                    <div class="row h-100 justify-content-center">
+                                        <div class="col-12 text-center" style="margin-top:auto; margin-bottom:auto; margin-left:auto; margin-right:auto;">
+                                            
+                                            <div class="center-container">
+
+                                                <div style="width:100%; display:inline-block">
+                                                    <img tag="center-logo-2" style="float:none;" src="http://mta/auth/components/images/logo.png"/>
+                                                </div>
+
+                                                <div style="width:100%; display:inline-block;">
+                                                    <div style="width:20vmax; display:inline-block; margin:auto;">
+                                                        <div class="input-group mb-2">
+                                                            <input type="text" tag="input-login" name="username" class="form-control" placeholder="Kullanıcı Adı" aria-label="Username" aria-describedby="basic-addon1">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                        </div>
+                                        <div style="top:97%; display:inline-block; position:absolute; transform:translateY(-100%); color:rgba(240,240,240,0.4); font-family:'SF Pro'; font-size:1.1vh;">© 2019 - Lucy RPG</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane animated fadeIn" id="nav-login-2" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                <div class="container-fluid">
+                                    <div class="row h-100 justify-content-center">
+                                        <div class="col-12 text-center" style="margin-top:auto; margin-bottom:auto; margin-left:auto; margin-right:auto;">
+                                            
+                                            <div class="center-container">
+
+                                                <div style="width:100%; display:inline-block">
+                                                    <img tag="center-logo-2" style="float:none;" src="http://mta/auth/components/images/logo.png"/>
+                                                </div>
+
+                                                <div style="width:100%; display:inline-block">
+                                                    <div style="width:20vmax; display:inline-block; margin:auto;">
+                                                        <div class="input-group mb-2">
+                                                            <input type="password" tag="input-login" name="password" class="form-control" placeholder="Şifre" aria-label="Username" aria-describedby="basic-addon1">
+                                                        </div>
+                                                        <a tag="next-step" style="float:left; padding:5px; position:relative; top:-1.9vh; font-size:1.1vh; left:-5px;" data-toggle="tooltip" data-placement="right" title="Hadi!" style="float:left; font-size:1.2vh" onClick="set(1)">Geri dön</a>
+                                                    </div>
+                                                </div>
+                                            
+                                            </div>
+                                            
+                                        </div>
+                                        <div style="top:97%; display:inline-block; position:absolute; transform:translateY(-100%); color:rgba(240,240,240,0.4); font-family:'SF Pro'; font-size:1.1vh;">© 2019 - Lucy RPG</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane animated fadeIn" id="nav-character-none" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                <div class="container-fluid">
+                                    <div class="row h-100 justify-content-center">
+                                        <div class="col-12 text-center" style="margin-top:auto; margin-bottom:auto; margin-left:auto; margin-right:auto;">
+                                            
+                                            <div class="center-container">
+
+                                                <div style="width:100%; display:inline-block">
+                                                    <div style="width:100%; display:inline-block; margin:auto;">
+                                                        <img tag="center-logo" src="http://mta/auth/components/images/logo.png"/>
+                                                        <p class="dialog">Merhaba, üzgünüm ki hiç karakterin yok (^_^)b ancak üzülme yeni bir karakter oluşturman için altta bir adres olucak
+                                                            oraya giriş yaparak hemen yeni bir karakter oluşturabilirsin. <font color="d32727" style="opacity:0.8"><i>http://www.lucyrpg.com/karakter-olustur</i></font>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            
+                                            </div>
+                                            
+                                        </div>
+                                        <div style="top:97%; display:inline-block; position:absolute; transform:translateY(-100%); color:rgba(240,240,240,0.4); font-family:'SF Pro'; font-size:1.1vh;">© 2019 - Lucy RPG</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane animated fadeIn" id="nav-character-list" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                <div class="container-fluid">
+                                    <div class="row h-100 justify-content-center">
+                                        <div class="col-12 text-center" style="margin-top:auto; margin-bottom:auto; margin-left:auto; margin-right:auto;">
+                                            
+                                            <div class="center-container">
+
+                                                <div style="width:100%; display:inline-block">
+                                                    <div style="width:100%; display:inline-block; margin:auto;">
+                                                        <img tag="center-logo" src="http://mta/auth/components/images/logo.png"/>          
+                                                    </div>
+
+                                                    <div style="width:100%; display:inline-block; margin:auto;">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover" style="font-family:'SF Pro'; font-size:1.2vh;">
+                                                                <thead>
+                                                                    <tr>
+                                                                      <th style="color:#dc4040; text-align:center; text-transform:uppercase; font-weight:600; font-size:1.1vh; border-bottom:2px solid #dc4040; border-top:none;"scope="col">Ad Soyad</th>
+                                                                      <th style="color:#dc4040; text-align:center; text-transform:uppercase; font-weight:600; font-size:1.1vh; border-bottom:2px solid #dc4040; border-top:none;"scope="col">(OOC) Ceza Durumu</th>
+                                                                      <th style="color:#dc4040; text-align:center; text-transform:uppercase; font-weight:600; font-size:1.1vh; border-bottom:2px solid #dc4040; border-top:none;"scope="col">(CK) Karakter Durumu</th>
+                                                                      <th style="color:#dc4040; text-align:center; text-transform:uppercase; font-weight:600; font-size:1.1vh; border-bottom:2px solid #dc4040; border-top:none;"scope="col">Son Görüldüğü Yer</th>
+                                                                      <th style="color:#dc4040; text-align:center; text-transform:uppercase; font-weight:600; font-size:1.1vh; border-bottom:2px solid #dc4040; border-top:none;"scope="col">Son Giriş</th>
+                                                                    </tr>
+                                                                  </thead>
+                                                                  <tbody class="class-characters"></tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            
+                                            </div>
+                                            
+                                        </div>
+                                        <div style="top:97%; display:inline-block; position:absolute; transform:translateY(-100%); color:rgba(240,240,240,0.4); font-family:'SF Pro'; font-size:1.1vh;">© 2019 - Lucy RPG</div>
+                                    </div>
+                                </div>
+                                
+                                <a class="create--character--screen"><i class="material-icons">person_add</i></a>
+
+                            </div>
+
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+  </body>
+
+  <script src="http://mta/auth/components/jquery.js"></script>
+  <script src="http://mta/auth/components/popper.js"></script>
+  <script src="http://mta/auth/components/underscore.js"></script>
+  <script src="http://mta/auth/components/framework.js"></script>
+
+  <script>
+    var step = 1;
+    var entityMap = {
+        '&': '',
+        '<': '',
+        '>': '',
+        '"': '',
+        "'": '',
+        '/': '',
+        '`': '',
+        ':': '',
+        ';': '',
+        '[': '',
+        ']': '',
+        '(': '',
+        ')': '',
+        '-': '',
+        '+': '',
+        ',': '',
+        '.': '',
+        '@': '',
+        '$': '',
+        '#': '',
+        '|': '',
+        '?': '',
+        '=': ''
+    };
+    var sections = {
+        openSection : function(className) {
+            $(className).css({'display':'block','opacity':'0'});
+            $(className).addClass('');
+            setTimeout(function() {
+                $(className).removeClass('');
+                $(className).css({'display':'block','opacity':'1'});
+            },500);
+        },
+        closeSection : function(className) {
+            $(className).addClass('animated05 fadeOut');
+            setTimeout(function() {
+                $(className).removeClass('animated05 fadeOut');
+                $(className).css({'display':'none'});
+            },350);
+        }, 
+    };
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    function escapeHtml(string) {
+        return String(string).replace(/[&<>"'`:+-;(),$#@|?=\/]/g, function (s) {
+            return entityMap[s];
+        });
+    }
+
+    function first(value) {
+        if (value == true) {
+            nav('#nav-home');
+        } else {
+            nav('#nav-home-2');
+        };
+    }
+
+    function setchname(name,id) {
+        var html = `
+            <a tag="next-step" onClick="set('8');">Vazgeç!</a>
+            <span style="display:inline-block; width:1.5vmax;">|</span>
+            <a tag="next-step" onClick="play('`+ id +`');">Oyna!</a>
+        `;
+
+        $('.chname').html(name);
+        $('.inline-character-select-2').html(html);
+    }
+
+    function play(id) {
+        mta.triggerEvent('auth.javascript.html5.document.return.to.character.select','auth.javascript.html5.document.return.to.character.select',id);
+        sections.closeSection('.overlay-effect');
+    }
+
+    function loadingcharacter() {
+        if (!$('.class-characters tr[tag="loading"]').html()) {
+            var inline = `
+                <tr tag="loading">
+                    <td style="border-top:none; text-align:center; color:rgba(240,240,240,0.7);">Karakterler yükleniyor..</td>
+                </tr>`;
+
+            $('.class-characters').append(inline);
+        }
+    }
+
+    function character(name,is_jail,cked,lastseen,lastlogin,id) {
+        
+        if ($('.class-characters tr[tag="loading"]').html()) {
+            $('.class-characters tr[tag="loading"]').remove();
+        };
+
+        var cvalue = false;
+            if (cked == 'Yaşıyor') {
+                
+                cvalue = `set(7); setchname('` + name + `', '` + id + `');`;
+            
+            } else { 
+
+                cvalue = '';
+
+            }
+
+        var inline = `
+            <tr tag="character" onClick="` + cvalue + `">
+                <td style="border-top:none; text-align:center; color:rgba(240,240,240,0.7)">` + name + `</td>
+                <td style="border-top:none; text-align:center; color:rgba(240,240,240,0.7)">` + is_jail + `</td>
+                <td style="border-top:none; text-align:center; color:rgba(240,240,240,0.7)">` + cked + `</td>
+                <td style="border-top:none; text-align:center; color:rgba(240,240,240,0.7)">` + lastseen + `</td>
+                <td style="border-top:none; text-align:center; color:rgba(240,240,240,0.7)">` + lastlogin + `</td>
+            </tr>`;
+
+        $('.class-characters').append(inline);
+    }
+
+    function characterspawn(name,arg) {
+        mta.triggerEvent(name,arg)
+    }
+
+    function nav(name) {
+        var target = $('[data-toggle="tab"][href="'+ name +'"]');
+        target.trigger('click');
+    }
+
+    function activaTab(tab){
+        $('.nav-tabs a[href="#' + tab + '"]').tab('show');
+    };
+
+    function set(val,username) {
+        if (val == 2) {
+           step = 2;
+           nav('#nav-login-2');
+           sections.openSection('#nav-login-2'); 
+           document.getElementsByName('password')[0].placeholder= username + ' adlı hesabın şifresini gir';
+        
+        } else if (val == 1) {
+            step = 1;
+
+            $("#nav-login-2-tab").removeClass("active");
+            sections.closeSection('#nav-login-2');
+
+            setTimeout(function() {nav('#nav-login'); sections.openSection('#nav-login');},500,1)
+
+        } else if (val == 3) {
+            step = 3;
+
+            nav('#nav-character-none');
+            sections.openSection('#nav-character-none');
+        
+        } else if (val == 4) {
+            step = 4;
+
+            nav('#nav-character-list');
+            sections.openSection('#nav-character-list');
+
+        } else if (val == 5) {
+            step = 1;
+
+            $("#nav-home-tab").removeClass("active");
+            sections.closeSection('#nav-home');
+            setTimeout(function() {nav('#nav-login'); sections.openSection('#nav-login');},500,1)
+
+        } else if (val == 6) {
+            step = 1;
+
+            $("#nav-home-2-tab").removeClass("active");
+            sections.closeSection('#nav-home-2');
+            setTimeout(function() {nav('#nav-login'); sections.openSection('#nav-login');},500,1)
+
+        } else if (val == 7) {
+            step = 6;
+
+            $("#nav-character-list").removeClass("active");
+            sections.closeSection('#nav-character-list');
+            setTimeout(function() {nav('#nav-select'); sections.openSection('#nav-select');},500,1)
+
+        } else if (val == 8) {
+            step = 4;
+
+            $("#nav-select").removeClass("active");
+            sections.closeSection('#nav-select');
+            setTimeout(function() {nav('#nav-character-list'); sections.openSection('#nav-character-list');},500,1)
+
+        }
+    }
+
+    function enter() {
+        if (step == 1) {
+            if (escapeHtml($('input[name="username"]').val()).length > 0 ) {
+
+                $("#nav-login-tab").removeClass("active");
+
+                sections.closeSection('#nav-login');
+                mta.triggerEvent('auth.javascript.html5.document.return.to.username','auth.javascript.html5.document.return.to.username',_.escape($('input[name="username"]').val()));
+            
+            }
+        } else if (step == 2) {
+            if (escapeHtml($('input[name="username"]').val()).length > 0 ) {
+
+            $("#nav-login-2-tab").removeClass("active");
+
+            sections.closeSection('#nav-login-2');
+            mta.triggerEvent('auth.javascript.html5.document.return.to.password','auth.javascript.html5.document.return.to.password',_.escape($('input[name="password"]').val()));
+
+            }
+        }
+    }
+
+    function reload() {
+        if (step == 1) {
+            nav('#nav-login');
+            $('input[name="username"]').val('');
+            sections.openSection('#nav-login');
+        }
+    }
+
+  </script>

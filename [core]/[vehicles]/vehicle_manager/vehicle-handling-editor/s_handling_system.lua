@@ -196,7 +196,7 @@ function createDepavlovPCs(which)
 		setElementFrozen(dealershipPed[12], true)
 	end
 end
-addEventHandler("onResourceStart",getResourceRootElement(getThisResource()),createDepavlovPCs)
+--addEventHandler("onResourceStart",getResourceRootElement(getThisResource()),createDepavlovPCs)
 
  --Setting upon editing
 function setHandling(theVehicle, saveToSQL, maxVelocityS, accelerationS, engineInertiaS, lowerLimitS, suspensionBiasS, suspensionForceS, suspensionDampingS, steeringLockS, driveTypeS, massWeightS, dragCoeffS, brakeForceS, brakeBiasS, tracMultiplyS, tracBiasS, centerOfMass)

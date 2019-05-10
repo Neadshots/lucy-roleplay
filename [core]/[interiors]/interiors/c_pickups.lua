@@ -182,12 +182,13 @@ function interiorShowPickups(interiorElement, isElevator)
 
 	local tpObjectModel =  1318--1316 --1559 --
 
-    local outsidePickup = createPickup( entrance[INTERIOR_X], entrance[INTERIOR_Y], entrance[INTERIOR_Z], 3,int[INTERIOR_DISABLED] and 1314 or ( getElementType(interiorElement) == "elevator" and tpObjectModel or ( int[INTERIOR_TYPE] == 2 and tpObjectModel  or ( int[INTERIOR_OWNER] < 1 and int[INTERIOR_FACTION] < 1 and ( int[INTERIOR_TYPE] == 1 and 1272 or 1273 ) or tpObjectModel  ) ) ) )
+    local outsidePickup = createPickup( entrance[INTERIOR_X], entrance[INTERIOR_Y], entrance[INTERIOR_Z], 3, 1239)--int[INTERIOR_DISABLED] and 1314 or ( getElementType(interiorElement) == "elevator" and tpObjectModel or ( int[INTERIOR_TYPE] == 2 and tpObjectModel  or ( int[INTERIOR_OWNER] < 1 and int[INTERIOR_FACTION] < 1 and ( int[INTERIOR_TYPE] == 1 and 1272 or 1273 ) or tpObjectModel  ) ) ) )
     setElementDoubleSided( outsidePickup, true )
     setElementAlpha( outsidePickup, 0 )
 
 
     setElementParent(outsidePickup, interiorElement)
+    --[[
     if getResourceState ( getResourceFromName( "markers" ) ) == "running" then
     	marker = exports.markers:marker("default", Vector3(entrance[INTERIOR_X], entrance[INTERIOR_Y], entrance[INTERIOR_Z]-0.99), 1)
     	if not isElevator then
@@ -218,7 +219,8 @@ function interiorShowPickups(interiorElement, isElevator)
 	        marker:setData("markertext", (getElementData(interiorElement, "name") or "").."\n"..intOwner or "")
 	    end
     end
-    --[[ Samp tarzı
+    ]]--
+   
     if not isElevator then
         local intOwner = "..Yükleniyor.."
         if intStatus[INTERIOR_OWNER] > 0 then
@@ -247,7 +249,7 @@ function interiorShowPickups(interiorElement, isElevator)
         setElementData(outsidePickup, "informationicon:information", "#7f8fa6İşyeri Adı:#ffffff "..getElementData(interiorElement, "name").."\n#7f8fa6Adres:#ffffff "..getZoneName(getElementPosition(interiorElement)).."\n#7f8fa6Sahibi:#ffffff "..intOwner.."\n#7f8fa6Giriş Ücreti:#ffffff N/A")
         
     end
-    ]]--
+
     setElementInterior(outsidePickup, entrance[INTERIOR_INT])
     setElementDimension(outsidePickup, entrance[INTERIOR_DIM])
     setElementData(outsidePickup, "dim", entrance[INTERIOR_DIM], false)
@@ -270,7 +272,7 @@ function interiorShowPickups(interiorElement, isElevator)
         end
     end
 
-    local insidePickup = createPickup( exit[INTERIOR_X], exit[INTERIOR_Y], exit[INTERIOR_Z], 3,  tpObjectModel )
+    local insidePickup = createPickup( exit[INTERIOR_X], exit[INTERIOR_Y], exit[INTERIOR_Z], 3, 1239)--tpObjectModel )
     setElementDoubleSided( insidePickup, true )
     setElementParent(insidePickup, interiorElement)
     setElementInterior(insidePickup, exit[INTERIOR_INT])
@@ -539,8 +541,8 @@ addEventHandler("manual-onClientColShapeLeave", getRootElement(), leaveInteriorP
 
 --MAXIME
 local intNameFont = dxCreateFont( "Bebas.ttf", 24 ) or "default-bold" --AngryBird
-local robotoFont = dxCreateFont( ":hud/images/blurhud/5.ttf", 10) or "default"
-local BizNoteFont = dxCreateFont( ":resources/BizNote.ttf", 21 ) or "default-bold"
+local robotoFont = dxCreateFont( ":hud/fonts/Roboto.ttf", 10) or "default"
+local BizNoteFont = "default-bold"
 local scrWidth, scrHeight = guiGetScreenSize()
 local yOffset = scrHeight-110
 local margin = 3
@@ -566,20 +568,7 @@ function renderInteriorName()
         --Determine the text color / MAXIME
         local textColor = tocolor(255,255,255,255)
         local protectedText, inactiveText = nil
-        if true or canPlayerKnowInteriorOwner(theInterior) or canPlayerSeeInteriorID(theInterior) then
-            local protected, details = isProtected(theInterior)
-            if protected then
-                textColor = tocolor(0, 255, 0,255)
-                protectedText = "[Inactivity protection remaining: "..details.."]"
-            else
-                local active, details2 = isActive(theInterior)
-                if not active then
-                    textColor = tocolor(150,150,150,255)
-                    inactiveText = "["..details2.."]"
-                end
-            end
-        end
-
+       
         dxDrawText ( intName or "Unknown Interior", intName_left+textShadowDistance , intName_top+textShadowDistance , intName_right+textShadowDistance, intName_bottom+textShadowDistance, tocolor(0,0,0,255),
                     1, intNameFont, "center", "center", false, true )
         dxDrawText ( intName or "Unknown Interior", intName_left , intName_top , intName_right, intName_bottom, textColor,
@@ -647,29 +636,6 @@ function renderInteriorName()
                         1, robotoFont, "center", "center", false, true )
                 intName_top = intName_top + intOwner_height
             end
-            if protectedText then
-                local intProtected_width = dxGetTextWidth ( protectedText, 1, robotoFont )
-                local intProtected_left = (scrWidth-intProtected_width)/2
-                local intProtected_height = dxGetFontHeight ( 1, robotoFont )
-                intName_top = intName_top + margin
-                local intProtected_right = intProtected_left + intProtected_width
-                local intProtected_bottom = intName_top + intProtected_height
-
-                dxDrawText ( protectedText , intProtected_left , intName_top , intProtected_right, intProtected_bottom, textColor,
-                            1, robotoFont, "center", "center", false, true )
-                intName_top = intName_top + intProtected_height
-            elseif inactiveText then
-                local intProtected_width = dxGetTextWidth ( inactiveText, 1, robotoFont )
-                local intProtected_left = (scrWidth-intProtected_width)/2
-                local intProtected_height = dxGetFontHeight ( 1, robotoFont )
-                intName_top = intName_top + margin
-                local intProtected_right = intProtected_left + intProtected_width
-                local intProtected_bottom = intName_top + intProtected_height
-
-                dxDrawText ( inactiveText , intProtected_left , intName_top , intProtected_right, intProtected_bottom, textColor,
-                            1, robotoFont, "center", "center", false, true )
-                intName_top = intName_top + intProtected_height
-            end
         end
         --Draw instructions
         local intInst_width = dxGetTextWidth ( intInst, 1, robotoFont )
@@ -716,53 +682,9 @@ function canPlayerSeeInteriorID(theInterior)
         or  (exports.integration:isPlayerSupporter(localPlayer) and (getElementData(localPlayer, "duty_supporter") == 1))
 end
 
---Disable enter/exit vehicle for driver while being inside int marker - maxime
---[[
-function enteringExitingVehicle(button, press)
-    if (button == "f" or button == "enter") and (press) then -- Only output when they press it down
-        if intShowing then
-            cancelEvent()
-        end
-    end
-end
-]]
---addEventHandler("onClientKey", root, enteringExitingVehicle)
-
---[[
-function vehicleStartEnter(thePlayer)
-    if thePlayer == getLocalPlayer() then
-        if getElementData(thePlayer, "interiormarker") then
-            cancelEvent()
-        end
-    end
-end
-addEventHandler("onClientVehicleStartEnter", getRootElement(), vehicleStartEnter)
-]]
-----********END********----
-----*  PICKUP HANDLER *----
-----********END********----
-
-----*******************----
-----*   Lag catcher   *----
-----*******************----
 local lagCatcherWindow, lagCatcherMessage = nil
 function showLagCatcher()
-    --[[if not firsttime then return end
 
-    lagcatcherenabled = true
-    setTimer(hideLagCatcher, 5000, 1, 1)
-
-    if (isElement(lagCatcherWindow)) then
-        destroyElement(lagCatcherWindow)
-    end
-
-    local x, y = guiGetScreenSize()
-    lagCatcherWindow = guiCreateWindow( x*.5-150, y*.5-65, 280, 110, "ATTENTION", false )
-    guiWindowSetSizable( lagCatcherWindow, false )
-    lagCatcherMessage = guiCreateLabel( 20, 20, 260, 80, "The server is sending all the interiors\nto your game, please standby. Your game\nmay hang for a few seconds in the process.\n", false, lagCatcherWindow )
-	guiBringToFront( lagCatcherWindow )
-
-    updateLagCatcher()]]
 end
 
 
@@ -908,28 +830,6 @@ addCommandHandler("forcepickupspawn", forcePickupSpawn)
 local curInteriors, maxInteriors, showingInterior, lastUpdateInterior = 0, 1, false, 0
 local curElevators, maxElevators, showingElevator, lastUpdateElevator = 0, 1, false, 0
 
-function showInteriorLoadingNotifier()
-    showingInterior = true
-    if getElementData(localPlayer, "loggedin") == 1 then
-        local x, y, w, h = 410, 374, 470, 85
-        local xoffset = (scrWidth-x)/2-x
-        local yoffset = -y+10
-        --dxDrawRectangle(x+xoffset, y+yoffset, w, h, tocolor(0, 0, 0, 98), true)
-       -- dxDrawText("Progress: "..curInteriors.."/"..maxInteriors.." ("..math.ceil(curInteriors/maxInteriors*100).."%)", 434+xoffset, 384+yoffset, 848+xoffset, 415+yoffset, tocolor(255, 255, 255, 255), 1.00, "bankgothic", "center", "top", false, false, true, false, false)
-       -- dxDrawText("Interiors are being loaded at the moment, please be patient if your property hasn't appeared yet.", 434+xoffset, 415+yoffset, 848+xoffset, 448+yoffset, tocolor(255, 255, 255, 255), 1.00, robotoFont, "center", "top", false, true, true, false, false)
-    end
-
-    if curInteriors >= maxInteriors or getTickCount() - lastUpdateInterior > 20000 then
-        hideInteriorLoadingNotifier()
-    end
-end
-
-function hideInteriorLoadingNotifier()
-    if showingInterior then
-        removeEventHandler("onClientRender", root, showInteriorLoadingNotifier)
-        curInteriors, maxInteriors, showingInterior = 0, 1, false
-    end
-end
 
 function interior_initializeSoFar(cur, max)
     for _, interior in ipairs(getElementsByType("interior")) do
@@ -937,10 +837,6 @@ function interior_initializeSoFar(cur, max)
         if not intsToBeLoaded[interior] and not interiorsSpawned[dbid] then
             intsToBeLoaded[interior] = true
         end
-    end
-
-    if not showingInterior then
-        addEventHandler("onClientRender", root, showInteriorLoadingNotifier)
     end
     curInteriors, maxInteriors = cur, max
     lastUpdateInterior = getTickCount()

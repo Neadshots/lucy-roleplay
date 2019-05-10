@@ -1,0 +1,160 @@
+<meta>
+	<info name="lucy roleplay - hud" author="foreigner26" version="rc0.9" type="script"/>
+	<min_mta_version server="1.5.4-9.11342" client="1.5.4-9.11342" />
+	<oop>true</oop>
+
+	<!-- 
+		@classlib.lua
+		@author: sbx320
+	-->
+	<script src="packages/classlib.lua" type="shared" cache="false"/>
+
+    <script src="c_hud.lua" type="client" cache="false"  />
+    <script src="c_nametags.lua" type="client" cache="false"  />
+
+    <script src="s_humanistic_functions.lua" type="server" />
+    <script src="c_humanistic_functions.lua" type="client" cache="false"  />
+    
+    <script src="c_overlay_top_right.lua" type="client" cache="false"  />
+    <script src="c_overlay_bottom_center.lua" type="client" cache="false"  />
+    <script src="s_overlay_basic_info.lua" type="server" />
+    <script src="s_overlay_show_admins.lua" type="server" />
+    
+    <script src="c_overlay_functions.lua" type="client" cache="false"  />
+    <script src="s_overlay_functions.lua" type="server" />
+    
+    <export function="sendBottomNotification" type="client" />
+    <export function="sendBottomNotification" type="server" />
+    
+    <export function="sendTopRightNotification" type="client" />
+    <export function="sendTopRightNotification" type="server" />
+    
+    <export function="getPlayerInterfaceMode" type="client" />
+    <export function="startBlackWhite" type="client" />
+    <export function="stopBlackWhite" type="client" />
+    
+    <script src="blur/blur_c.lua" type="client" cache="false" />
+    <file src="blur/blurshader.fx" type="client"/>
+
+    <script src="blackwhite/blackwhite.lua" type="client" cache="false" />
+    <file src="blackwhite/fx/blackwhite.fx" type="client" />
+    
+   
+
+    <file src="images/samp/writing.png" type="client"/>
+    <file src="images/pin.png" type="client"/>
+    <file src="images/pinned.png" type="client"/>
+    <file src="images/radio.png" type="client"/>
+   
+    <file src="fonts/nametags0.ttf" />
+    <file src="fonts/Bebas.ttf" />
+    <file src="fonts/old_school_united_stencil.ttf" />
+    <file src="fonts/Roboto.ttf"/>
+    <file src="fonts/gtaFont.ttf"/>
+    <file src="fonts/font.ttf"/>
+    <file src="fonts/FontAwesome.ttf"/>
+
+    <file src="images/samp/a1_on.png" type="client"/>
+    <file src="images/samp/a2_on.png" type="client"/>
+    <file src="images/samp/a3_on.png" type="client"/>
+    <file src="images/samp/a4_on.png" type="client"/>
+    <file src="images/samp/admin.png" type="client"/>
+    <file src="images/samp/afk.png" type="client"/>
+    <file src="images/samp/armour.png" type="client"/>
+    <file src="images/samp/auto.png" type="client"/>
+    <file src="images/samp/autopark.png" type="client"/>
+    <file src="images/samp/p_star.png" type="client"/>
+    <file src="images/samp/badge1.png" type="client"/>
+    <file src="images/samp/bandana.png" type="client"/>
+    <file src="images/samp/bikerhelmet.png" type="client"/>
+    <file src="images/samp/bleeding.png" type="client"/>
+    <file src="images/samp/boathandbrake.png" type="client"/>
+    <file src="images/samp/carlock.png" type="client"/>
+    <file src="images/samp/cc.png" type="client"/>
+    <file src="images/samp/cigarette.png" type="client"/>
+    <file src="images/samp/developeradm.png" type="client"/>
+    <file src="images/samp/dglock.png" type="client"/>
+    <file src="images/samp/engine.png" type="client"/>
+    <file src="images/samp/fuel.png" type="client"/>
+    <file src="images/samp/fullfacehelmet.png" type="client"/>
+    <file src="images/samp/gasmask.png" type="client"/>
+    <file src="images/samp/genelyetkili.png" type="client"/>
+    <file src="images/samp/handcuffs.png" type="client"/>
+    <file src="images/samp/headadm.png" type="client"/>
+    <file src="images/samp/headlights.png" type="client"/>
+    <file src="images/samp/head_turning.png" type="client"/>
+    <file src="images/samp/health.png" type="client"/>
+    <file src="images/samp/helmet.png" type="client"/>
+    <file src="images/samp/isbasi.png" type="client"/>
+    <file src="images/samp/isimetiketleri1.png" type="client"/>
+    <file src="images/samp/isimetiketleri2.png" type="client"/>
+    <file src="images/samp/isimetiketleri3.png" type="client"/>
+    <file src="images/samp/isimetiketleri4.png" type="client"/>
+    <file src="images/samp/leadadm.png" type="client"/>
+    <file src="images/samp/lowhp.png" type="client"/>
+    <file src="images/samp/mask.png" type="client"/>
+    <file src="images/samp/mdc.png" type="client"/>
+    <file src="images/samp/minimized.png" type="client"/>
+    <file src="images/samp/phone.png" type="client"/>
+    <file src="images/samp/rehber.png" type="client"/>
+    <file src="images/samp/rehber_on.png" type="client"/>
+    <file src="images/samp/seatbelt.png" type="client"/>
+    <file src="images/samp/test.png" type="client"/>
+    <file src="images/samp/trialadm_on.png" type="client"/>
+    <file src="images/samp/udy_on.png" type="client"/>
+    <file src="images/samp/vip1.png" type="client"/>
+    <file src="images/samp/vip2.png" type="client"/>
+    <file src="images/samp/vip3.png" type="client"/>
+    <file src="images/samp/walkingstyle.png" type="client"/>
+    <file src="images/samp/window2.png" type="client"/>
+    <file src="images/samp/youtuberEtiketi.png" type="client"/>
+    <file src="images/samp/injury.png" type="client"/>
+
+    <!-- 
+		@components ui_instance
+	-->
+	<file src="components/weapon/0.png" />
+	<file src="components/weapon/1.png" />
+	<file src="components/weapon/2.png" />
+	<file src="components/weapon/3.png" />
+	<file src="components/weapon/4.png" />
+	<file src="components/weapon/5.png" />
+	<file src="components/weapon/6.png" />
+	<file src="components/weapon/7.png" />
+	<file src="components/weapon/8.png" />
+	<file src="components/weapon/9.png" />
+	<file src="components/weapon/10.png" />
+	<file src="components/weapon/11.png" />
+	<file src="components/weapon/12.png" />
+	<file src="components/weapon/14.png" />
+	<file src="components/weapon/15.png" />
+	<file src="components/weapon/16.png" />
+	<file src="components/weapon/17.png" />
+	<file src="components/weapon/18.png" />
+	<file src="components/weapon/22.png" />
+	<file src="components/weapon/23.png" />
+	<file src="components/weapon/24.png" />
+	<file src="components/weapon/25.png" />
+	<file src="components/weapon/26.png" />
+	<file src="components/weapon/27.png" />
+	<file src="components/weapon/28.png" />
+	<file src="components/weapon/29.png" />
+	<file src="components/weapon/30.png" />
+	<file src="components/weapon/31.png" />
+	<file src="components/weapon/32.png" />
+	<file src="components/weapon/33.png" />
+	<file src="components/weapon/34.png" />
+	<file src="components/weapon/35.png" />
+	<file src="components/weapon/36.png" />
+	<file src="components/weapon/37.png" />
+	<file src="components/weapon/38.png" />
+	<file src="components/weapon/39.png" />
+	<file src="components/weapon/40.png" />
+	<file src="components/weapon/41.png" />
+	<file src="components/weapon/42.png" />
+	<file src="components/weapon/43.png" />
+	<file src="components/weapon/44.png" />
+	<file src="components/weapon/45.png" />
+	<file src="components/weapon/46.png" />
+    
+</meta>

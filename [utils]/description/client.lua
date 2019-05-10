@@ -8,9 +8,8 @@ local showing = false
 local timerRefresh = nil
 local BizNoteFont18 = dxCreateFont ( "BizNote.ttf" , 18 )
 local fonte = dxCreateFont ( "font.ttf" , 18 )
-local plakaFont = dxCreateFont(":hud/nametags0.ttf", 15)
---local font = dxCreateFont ( "awesome.ttf" , 10 )
-
+local plakaFont = dxCreateFont(":hud/fonts/nametags0.ttf", 15)
+local fontElement = dxCreateFont(":hud/fonts/FontAwesome.ttf", 9)
 local noPlateVehs = {
 	[481] = "BMX",
 	[509] = "Bike",
@@ -118,16 +117,6 @@ function showText()
 			if getDistanceBetweenPoints3D(cx,cy,cz,x,y,z) <= viewDistance then --Within radius viewDistance
 				local px,py,pz = getScreenFromWorldPosition(x,y,z+heightOffset,0.05)
 				if px and isLineOfSightClear(cx, cy, cz, x, y, z, true, false, false, true, true, false, false) then				
-					--FETCH FONT IN REAL TIME
-					local fontString = getElementData(localPlayer, "cFontVeh") or "default"
-					local fontElement = fontString
-					if fontElement == "BizNoteFont18" then
-						if not BizNoteFont18 then
-							BizNoteFont18 = dxCreateFont ( ":resources/BizNote.ttf" , 18 )
-						end
-						fontElement = BizNoteFont18
-					end
-					--INITIAL SHIT
 					local toBeShowed = ""
 					local vehicleBrand = ""
 					local fontWidth = 90
@@ -390,9 +379,9 @@ function showText()
 					end
 					
 					local textColor2 = tocolor(255,255,255,200)
-					local marg = 15
+					local marg = 20
 					local oneLineHeight = dxGetFontHeight(1, fontElement)
-					local fontHeight = oneLineHeight * lines
+					local fontHeight = oneLineHeight * (lines - 1)
 					--fontWidth = fontWidth*fontType[fontString][2] --Fix custom fonts
 					px = px-(fontWidth/2)
 					local recuzunluk = nil
@@ -402,39 +391,18 @@ function showText()
 					if uzunluk2 > uzunluk then
 						recuzunluk = uzunluk2
 					end	
-					--START DRAWING
-					--if getElementData(localPlayer, "bgVeh") ~= "0" then
-					--	dxDrawRectangle(px-marg, py-marg, fontWidth+(marg*2), fontHeight+(marg*2), tocolor(0, 0, 0, 10))
-					--end
-					--if getElementData(localPlayer, "borderVeh") ~= "0" then
-					--	dxDrawRectangleBorder(px-marg, py-marg, fontWidth+(marg*2), fontHeight+(marg*2), 1, tocolor(255, 255, 255, 10), true)
-					--end
-					--dxDrawText(toBeShowed, px, py, px + fontWidth, (py + fontHeight), textColor, 1, fontElement, "center")
-
-					--dxDrawRectangle(px-marg, py+marg + 39, fontWidth+(marg*2), fontHeight+(marg*2), tocolor(0, 0, 0, 150))
 					
-					--[[	
-					if getElementData(localPlayer, "bgVeh") ~= "0" then
-						dxDrawRectangle(px-marg, py+marg + 39, fontWidth+(marg*2), fontHeight+(marg*2), tocolor(0, 0, 0, 50))
-					end
-					if getElementData(localPlayer, "borderVeh") ~= "0" then
-						dxDrawRectangleBorder(px-marg, py+marg+39, fontWidth+(marg*2), fontHeight+(marg*2), 1, tocolor(255, 255, 255, 10), true)
-					end]]
-					
-					-- VEHİCLE BRAND
-					local renk = tocolor(0, 0, 0, 100) -- rectangle renkleri
-					dxDrawRectangle(px+5, py+marg - 100, recuzunluk, 24, tocolor(0, 0, 0, 200))
-					dxDrawRectangleBorder(px+5, py+marg - 100, recuzunluk, 24, 1, renk, true)
-					dxDrawText(vehicleBrand, px, py+marg-95, px +fontWidth+marg, (py + 2000), textColor2, 1, fontElement, "center") -- burası
+					local renk = tocolor(0, 0, 0, 200) -- rectangle renkleri
+					exports.draw:gradient(px - 7.5, py+marg - 100,(recuzunluk + marg),24,0,0,0,255,false,true)
+					exports.draw:gradient(px - 7.5, py+marg - 100,(recuzunluk + marg),24+(fontHeight+marg-7),0,0,0,205,false,true)
+					dxDrawText(vehicleBrand, px + 5.5, py+marg-95, px +fontWidth+ 5.5, (py + 2000), textColor2, 1, fontElement, "center") -- burası
 					local own = getElementData(theVehicle,"owner")
 					if own == -2 then
-					dxDrawText(getVehicleName(theVehicle), px, py+marg+44, px + fontWidth, (py + 20), textColor2, 1, fontElement, "center")
+					dxDrawText(getVehicleName(theVehicle), px + 15, py+marg+44, px + fontWidth + 15, (py + 20), textColor2, 1, fontElement, "center")
 					end
+					--exports.draw:gradient(px+5, py+marg - 90, recuzunluk, fontHeight+(marg*1) - 4,0,0,0,255,false,true)
 					
-					-- DESCRİPTİON
-					dxDrawRectangle(px+5, py+marg - 75, recuzunluk, fontHeight+(marg*1) - 4, renk)
-					dxDrawRectangleBorder(px+5, py+marg -75, recuzunluk, fontHeight+(marg*1) - 4, 1, renk, true)
-					dxDrawText(toBeShowed, px+10, py+marg-70, px + fontWidth, (py + fontHeight)+24, textColor2, 1, fontElement, "center")
+					dxDrawText(toBeShowed, px+10, py+marg-75, px + fontWidth, (py + fontHeight)+24, textColor2, 1, fontElement, "center")
 				end
 			end
 		end

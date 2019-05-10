@@ -76,7 +76,7 @@ function playerDeath(totalAmmo, killer, killerWeapon)
 				changeDeathViewTimer = setTimer(changeDeathView, 3000, 1, source, victimDropItem, true)
 			end
 			
-			outputChatBox("#1a00ff[!] #dedede Bayıldınız, üzerinizde silah yok ise 60 saniye. Var ise 200 saniye bayılacaksınız..", source, 255, 255, 255, true)
+			outputChatBox("#1a00ff[!] #dedede Bayıldınız, kalan süreyi ekrandan takip edebilirsiniz.", source, 255, 255, 255, true)
 			
 			
 			exports.logs:dbLog(source, 34, affected, killstr)

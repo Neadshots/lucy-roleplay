@@ -54,7 +54,6 @@ function onJoin()
 		setElementData(source, "chatbubbles", 0, false)
 		setElementDimension(source, 9999)
 		setElementInterior(source, 0)
-		setPlayerName(source, "Lucy-RPG."..getElementData(source, "playerid"))
 	end
 	
 	exports.global:updateNametagColor(source)
@@ -557,7 +556,7 @@ function spawnCharacter(characterID, remoteAccountID, theAdmin, targetAccountNam
 					setElementDataEx(client, "timeinserver", tonumber(characterData["timeinserver"]), false)
 					setElementDataEx(client, "account:character:id", characterID, false)
 					setElementDataEx(client, "dbid", characterID, true) -- workaround
-					exports['item-system']:loadItems( client, true )
+					--exports['item-system']:loadItems( client, true )
 					
 					
 					setElementDataEx(client, "loggedin", 1, true)
@@ -610,8 +609,8 @@ function spawnCharacter(characterID, remoteAccountID, theAdmin, targetAccountNam
 					setElementInterior(client, locationToSpawn.int , locationToSpawn.x, locationToSpawn.y, locationToSpawn.z)
 					setCameraInterior(client, locationToSpawn.int)
 					
-
-					exports["item-system"]:loadItems(client)
+					triggerClientEvent(getRootElement(),"hud:load",getRootElement())
+					--exports["item-system"]:loadItems(client)
 
 					setCameraTarget(client, client)
 					setElementHealth(client, tonumber(characterData["health"]))

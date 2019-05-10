@@ -64,7 +64,7 @@ function options_showmenu()
 	if getElementData(localPlayer, "exclusiveGUI") or not isCameraOnPlayer() then
 		return
 	end
-	triggerEvent( 'hud:blur', resourceRoot, 6, false, 0.5, nil )
+	--triggerEvent( 'hud:blur', resourceRoot, 6, false, 0.5, nil )
 	setElementData(localPlayer, "exclusiveGUI", true, false)
 	triggerEvent("account:changingchar", localPlayer)
 	local screenWidth, screenHeight = guiGetScreenSize()
@@ -78,7 +78,7 @@ function options_showmenu()
 	showCursor(true)
 	
 	wOptions = guiCreateWindow(left, top, windowWidth, windowHeight, "Ayarlar", false)
-	
+
 
 	bChangeCharacter = guiCreateButton(margin, margin+20, 230, 30, "Karakter değiştir", false, wOptions)
 	addEventHandler("onClientGUIClick", bChangeCharacter,
@@ -203,7 +203,7 @@ function options_closemenu()
 		wOptions = nil
 	end
 	setElementData(localPlayer, "exclusiveGUI", false, false)
-	triggerEvent( 'hud:blur', resourceRoot, 'off' )
+	--triggerEvent( 'hud:blur', resourceRoot, 'off' )
 end
 
 function options_cameraWorkAround()

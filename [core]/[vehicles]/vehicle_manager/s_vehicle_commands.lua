@@ -821,8 +821,7 @@ function respawnAllVehicles(thePlayer, commandName, timeToRespawn)
 					end
 				end
 
-				outputChatBox("*** All vehicles will be respawned in "..timeToRespawn.." seconds! ***", getRootElement(), 255, 194, 14)
-				outputChatBox("You can stop it by typing /respawnstop!", thePlayer)
+				outputChatBox("(( Tüm araçlar "..timeToRespawn.." saniye içinde yenilenecek. ))", root, 255, 0, 0, true)
 				respawnTimer = setTimer(respawnAllVehicles, timeToRespawn*1000, 1, thePlayer)
 			end
 			return
@@ -1578,14 +1577,8 @@ function deleteVehicle(thePlayer, commandName, id)
 			local adminTitle = exports.global:getPlayerAdminTitle(thePlayer)
 			local adminID = getElementData(thePlayer, "account:id")
 			if theVehicle then
-				local protected, details = exports['vehicle']:isProtected(theVehicle) 
-	            if protected then
-	                outputChatBox("This vehicle is protected and can not be deleted. Protection remaining: "..details..".", thePlayer, 255,0,0)
-	                return false
-	            end
-	            local active, details2, secs = exports['vehicle']:isActive(theVehicle)
-	            --outputChatBox(exports.data:load(getElementData(thePlayer, "account:id").."/"..commandName))
-	            if active and exports.data:load(getElementData(thePlayer, "account:id").."/"..commandName) ~= dbid then
+				
+	            if exports.data:load(getElementData(thePlayer, "account:id").."/"..commandName) ~= dbid then
 	            	local inactiveText = ""
 	                local owner_last_login = getElementData(theVehicle, "owner_last_login")
 					if owner_last_login and tonumber(owner_last_login) then

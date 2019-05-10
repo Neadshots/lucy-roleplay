@@ -487,7 +487,7 @@ function reloadOneInterior(id, updatePlayers, massLoad)
 					end
 				else
 					--outputDebugString("interiorElement = "..tostring(interiorElement))
-					triggerClientEvent("interior:schedulePickupLoading", root, interiorElement)
+					--triggerClientEvent("interior:schedulePickupLoading", root, interiorElement)
 				end
 			end
 		end,
@@ -1531,7 +1531,7 @@ addEventHandler("viewPropertyInterior", getRootElement(), timedInteriorView)
 
 addEventHandler("accounts:characters:change", root,
 	function()
-		if isTimer(viewingTimer[client]) then
+		if (viewingTimer and viewingTimer[client]) and isTimer(viewingTimer[client]) then
 			killTimer(viewingTimer[client])
 		end
 	end

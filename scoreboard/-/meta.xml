@@ -1,8 +1,0 @@
-<meta>
-	<script src="c_tab.lua" type="client" />
-	<script src="s_tab.lua" type="server" />
-	
-	<file src="files/score_top.png" />
-	<file src="files/Roboto.ttf" />
-	<export function="isVisible" type="client" />
-</meta>

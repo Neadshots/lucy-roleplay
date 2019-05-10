@@ -1,20 +1,25 @@
 <meta>
-	<script src="thread.lua" type="shared" />
-	<script src="s_crusher.lua" type="server" />
-	<script src="c_crusher.lua" type="client" />
-	<export function="getVehiclePrice" type="server" http="true" />
-	<export function="getPriceFromModel" type="server" http="true" />
-	
-	<script src="s_shop.lua" type="server" />
-	<script src="g_shops.lua" type="server" />
-	<script src="g_shops.lua" type="client" />
-	<script src="c_shop.lua" type="client" />
-	<script src="c_blip.lua" type="client" />
-	<script src="c_dealer_ped.lua" type="client" />
-	
-	<export function="isForSale" type="server" http="true" />
-	<export function="getCarShops" type="client" />
-	<export function="getCarShops" type="server" />
-	<map src="belgica-boatcrusher/belgica-boatcrusher.map" dimension="0"></map>
-	<oop>true</oop>
+    <info name="Projecte - carshop class" author="yourpalenes" version="rc0.9" type="script"/>
+    <min_mta_version server="1.3.4-0.00000" client="1.5.4-9.11342" />
+    <oop>true</oop>
+
+    <!-- 
+        @classlib.lua
+        @async.lua
+        @author: sbx320
+
+        @json.lua
+        @author: rxi
+    -->
+    <script src="packages/classlib.lua" type="shared"/>
+    <script src="packages/async.lua" type="shared"/>
+    <script src="packages/json.lua" type="server"/>
+
+    <!-- 
+        @events.lua
+        @draw.lua
+        @author: rxi
+    -->
+    <script src="events.lua" type="server"/>
+    <script src="draw.lua" type="client"/>
 </meta>

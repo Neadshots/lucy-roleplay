@@ -1,7 +1,0 @@
-<meta>
-    <info type="Arac-Cekme Sistemi" name="Dunper(EnesEp)" author="EnesEp" version="1"></info>
-	
-    <script src="server.lua" type="server" />
-			<!--Delete Sistemi-->
-	<script src="Delete.lua" type="client"/>
-</meta>

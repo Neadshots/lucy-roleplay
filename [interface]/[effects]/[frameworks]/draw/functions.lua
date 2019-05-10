@@ -32,7 +32,7 @@ DX = {
         dxDrawCircle(x, y+h, radius, 90, 180, tocolor(r,g,b,0),tocolor(r,g,b,a), radius)
 
         if(fill and fill == true)then
-            dxDrawRectangle(x+1,y+1,w-1,h-1, tocolor(r,g,b,255))
+            dxDrawRectangle(x+1,y+1,w-1,h-1, tocolor(0,0,0,200))
         end
     end,
 }

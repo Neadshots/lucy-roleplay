@@ -1,0 +1,45 @@
+<meta>
+    <info author="projecte - modloader" type="script"/>
+
+    <!--
+		@client.lua
+		@server.lua
+		@author: yourpalenes
+	-->
+    <script src="client.lua" type="client" protected="true" />
+    <script src="server.lua" type="server" protected="true" />
+    
+
+    <file src="files/eb163727917cbba1eea208541a643e74.txd" download="false" model="211" />
+    <file src="files/eb163727917cbba1eea208541a643e74.dff" download="false" model="211" />
+    <file src="files/d96409bf894217686ba124d7356686c9.txd" download="false" model="257" />
+    <file src="files/d96409bf894217686ba124d7356686c9.dff" download="false" model="257" />
+    <file src="files/e56954b4f6347e897f954495eab16a88.txd" download="false" model="265" />
+    <file src="files/e56954b4f6347e897f954495eab16a88.dff" download="false" model="265" />
+    <file src="files/f7664060cc52bc6f3d620bcedc94a4b6.txd" download="false" model="266" />
+    <file src="files/f7664060cc52bc6f3d620bcedc94a4b6.dff" download="false" model="266" />
+    <file src="files/eda80a3d5b344bc40f3bc04f65b7a357.txd" download="false" model="267" />
+    <file src="files/eda80a3d5b344bc40f3bc04f65b7a357.dff" download="false" model="267" />
+    <file src="files/92c8c96e4c37100777c7190b76d28233.txd" download="false" model="280" />
+    <file src="files/92c8c96e4c37100777c7190b76d28233.dff" download="false" model="280" />
+    <file src="files/e3796ae838835da0b6f6ea37bcf8bcb7.txd" download="false" model="281" />
+    <file src="files/e3796ae838835da0b6f6ea37bcf8bcb7.dff" download="false" model="281" />  
+    <file src="files/6a9aeddfc689c1d0e3b9ccc3ab651bc5.txd" download="false" model="282" />
+    <file src="files/6a9aeddfc689c1d0e3b9ccc3ab651bc5.dff" download="false" model="282" />
+    <file src="files/0f49c89d1e7298bb9930789c8ed59d48.txd" download="false" model="283" />
+    <file src="files/0f49c89d1e7298bb9930789c8ed59d48.dff" download="false" model="283" />
+    <file src="files/46ba9f2a6976570b0353203ec4474217.txd" download="false" model="284" />
+    <file src="files/46ba9f2a6976570b0353203ec4474217.dff" download="false" model="284" />
+    <file src="files/0e01938fc48a2cfb5f2217fbfb00722d.txd" download="false" model="285" />
+    <file src="files/0e01938fc48a2cfb5f2217fbfb00722d.dff" download="false" model="285" />
+    <file src="files/16a5cdae362b8d27a1d8f8c7b78b4330.txd" download="false" model="286" />
+    <file src="files/16a5cdae362b8d27a1d8f8c7b78b4330.dff" download="false" model="286" />
+    <file src="files/918317b57931b6b7a7d29490fe5ec9f9.txd" download="false" model="287" />
+    <file src="files/918317b57931b6b7a7d29490fe5ec9f9.dff" download="false" model="287" />
+    <file src="files/48aedb8880cab8c45637abc7493ecddd.txd" download="false" model="288" />
+    <file src="files/48aedb8880cab8c45637abc7493ecddd.dff" download="false" model="288" />
+    <file src="files/26e359e83860db1d11b6acca57d8ea88.txd" download="false" model="298" />
+    <file src="files/26e359e83860db1d11b6acca57d8ea88.dff" download="false" model="298" />
+
+    <oop>true</oop>
+</meta>
