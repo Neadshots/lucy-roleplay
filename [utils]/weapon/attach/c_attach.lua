@@ -511,10 +511,12 @@ addEventHandler("onClientResourceStart", resourceRoot,
 	function()
 		loadWeaponTable()
 
-		for i, model in pairs(models) do
-			if getElementData(localPlayer, "attachingWeapon" .. i) then
-				if getPedWeapon(localPlayer, getSlotFromWeapon(i)) == i and getPedWeapon(localPlayer) ~= i then
-					triggerServerEvent("createWeaponModel", localPlayer, unpack(getAttachmentPositionMatrix(i)))
+		if models and type(models) == 'table' and #models > 0 then
+			for i, model in pairs(models) do
+				if getElementData(localPlayer, "attachingWeapon" .. i) then
+					if getPedWeapon(localPlayer, getSlotFromWeapon(i)) == i and getPedWeapon(localPlayer) ~= i then
+						triggerServerEvent("createWeaponModel", localPlayer, unpack(getAttachmentPositionMatrix(i)))
+					end
 				end
 			end
 		end
@@ -540,12 +542,13 @@ addEventHandler("onClientVehicleExit", root,
 		if player ~= localPlayer then
 			return
 		end
-
-		for i, model in pairs(models) do
-			if getElementData(localPlayer, "attachingWeapon" .. i) then
-    			if getPedWeapon(localPlayer, getSlotFromWeapon(i)) == i and getPedWeapon(localPlayer) ~= i then
-    				triggerServerEvent("createWeaponModel", localPlayer, unpack(getAttachmentPositionMatrix(i)))
-    			end
+		if models and type(models) == 'table' and #models > 0 then
+			for i, model in pairs(models) do
+				if getElementData(localPlayer, "attachingWeapon" .. i) then
+	    			if getPedWeapon(localPlayer, getSlotFromWeapon(i)) == i and getPedWeapon(localPlayer) ~= i then
+	    				triggerServerEvent("createWeaponModel", localPlayer, unpack(getAttachmentPositionMatrix(i)))
+	    			end
+				end
 			end
 		end
 	end

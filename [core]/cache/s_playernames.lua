@@ -29,7 +29,7 @@ function getCharacterName( id, singleName )
 		id = tonumber(id)
 		if not (id < 1) then
 			local query = {}
-			local accounts, characters = exports.account:getTableInformations()
+			local accounts, characters = exports.auth:getTableInformations()
 			for index, value in ipairs(characters) do
 				if value.id == id then
 					query.charactername = value.charactername

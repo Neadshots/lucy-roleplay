@@ -6,9 +6,6 @@ for i=1, 99 do
 	levels[hourOfCache] = i
 	hourOfCache = hourOfCache + 10
 end
-function setElementData(element, data, value)
-	triggerServerEvent("anticheat:changeEld", element, element, data, value)
-end
 
 addEventHandler("onClientElementDataChange", localPlayer,
     function(dName)
@@ -63,6 +60,7 @@ function currentExprance(level, type)
 	currentLevel = level
 	lastLevel = currentLevel + 1
 	backLevel = currentLevel - 1
+	if backLevel <= 0 then backLevel = 1 end
 
 	backLevelPoint = findLevelToMinute(backLevel)
 	lastLevelPoint = findLevelToMinute(lastLevel)

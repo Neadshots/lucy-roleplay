@@ -1,5 +1,14 @@
 
+-- @class Auth
+-- @author: yourpalenes
+
 Auth = {
+    Tables = {
+        ['accounts'] = {},
+        ['characters'] = {},
+    },
+    mysql = exports.mysql:getConnection(),
+
     login = function(self, player, row)
         player:setData("account:loggedin", true)
         player:setData("account:id", tonumber(row["id"]))
@@ -39,40 +48,33 @@ Auth = {
         if row["monitored"] ~= "" then
             player:setData("admin:monitor", row["monitored"])
         end
-        exports.mysql:getConnection():exec("UPDATE `accounts` SET `ip`='" .. getPlayerIP(player) .. "', `mtaserial`='" .. getPlayerSerial(player) .. "' WHERE `id`='".. tostring(row["id"]) .."'")
+        self.mysql:exec("UPDATE `accounts` SET `ip`='" .. getPlayerIP(player) .. "', `mtaserial`='" .. getPlayerSerial(player) .. "' WHERE `id`='".. tostring(row["id"]) .."'")
         player:setData("jailreason", row["adminjail_reason"])
         player:setData("forum_name", row["forum_name"])
         --loadAccountSettings(source, row["id"])
     end,
 
     username_check = function(self, player, username)
-
-        exports.mysql:getConnection():query(
+        self.mysql:query(
             function(qh, player)
                 local res, rows, err = qh:poll(0)
-               
-                triggerClientEvent(player, "push:username", player, res)
-                
+                triggerClientEvent(player, "push:username", player, res)   
             end,
         {player}, "SELECT * FROM accounts WHERE username = '"..username.."'")
     end,
 
-    password_check = function(self, player, username, password)
-
-    end,
-
     serial_check = function(self, player)
         local serial = player.serial
-        exports.mysql:getConnection():query(
+        self.mysql:query(
             function(qh, player)
-                local res, rows, err = qh:poll(0)
+                local res, rows, err = qh:poll(-1)
                 triggerClientEvent(player, "push:serial", player, rows)
             end,
         {player}, "SELECT * FROM accounts WHERE mtaserial = '"..serial.."'")
     end,
 
-    characters = function(self, player, index)
-        exports.mysql:getConnection():query(
+    characters = function(self, player, dbid, state)
+        self.mysql:query(
             function(qh, player)
                 local res, rows, err = qh:poll(0);
                 if rows > 0 then
@@ -84,14 +86,49 @@ Auth = {
                         end
                         i = i + 1
                     end
-                    triggerClientEvent(player, "push:characters", player, characters)
+                    if (state == 'f10') then
+                        triggerClientEvent(player, "push:characters:list", player, characters)
+                    else
+                        triggerClientEvent(player, "push:characters", player, characters)
+                    end
                 end
             end,
-        {player}, "SELECT * FROM characters WHERE account = '"..index.."'")
+        {player}, "SELECT * FROM characters WHERE account = '"..dbid.."' AND cked='0'")
     end,
 
-    spawn_player = function(self, player, index, row)
-        exports.mysql:getConnection():query(
+    create_character = function(self, player, charname, gender, age, weight, height)
+    	self.mysql:query(
+    		function(qh, player, charname, gender, age, weight, height)
+    			local res, rows, err = qh:poll(0)
+    			if rows > 0 then
+    				--// Karakter adı kullanılıyor
+    			else
+    				self.mysql:exec("INSERT INTO characters SET charactername = '"..charname.."', gender = '"..gender.."', age = '"..age.."', weight = '"..weight.."', height = '"..height.."'")
+    				
+    				self.mysql:query(
+    					function(qh, player)
+    						local res, rows, err = dbPoll(qh, 0)
+    						if rows > 0 then
+    							for index, value in ipairs(res) do
+									row_info = {}
+									for count, data in pairs(value) do
+										row_info[count] = data
+									end
+									self.Tables['characters'][#self.Tables['characters'] + 1] = row_info
+								end
+								--// DBID:
+								local dbid = res[1].id
+								self.spawn_player(player, dbid);
+    						end
+    					end,
+    				{player}, "SELECT * FROM characters WHERE id = LAST_INSERT_ID()")
+    			end
+    		end,
+    	{player, charname, gender, age, weight, height}, "SELECT charactername FROM characters WHERE charactername = '"..charname.."'")
+	end,
+
+    spawn_player = function(self, player, index)
+        self.mysql:query(
             function(qh, player)
                 local res, rows, err = qh:poll(0)
                 if rows > 0 then
@@ -109,7 +146,7 @@ Auth = {
                     player:setData("age", tonumber(row["age"]))
                     player:setData("month", tonumber(row["month"]))
                     player:setData("day", tonumber(row["day"]))
-                    player:setData("vip", tonumber(row["adminjail_time"]))
+                    player:setData("vip", tonumber(row["vip"]))
                     player:setData("vip_day", row["vip_day"])
                     player:setData("vip_hour", row["vip_hour"])
                     player:setData("timeinserver", tonumber(row["timeinserver"]))
@@ -136,7 +173,7 @@ Auth = {
                         teamElement = exports.pool:getElement('team', tonumber(row["faction_id"]))
                         if not (teamElement) then
                             row["faction_id"] = -1
-                            exports.mysql:getConnection():exec("UPDATE characters SET faction_id='-1', faction_rank='1' WHERE id='" .. tostring(characterID) .. "' LIMIT 1")
+                            self.mysql:exec("UPDATE characters SET faction_id='-1', faction_rank='1' WHERE id='" .. tostring(characterID) .. "' LIMIT 1")
                         end
                     end
                     if teamElement then
@@ -260,8 +297,9 @@ Auth = {
                     triggerEvent("accounts:character:select", player)
                     exports.global:setMoney(player, tonumber(row["money"]), true)
                     exports.global:checkMoneyHacks(player)
+
+                    triggerClientEvent(player, "hud:load", player) --// foreigner26
                     exports['item-system']:loadItems(player, true)
-                    --loadCharacterSettings(player, characterID)
                     triggerClientEvent(player, "item:updateclient", player)
                 else
                     print('Veritabanında (Karakter ID) bulunamadı.')
@@ -278,7 +316,7 @@ Auth = {
 		setRuleValue("Website", "www.lucyrpg.com")
 		for key, value in ipairs(getElementsByType("player")) do
 			if (value:getData('loggedin') or 0) == 0 then
-				triggerEvent("recieve:update_player_settings", value, value)
+				triggerEvent("receive:update_player_settings", value, value)
                 
 			end
 		end
@@ -300,7 +338,7 @@ Auth = {
 			player:setData("chatbubbles", 0)
 			player.dimension = 9999
 			player.interior = 0
-			player.name = "belirsiz-"..player:getData("playerid")
+			player.name = "Belirsiz-"..player:getData("playerid")
             triggerClientEvent(player, 'push:start_login', player, player)
 		end
 		exports.global:updateNametagColor(player)
@@ -338,31 +376,70 @@ Auth = {
                 end
                 local hunger = player:getData("hunger") or 100
                 local thirst = player:getData("thirst") or 100
-                exports.mysql:getConnection():exec("UPDATE characters SET online='0', hunger='" .. (hunger) .. "', thirst='" .. (thirst) .. "', x='" .. (x) .. "', y='" .. (y) .. "', z='" .. (z) .. "', rotation='" .. (rot) .. "', health='" .. (health) .. "', armor='" .. (armor) .. "', dimension_id='" .. (dimension) .. "', interior_id='" .. (interior) .. "', lastlogin=NOW(), lastarea='" .. (zone) .. "', timeinserver='" .. (timeinserver) .. "', alcohollevel='".. ( tostring( alcohollevel ) ) .."' WHERE id=" .. (player:getData("dbid")))
-                exports.mysql:getConnection():exec("UPDATE accounts SET bakiyeMiktari='"..(player:getData("bakiyeMiktar") or 0).."', lastlogin=NOW() WHERE id = " .. (getElementData(player,"account:id")))
-                print(player.name..' saved succesfuly. :auth/events.lua:346')
+                self.mysql:exec("UPDATE characters SET online='0', hunger='" .. (hunger) .. "', thirst='" .. (thirst) .. "', x='" .. (x) .. "', y='" .. (y) .. "', z='" .. (z) .. "', rotation='" .. (rot) .. "', health='" .. (health) .. "', armor='" .. (armor) .. "', dimension_id='" .. (dimension) .. "', interior_id='" .. (interior) .. "', lastlogin=NOW(), lastarea='" .. (zone) .. "', timeinserver='" .. (timeinserver) .. "', alcohollevel='".. ( tostring( alcohollevel ) ) .."' WHERE id=" .. (player:getData("dbid")))
+                self.mysql:exec("UPDATE accounts SET bakiyeMiktari='"..(player:getData("bakiyeMiktar") or 0).."', lastlogin=NOW() WHERE id = " .. (getElementData(player,"account:id")))
+                --print(player.name..' saved succesfuly. :auth/events.lua')
             end
         end
+    end,
+
+    get_tables = function(self)
+        self.mysql:query(
+			function(qh)
+				local res, rows, err = dbPoll(qh, 0)
+				if rows > 0 then
+					for index, value in ipairs(res) do
+						row_info = {}
+						for count, data in pairs(value) do
+							row_info[count] = data
+						end
+						self.Tables['accounts'][#self.Tables['accounts'] + 1] = row_info
+					end
+				end
+			end,
+		"SELECT * FROM `accounts`")
+		self.mysql:query(
+			function(qh)
+				local res, rows, err = dbPoll(qh, 0)
+				if rows > 0 then
+					for index, value in ipairs(res) do
+						row_info = {}
+						for count, data in pairs(value) do
+							row_info[count] = data
+						end
+						self.Tables['characters'][#self.Tables['characters'] + 1] = row_info
+					end
+				end
+			end,
+		"SELECT * FROM `characters`")
+    end,
+
+    informations = function(self)
+        return self.Tables['accounts'], self.Tables['characters']
     end,
 }
 
 instance = new(Auth)
 
-addEvent('recieve:username', true)
-addEvent('recieve:serial', true)
-addEvent('recieve:characters', true)
-addEvent('recieve:join_character', true)
-addEvent('recieve:loginok', true)
-addEvent('recieve:start', true)
-addEvent('recieve:update_player_settings', true)
+addEvent('receive:username', true)
+addEvent('receive:serial', true)
+addEvent('receive:characters', true)
+addEvent('receive:create_character', true)
+addEvent('receive:join_character', true)
+addEvent('receive:loginok', true)
+addEvent('receive:start', true)
+addEvent('receive:update_player_settings', true)
 addEvent("savePlayer", true)
-addEventHandler('recieve:username', root, function(player, username) instance:username_check(player, username) end)
-addEventHandler('recieve:serial', root, function(player) instance:serial_check(player) end)
-addEventHandler('recieve:characters', root, function(player, id) instance:characters(player, id) end)
-addEventHandler('recieve:join_character', root, function(player, index) instance:spawn_player(player, index, row) end)
-addEventHandler('recieve:loginok', root, function(player, data) instance:login(player, data) end)
-addEventHandler('recieve:start', root, function() instance:update_settings() end)
-addEventHandler('recieve:update_player_settings', root, function(player) instance:update_player_settings(player) end)
+addEventHandler('receive:username', root, function(player, username) instance:username_check(player, username) end)
+addEventHandler('receive:serial', root, function(player) instance:serial_check(player) end)
+addEventHandler('receive:characters', root, function(player, id, state) instance:characters(player, id, state) end)
+addEventHandler('receive:create_character', root, function(player, charname, gender, age, weight, height) instance:create_character(player, charname, gender, age, weight, height) end)
+addEventHandler('receive:join_character', root, function(player, index) instance:spawn_player(player, index, row) end)
+addEventHandler('receive:loginok', root, function(player, data) instance:login(player, data) end)
+addEventHandler('receive:start', root, function() instance:update_settings() end)
+addEventHandler('receive:update_player_settings', root, function(player) instance:update_player_settings(player) end)
 addEventHandler('onPlayerQuit', root, function() instance:save(source) end)
 addEventHandler('savePlayer', root, function() instance:save(source) end)
+addEventHandler('onResourceStart', resourceRoot, function() instance:get_tables() end)
 addCommandHandler('saveme', function(p) instance:save(p) end)
+function getTableInformations() return instance:informations() end

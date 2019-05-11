@@ -142,16 +142,17 @@ end
 
 local function getImage( itemID, itemValue )
 	if not itemID or not tonumber(itemID) then --Stop bugging out int when picking up items too fast / Maxime
-		return ":account/img/nil.png"
+		return "images/skins/nil.png"
 	end
 
 	if itemID == 16 then -- Clothes
-		local tmp = ("%03d"):format(tonumber(tostring(itemValue):gsub(":(.*)$", ""), 10) or 999)
+		--local tmp = ("%03d"):format(tonumber(tostring(itemValue):gsub(":(.*)$", ""), 10) or 999)
+		local tmp = itemValue
 		if not tmp or not tonumber(tmp) or tonumber(tmp) == 999 then
-			return ":account/img/nil.png"
+			return "images/skins/nil.png"
 		else
-			--return ":account/img/" .. ("%03d"):format(tonumber(itemValue)) .. ".png"
-			return ":account/img/" .. tmp .. ".png"
+			--return "images/skins/" .. ("%03d"):format(tonumber(itemValue)) .. ".png"
+			return "images/skins/" .. tmp .. ".png"
 		end
 	elseif itemID == 115 then -- Weapon
 		local itemValueExploded = explode(':', itemValue)

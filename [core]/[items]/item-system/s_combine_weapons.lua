@@ -1,7 +1,8 @@
 --Militan
+Async:setDebug(false)
 addEventHandler("onPlayerWeaponFire", root,
 	function(weapon)
-		useAmmo(source, weapon)
+		useAmmo(source, weapon, 0)
 	end
 )
 
@@ -193,7 +194,7 @@ function useAmmo(client, weapon,wasted)
 	local ammocalc = ammo - ammoinclip
 
 	--for i, v in ipairs( playerAmmos ) do
-	if #playerAmmos == 0 then return end
+	if not playerAmmos or type(playerAmmos) ~= 'table' or #playerAmmos == 0 then return end
 	Async:foreach(playerAmmos, function(v, i)
 		if not v then
 			return
@@ -203,7 +204,7 @@ function useAmmo(client, weapon,wasted)
 		itemCheck = v[2]
 		if (itemCheck[1] == 116) then
 			local weaponBulletDetails = explode(':', itemCheck[2])
-			if tonumber(weaponBulletDetails[1]) == weapon and taken < wasted then				
+			if weaponBulletDetails and tonumber(weaponBulletDetails[1]) and tonumber(weaponBulletDetails[1]) == weapon and taken < wasted then				
 				local bullets = tonumber(weaponBulletDetails[2])
 				local left = wasted - taken
 				--print("Mermi alüyürk")
@@ -375,7 +376,7 @@ function reloadWeapon(cl)
 	if (not reloading) and not (isPedInVehicle(thePlayer)) and ((jammed==0) or not jammed) then
 		if (weapon) and (ammo) and (ammocalc > 0) then -- safety measure: cant reload your last clip
 		local clipSizeCalc = clipSize[weapon] or 60
-		print(clipSizeCalc.. " ammo "..ammoinclip)
+		
 			if not (ammoinclip >= clipSizeCalc) then -- Not reload if their clip is full
 				if not getElementData(thePlayer, "deagle:reload") and not getElementData(thePlayer, "scoreboard:reload") then
 					-- Reload our gun

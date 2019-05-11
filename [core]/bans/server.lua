@@ -102,7 +102,7 @@ function offlineBanAPlayer(thePlayer, commandName, targetUsername, hours, ...)
 				outputChatBox("You cannot ban for more than 7 days (168 Hours).", thePlayer, 255, 194, 14)
 				return false
 			end
-			local accounts, characters = exports.account:getTableInformations()
+			local accounts, characters = exports.auth:getTableInformations()
 			for index, value in ipairs(accounts) do
 				if value.username == targetUsername then
 					user = accounts[index]
@@ -291,7 +291,7 @@ function banPlayerAccount(thePlayer, commandName, account, ...)
 		if not account or not (...) then
 			outputChatBox("SYNTAX: /" .. commandName .. " [Username] [Reason]", thePlayer, 255, 194, 14)
 		else
-			local accounts, characters = exports.account:getTableInformations()
+			local accounts, characters = exports.auth:getTableInformations()
 			for index, value in ipairs(accounts) do
 				if value.username == account then
 					account = accounts[index]

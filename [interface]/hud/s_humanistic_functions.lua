@@ -38,6 +38,7 @@ addCommandHandler("setthirst",
 		if exports.integration:isPlayerSeniorAdmin(player) then
 			value = tonumber(value)
 			if value and target then
+				if value > 100 then return outputChatBox(exports.pool:getServerSyntax(false, "e").. "Geçersiz değer girdiniz.", player, 255, 255, 255, true) end
 				local targetPlayer, targetPlayerName = exports.global:findPlayerByPartialNick(thePlayer, target)
 				if targetPlayer then
 					outputChatBox(exports.pool:getServerSyntax(false, "s").. "Kişinin susuzluk değeri başarıyla değiştirildi. ("..getElementData(targetPlayer, "thirst").." - > "..value..")", player, 255, 255, 255, true)

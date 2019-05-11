@@ -1,6 +1,6 @@
 function getCharacterIDFromName(charName)
 	if not charName then return false end
-	local accounts, characters = exports.account:getTableInformations()
+	local accounts, characters = exports.auth:getTableInformations()
 	for index, value in ipairs(characters) do
 		if value.charactername == charName then
 			return characters[index]['id']
@@ -10,7 +10,7 @@ function getCharacterIDFromName(charName)
 end
 function getCharacterNameFromID(charID)
 	if not charID then return false end
-	local accounts, characters = exports.account:getTableInformations()
+	local accounts, characters = exports.auth:getTableInformations()
 	for index, value in ipairs(characters) do
 		if value.id == charID then
 			return characters[index]['charactername']
@@ -25,7 +25,7 @@ function getUserNameFromID(userID)
 	if userNamesCache[userID] then
 		return userNamesCache[userID]
 	end
-	local accounts, characters = exports.account:getTableInformations()
+	local accounts, characters = exports.auth:getTableInformations()
 	for index, value in ipairs(accounts) do
 		if value.id == userID then
 			return characters[index]['username']

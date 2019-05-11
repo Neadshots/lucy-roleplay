@@ -2,7 +2,7 @@
 local mysql = exports.mysql
 local staffTitles = exports.integration:getStaffTitles()
 function getStaffInfo(username, error)
-	local accounts = exports.account:getTableInformations()
+	local accounts = exports.auth:getTableInformations()
 	for index, value in ipairs(accounts) do
 		if value.username == username then
 			user = {
@@ -115,7 +115,7 @@ function editStaff(userid, ranks, details)
 		end
 	end
 	staffTitles = exports.integration:getStaffTitles()
-	local accounts = exports.account:getTableInformations()
+	local accounts = exports.auth:getTableInformations()
 	for index, value in ipairs(accounts) do
 		if value.id == userid then
 			user = {

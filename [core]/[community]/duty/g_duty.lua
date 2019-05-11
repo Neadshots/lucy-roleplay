@@ -64,8 +64,10 @@ function fetchAvailablePackages( targetPlayer )
 	if resource then
 		allowList = getElementData(resource, "dutyAllowTable")
 		for k,v in pairs(allowList) do
-			if tonumber(v[1]) == factionID then
+
+			if tonumber(v[1]) == tonumber(factionID) then
 				key = k
+
 				break
 			end
 		end

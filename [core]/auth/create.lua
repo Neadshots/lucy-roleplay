@@ -14,19 +14,23 @@ Auth = {
 
         if variable == 'firstornot' then
 
+            if self.browser then return false end
+
             showChat(false)
             showCursor(true)
 
             WebUIManager:new()
-           
-            self.browser = WebWindow:new(Vector2(0,0), Vector2(self.screen.x, self.screen.y), "http://mta/auth/html/interface.html", true);
+
+            self.browser = WebWindow:new(Vector2(0,0), Vector2(self.screen.x,self.screen.y), "http://mta/auth/html/interface.html", true);
             localPlayer:setData('auth:browser', self.browser)
-            addEventHandler('onClientBrowserCreated',self.browser:getUnderlyingBrowser(),function()
-                addEventHandler('onClientBrowserDocumentReady',self.browser:getUnderlyingBrowser(),function()
-                    self.browser:executeJavascript2('first('..tostring(not value)..')');
-                    Camera.fade(true)
-                end)
-            end)
+
+            self.browser:addEvent("browser:ready",
+            function(webwindow)
+
+                self.browser:getUnderlyingBrowser():executeJavascript('start('..tostring(not value)..')');
+                Camera.fade(true)
+				
+			end)
     
             setDevelopmentMode(self.debug, self.debug);
 
@@ -62,8 +66,7 @@ Auth = {
 
         if event == 'auth.javascript.html5.document.return.to.username' then
 
-            --Encrypt:sql('select',{Tablename='accounts',Type='username',Value=tostring(value)},'push:username')
-            triggerServerEvent('recieve:username', localPlayer, localPlayer, value)
+            triggerServerEvent('receive:username', localPlayer, localPlayer, value)
             return true
         end
 
@@ -76,8 +79,8 @@ Auth = {
                 localPlayer:setData("vct_level", tonumber(self.user['vct']))
                 localPlayer:setData("mapper_level", tonumber(self.user['mapper']))
                 localPlayer:setData("scripter_level", tonumber(self.user['scripter']))
-                triggerServerEvent('recieve:loginok',localPlayer,localPlayer,self.user)
-                triggerServerEvent('recieve:characters',localPlayer,localPlayer,self.user.id)
+                triggerServerEvent('receive:loginok',localPlayer,localPlayer,self.user)
+                triggerServerEvent('receive:characters',localPlayer,localPlayer,self.user.id)
             else 
                 self.browser:executeJavascript2('set(2,`'..self.user.username..'`)');
             end            
@@ -85,6 +88,16 @@ Auth = {
             return true
         end
 
+        --[[
+            @method push:characters:list
+            @desc: Karakterleri çekip F10'a aktarma
+        ]]
+        if event == 'push:characters:list' then
+            if value then
+                self.characters = value
+            end
+            return true
+        end
 
         --[[
             @method push:characters
@@ -111,7 +124,7 @@ Auth = {
                     else 
                         sendJail = 'Serbest';
                     end
-
+                    
                     self.browser:executeJavascript2('character(`'..v.charactername..'`,`'..sendJail..'`,`'..v.cked..'`,`'..tostring(getZoneName(v.x,v.y,v.z))..'`,`'..(v.lastlogin or "N/A")..'`,`'..v.id..'`)');
  
                end
@@ -135,9 +148,9 @@ Auth = {
                 setTimer(function()
 
                     removeEventHandler("onClientKey", root, function(button,press) if press and button == 'enter' then instance:enter() end end)
-                    triggerServerEvent('recieve:join_character', localPlayer, localPlayer, value)
+                    triggerServerEvent('receive:join_character', localPlayer, localPlayer, value)
                       
-                    self.characters = {}
+                    --self.characters = {}
                     self.user = {}
 
                     showChat(true)
@@ -192,35 +205,74 @@ Auth = {
             outputChatBox(syntax.."Herhangi bir sorunun olduğunda /rapor komutunu kullanabilirsin.", 85, 155, 255, true)
 
             self.browser:destroy();
-        end
-    end,
-    
-    enter = function(self)
-        if self.browser then
-            self.browser:executeJavascript2('enter()');
+            removeEventHandler('onClientKey',root,enter)
         end
     end,
 
     index = function(self)
     
         if localPlayer:getData('loggedin') ~= 1 then
-           triggerServerEvent('recieve:serial',localPlayer,localPlayer)
+           triggerServerEvent('receive:serial',localPlayer,localPlayer)
         end
     end,
 
-    f10 = function(self)
+    f10 = function(self, state)
     	if localPlayer:getData('loggedin') == 1 then
-    		localPlayer.frozen = true
-    		triggerServerEvent('recieve:serial',localPlayer,localPlayer)
-    		triggerServerEvent('savePlayer',localPlayer,localPlayer)
+            if (state == 'on') then
+                localPlayer:setData('f10', true)
+                if #self.characters == 0 then
+                    triggerServerEvent('receive:characters',localPlayer,localPlayer,localPlayer:getData('account:id'),'f10')
+                end
+                addEventHandler('onClientRender',root,self.characterlist)
+            else
+                localPlayer:setData('f10', false)
+                removeEventHandler('onClientRender',root,self.characterlist)
+            end
     	end
-	end,
+    end,
+    
+    characterlist = function()
+    instance = Auth
+        local i = 1
+        local selected = 1
+        for index, value in ipairs(instance.characters) do
+            if i <= 4 then
+                if value.id == localPlayer:getData('dbid') then
+                    selected = i
+                end
+               
+                i = i + 1
+            end
+        end
+        dxDrawImage(instance.screen.x-215, instance.screen.y-210, 200, 200, "components/images/slots/slot"..selected..".png")
+        -- #4 of list one:
+        list_positions = {
+            [1] = {instance.screen.x-145, instance.screen.y-190},
+            [2] = {instance.screen.x-195, instance.screen.y-140},
+            [3] = {instance.screen.x-85, instance.screen.y-140},
+            [4] = {instance.screen.x-145, instance.screen.y-140},
+        }
+        local i = 1
+        for index, value in ipairs(instance.characters) do
+            if i <= 4 then
+                local tmp = value.skin
+                
+                if value.id == localPlayer:getData('dbid') then
+                    selected = i
+                end
+                dxDrawImage(list_positions[i][1], list_positions[i][2], 48, 48, ":item-system/images/skins/"..tmp..".png")
+                i = i + 1
+            end
+        end
+ 
+    end,
 }
 instance = new(Auth)
 --localPlayer:setData('loggedin', 0)
 addEvent('push:serial',true)
 addEvent('push:username',true)
 addEvent('push:characters',true)
+addEvent('push:characters:list',true)
 addEvent('push:start_login',true)
 addEvent('push:login_character',true)
 addEvent('auth.javascript.html5.document.return.to.username',true)
@@ -230,13 +282,23 @@ addEvent('auth.javascript.html5.document.return.to.character.select',true)
 addEventHandler('push:serial',root,function(callback) instance:events('push:serial',callback) end)
 addEventHandler('push:username',root,function(callback) instance:events('push:username',callback) end)
 addEventHandler('push:characters',root,function(callback) instance:events('push:characters',callback) end)
+addEventHandler('push:characters:list',root,function(callback) instance:events('push:characters:list',callback) end)
 addEventHandler('push:login_character',root,function(callback) instance:events('push:login_character',callback) end)
 addEventHandler('auth.javascript.html5.document.return.to.username',root,function(event,callback) instance:events(event,callback) end)
 addEventHandler('auth.javascript.html5.document.return.to.password',root,function(event,callback) instance:events(event,callback) end)
 addEventHandler('auth.javascript.html5.document.return.to.character.select',root,function(event,callback) instance:events(event,callback) end)
 
-addEventHandler("onClientKey", root, function(button,press) if press and button == 'enter' then instance:enter()  end end)
+function enter(button,press)
+    if press and button == 'enter' then
+        if instance.browser then
+            instance.browser:executeJavascript2('enter()');
+        end
+    end
+end
 
-addEventHandler('onClientResourceStart',getResourceRootElement(getThisResource()),function() triggerServerEvent('recieve:start',root,root) end)
+addEventHandler("onClientKey", root, enter)
+
+addEventHandler('onClientResourceStart',getResourceRootElement(getThisResource()),function() triggerServerEvent('receive:start',root,root) end)
 addEventHandler('push:start_login',root,function() instance:index() end)
-bindKey('f10', 'down', function(key, state) instance:f10() end)
+bindKey('f10', 'down', function(key, state) instance:f10('on') end)
+bindKey('f10', 'up', function(key, state) instance:f10('off') end)

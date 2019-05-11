@@ -4,20 +4,17 @@
 */
 
 body {-webkit-font-smoothing: antialiased; font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; background:transparent; } input {-webkit-user-select:none !important;} canvas { width: 100%; height: 100% } tr {border-bottom:none;} :focus{outline: none !important; border:none !important;}
-body.modal-open .background-container{-webkit-filter: blur(4px); -moz-filter: blur(4px); -o-filter: blur(4px); -ms-filter: blur(4px); filter: blur(4px); filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='4');}
-
-
 
 /* 
     #Genel Stiller & #General Styles
 */
 
-.overlay-effect {background-image:radial-gradient(circle closest-side,#101111,#0f0f0f); width:100%; height:100%; display:inline-block;}
+.overlay-effect {background-image:radial-gradient(circle closest-side,#101111,#070707); width:100%; height:100%; display:inline-block;}
 .animated05 {animation-duration:0.4s;}
 
 .center-container {width:45%; height:auto; display:inline-block; margin:auto; text-align:center;}
-.center-container img[tag="center-logo"] {width:6vmax; float:left; display:inline-block; margin-left:auto; margin-right:auto;}
-.center-container img[tag="center-logo-2"] {width:10vmax; float:left; display:inline-block; margin-left:auto; margin-right:auto;}
+.center-container img[tag="center-logo"] {width:8vmax; float:left; display:inline-block; opacity:0.9; margin-left:auto; margin-right:auto;}
+.center-container img[tag="center-logo-2"] {width:12vmax; float:left; margin-bottom:5px; opacity:0.9; display:inline-block; margin-left:auto; margin-right:auto;}
 
 .info-container {width:calc(100% - 2vmax); height:auto; padding:12px; border-radius:6px; overflow:hidden; margin:0px 0px 0px 2vmax;}
 .inside-container {width:calc(100% - 2vmax); height:auto; padding:12px; border-radius:6px; overflow:hidden; margin:1vh 0px 0px 2vmax;}
@@ -40,7 +37,13 @@ a[tag="get-back"] {display:inline-block; position:relative; font-family:"SF Pro"
 a[tag="get-back"]:hover {color:rgba(254, 196, 0,0.8) !important; transition:color 0.3s,margin-left 0.4s;}
 a[tag="get-back"] i {font-size:3vh;}
 
-a[tag="image-selection"] {width:6vh; height:6vh; display:inline-block; text-align:center; line-height:6vh; font-weight:600; font-family:"SF Pro" !important; font-size:1.5vh; color:rgba(240,240,240,0.8) !important; background:#7d1717; overflow:hidden; border-radius:100%;}
+a[tag="image-selection"] {width:6vh; height:6vh; display:inline-block; text-align:center; line-height:6vh; font-weight:600; font-family:"SF Pro" !important; font-size:1.5vh; color:rgba(240,240,240,0.8) !important; background:#ffc358; opacity:0.9; overflow:hidden; border-radius:100%;}
+
+input[tag="input-age"]::placeholder {color:rgba(240,240,240,0.8) !important; transition:0.3s ease all;}
+input[tag="input-age"] {width:calc(100% - 10px); margin-top:0.9vh; background:transparent !important; color:rgba(255, 195, 88,0.9) !important; text-align:center; border:none !important; transition:border 0.3s; border-bottom:none !important; text-indent:0px !important; padding-left:0px !important; border-radius:0px !important; display:inline-block; font-family:"SF Pro" !important; font-size:1.2vh;}
+input[tag="input-age"]:focus {box-shadow:none !important; border:none !important; border-bottom:none !important; transition:border 0.3s;}
+input[tag="input-age"]:focus::placeholder {color:rgba(255, 195, 88,0.9) !important; transition:0.3s ease all;}
+input[tag="input-age"]:hover::placeholder {color:rgba(255, 195, 88,0.9) !important; transition:0.3s ease all;}
 
 input[tag="input-login"]::placeholder {color:rgba(240,240,240,0.8) !important;}
 input[tag="input-login"] {background:transparent !important; color:rgba(240,240,240,1) !important; border:none !important; transition:border 0.3s; border-bottom:2px solid rgba(240,240,240,0.5) !important; text-indent:0px !important; padding-left:0px !important; border-radius:0px !important; display:inline-block; font-family:"SF Pro" !important; font-size:1.2vh;}
@@ -49,8 +52,16 @@ input[tag="input-login"]:focus {box-shadow:none !important; border:none !importa
 td {transition:background 0.3s;}
 .character:hover + td {background:#fff; transition:background 0.3s;}
 
-.create--character--screen {position:fixed; background:#7d1717; border-radius:100%; width:50px; height:50px; bottom:25px; right:25px; line-height:55px; text-align:center; color:rgba(255,255,255,0.8);}
-.create--character--screen i {line-height:53px; font-size:2vh; color:rgba(255,255,255,0.8);}
+.input-container--list {width:20vmax; display:inline-block; margin:auto;}
+
+.create--character--screen {position:fixed; background:#ffc358; opacity:0.9; border-radius:100%; width:50px; height:50px; bottom:25px; right:25px; line-height:55px; text-align:center; color:rgba(255,255,255,0.8);}
+.create--character--screen i {line-height:53px; font-size:2vh; color:#101111;}
+
+.gender {width:50%; border:1px solid rgba(0,0,0,0.2); margin-top:1.3vh; overflow:hidden; display:inline-block; border-radius:5px; height:25px;}
+.gender a {float:left; display:inline-block; width:50%; background:rgba(0,0,0,0.2); height:25px; line-height:25px; font-size:1.2vh; font-weight:500 !important; font-family:"SF Pro" !important;}
+.gender__selected {background:#ffc358 !important; opacity:0.9; color:#101111 !important; font-weight:600 !important; font-family:"SF Pro" !important;}
+
+@media only screen and (max-width: 1025px) {.input-container--list {width:25vmax !important} input[tag="input-age"] {margin-top:0.7vh !important;} .center-container {width:75% !important;} .gender {height:20px !important} .gender a {height:20px !important; line-height:20px !important;} .create--character--screen {height:40px !important; width:40px !important;} .create--character--screen i {line-height:43px !important} }
 
 table {border-collapse: separate !important; border-spacing: 0 8px !important;}
 

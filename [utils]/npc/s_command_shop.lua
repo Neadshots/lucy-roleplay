@@ -195,6 +195,11 @@ function buy(thePlayer, cmd, itemname)
                                     --break
                                 elseif s[3] == "drink" then
                                     thirst = getElementData(thePlayer, "thirst")
+
+                                    if thirst + s[4] > 100 then 
+                                        s[4] = 100 - thirst
+                                    end
+
                                     exports.anticheat:changeProtectedElementDataEx(thePlayer, "thirst", thirst+s[4])
                                     exports.global:applyAnimation(thePlayer, "BAR", "dnk_stndM_loop", 2000, false, true, true)
                                     --break
@@ -202,13 +207,14 @@ function buy(thePlayer, cmd, itemname)
                                     exports.global:giveItem(thePlayer, s[4], s[5])
                                 end
                                 exports.global:takeMoney(thePlayer, s[2])
-                                --break
+
+                            break
                             else
-                                outputChatBox("Paran yok oç", thePlayer)
+                                outputChatBox(exports.pool:getServerSyntax(false, "w").." Cebindeki bozukluklar mı bitti adamım?.",thePlayer,255, 255, 255, true)
                             end
-                        --else
-                            --outputChatBox("böyle bi eşya yok göt dalağını siktigim", thePlayer)
-                            --break
+                        else
+                           -- outputChatBox(tostring(s[1]:lower()),thePlayer)
+                           -- outputChatBox(exports.pool:getServerSyntax(false, "w").." girdiğiniz yemek ismi yanlış.",thePlayer,255, 255, 255, true)
                         end
                     --end
                 end

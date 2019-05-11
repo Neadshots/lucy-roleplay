@@ -107,7 +107,7 @@ function offlineJailPlayer(thePlayer, commandName, who, minutes, ...)
 					return true
 				end
 			end
-			local accounts, characters = exports.account:getTableInformations()
+			local accounts, characters = exports.auth:getTableInformations()
 			local row = {}
 			for index, value in ipairs(account) do
 				if value.username == who then

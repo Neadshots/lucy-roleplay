@@ -1,44 +1,4 @@
 local secretHandle = 'some_shit_that_is_really_secured'
---[[
-addEventHandler("onElementDataChange", getRootElement(), 
-	function (index, oldValue)
-		if not client then
-			return
-		end
-		local theElement = source
-		if (index ~= "interiormarker") and (index ~= "i:left") and (index ~= "i:right") then
-			local isProtected = getElementData(theElement, secretHandle.."p:"..index)
-			if (isProtected) then
-				-- get real source here
-				-- it aint source!
-				local sourceClient = client
-				if (sourceClient) then
-					if (getElementType(sourceClient) == "player") then
-						local newData = getElementData(source, index)
-						local playername = getPlayerName(source) or "Somethings"
-						-- Get rid of the player
-						local msg = "[AdmWarn] " .. getPlayerName(sourceClient) .. " sent illegal data. "
-						local msg2 = " (victim: "..playername.." index: "..index .." newvalue:".. tostring(newData) .. " oldvalue:".. tostring(oldValue)  ..")"
-						--outputConsole(msg)
-						--outputConsole(msg2)
-						--exports.global:sendMessageToAdmins(msg)
-						exports.global:sendMessageToAdmins(msg)
-						exports.global:sendMessageToAdmins(msg2)
-						--exports.logs:logMessage(msg..msg2, 29)
-						--exports.logs:dbLog(sourceClient, 5, sourceClient, msg..msg2 )
-						
-						-- uncomment this when it works
-						--local ban = banPlayer(sourceClient, false, false, true, getRootElement(), "Hacked Client.", 0)
-						
-						-- revert data
-						changeProtectedElementDataEx(source, index, oldValue, true)
-					end
-				end
-			end
-		end
-	end
-);
-]]--
 
 function changeProtectedElementData(thePlayer, index, newvalue)
 	setElementData(thePlayer, index, newvalue)
@@ -46,22 +6,7 @@ end
 
 function changeProtectedElementDataEx(thePlayer, index, newvalue, sync, nosyncatall)
 	if (thePlayer) and (index) then
-		if not newvalue then
-			newvalue = nil
-		end
-		if not nosyncatall then
-			nosyncatall = false
-		end
-	
-		setElementData(thePlayer, index, newvalue, sync)
-
-		if not sync then
-			if not nosyncatall then
-				if getElementType ( thePlayer ) == "player" then
-					triggerClientEvent(thePlayer, "edu", getRootElement(), thePlayer, index, newvalue)
-				end
-			end
-		end
+		setElementData(thePlayer, index, newvalue)
 		return true
 	end
 	return false
@@ -69,7 +14,6 @@ end
 
 function changeEld(thePlayer, index, newvalue)
 	if source then thePlayer = thePlayer end
---	return changeProtectedElementData(thePlayer, index, newvalue)
 	return setElementData(thePlayer, index, newvalue)
 end
 addEvent("anticheat:changeEld", true)

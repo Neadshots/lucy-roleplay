@@ -1429,11 +1429,11 @@ function adminDuty(thePlayer, commandName)
 		local username = getPlayerName(thePlayer)
 
 		if adminduty == 0 then
-			triggerClientEvent(thePlayer, "accounts:settings:updateAccountSettings", thePlayer, "duty_admin", 1)
+			setElementData(thePlayer, "duty_admin", 1)
 			exports.global:sendMessageToAdmins("AdmDuty: " .. username .. " came on duty.")
 			outputChatBox("(( Başarıyla göreve başladınız. ))", thePlayer, 255, 0, 0)
 		else
-			triggerClientEvent(thePlayer, "accounts:settings:updateAccountSettings", thePlayer, "duty_admin", 0)
+			setElementData(thePlayer, "duty_admin", 0)
 			exports.global:sendMessageToAdmins("AdmDuty: " .. username .. " went off duty.")
 			outputChatBox("(( Başarıyla görevden ayrıldınız. ))", thePlayer, 255, 0, 0)
 			if getElementData(thePlayer, "supervising") == true then
@@ -1458,10 +1458,10 @@ function gmDuty(thePlayer, commandName)
 		
 
 		if gmDuty == 0 then
-			triggerClientEvent(thePlayer, "accounts:settings:updateAccountSettings", thePlayer, "duty_supporter", 1)
+			setElementData(thePlayer, "duty_supporter", 1)
 			exports.global:sendMessageToAdmins("SDuty: " .. username .. " came on duty.")
 		elseif gmDuty == 1 then
-			triggerClientEvent(thePlayer, "accounts:settings:updateAccountSettings", thePlayer, "duty_supporter", 0)
+			setElementData(thePlayer, "duty_supporter", 0)
 			exports.global:sendMessageToAdmins("SDuty: " .. username .. " went off duty.")
 		end
 	end

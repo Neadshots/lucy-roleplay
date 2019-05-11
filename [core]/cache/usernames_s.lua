@@ -28,7 +28,7 @@ function getUsername( clue )
 	
 	outputDebugString("Server cache: Username not found in all current online players. Searching in database.")
 	if not searched[clue] then
-		local accounts, characters = exports.account:getTableInformations()
+		local accounts, characters = exports.auth:getTableInformations()
 		for index, value in ipairs(accounts) do
 			if value.username == clue then
 				usernameCache[tonumber(value["id"])] = value["username"]
@@ -107,7 +107,7 @@ function getUsernameFromId(id)
 	searched[id] = true
 
 	outputDebugString("Server cache: Username not found in all current online players. Searching in database.")
-	local accounts, characters = exports.account:getTableInformations()
+	local accounts, characters = exports.auth:getTableInformations()
 	for index, value in ipairs(accounts) do
 		if value.id == id then
 			usernameCache[tonumber(value["id"])] = value["username"]
@@ -147,7 +147,7 @@ function getAccountFromCharacterId(id)
 	end
 	accountCacheSearched[id] = true
 
-	local accounts, characters = exports.account:getTableInformations()
+	local accounts, characters = exports.auth:getTableInformations()
 	for index, value in ipairs(characters) do
 		if value.account == id then
 			usernameCache[tonumber(value["id"])] = value["username"]

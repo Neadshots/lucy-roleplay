@@ -280,7 +280,7 @@ function renderNametags()
 		local rx, ry, rz = getElementPosition(player)
 		local distance = getDistanceBetweenPoints3D(lx, ly, lz, rx, ry, rz)
 		local limitdistance = 20
-		local reconx = streamedPlayers[localPlayer]['reconx'] and (data['admin_level'] >= 2)
+		local reconx = (streamedPlayers[localPlayer]['reconx'] or false) and (data['admin_level'] >= 2)
 		local shown_player = true
 		if (player == localPlayer) then
 			if interface_mode ~= 1 then

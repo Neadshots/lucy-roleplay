@@ -32,11 +32,11 @@
 		@events.lua
         @author: foreigner26 & yourpalenes
     -->
-    <script src="create.lua" type="client" />
+    <script src="create.lua" type="client"/>
     <script src="events.lua" type="server"/>
 
 
-	<export function="refreshck" type="server"/>
+	<export function="getTableInformations" type="server"/>
 
     <!--
 		@components html_instance
@@ -65,9 +65,9 @@
 
 					<file src="components/images/logo.png" cache="false"/>
 
-					<file src="components/images/skin/0.png" cache="false"/>
-					<file src="components/images/skin/1.png" cache="false"/>
-					<file src="components/images/skin/2.png" cache="false"/>
-					<file src="components/images/skin/3.png" cache="false"/>
+					<file src="components/images/slots/slot1.png" cache="false"/>
+					<file src="components/images/slots/slot2.png" cache="false"/>
+					<file src="components/images/slots/slot3.png" cache="false"/>
+					<file src="components/images/slots/slot4.png" cache="false"/>
 
 </meta>

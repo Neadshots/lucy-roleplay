@@ -29,7 +29,7 @@ function getCharacterNameFromID( id )
 		searched[index] = nil
 	end, refreshCacheRate*1000*60, 1)
 	
-	local _, characters = exports.account:getTableInformations()
+	local _, characters = exports.auth:getTableInformations()
 	for index, value in ipairs(characters) do
 		if value.id == id then
 			local characterName = string.gsub(value["charactername"], "_", " ")

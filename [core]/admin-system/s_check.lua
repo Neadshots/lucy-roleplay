@@ -191,7 +191,7 @@ addCommandHandler( "history",
 		else
 			local targetPlayerName = table.concat({...},"_")
 			-- select by charactername
-			local accounts, characters = exports.account:getTableInformations()
+			local accounts, characters = exports.auth:getTableInformations()
 			local __index = 0
 			for index, value in ipairs(characters) do
 				if value.charactername == targetPlayerName then

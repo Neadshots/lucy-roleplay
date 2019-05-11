@@ -153,7 +153,7 @@ function transferMoneyToPersonal(business, name, amount, reason)
 	local dbid = nil
 	if not reciever then
 		local __index = 0
-		local accounts, characters = exports.account:getTableInformations()
+		local accounts, characters = exports.auth:getTableInformations()
 		for index, value in ipairs(characters) do
 			if value.charactername == (string.gsub(name," ","_")) then
 				__index = index

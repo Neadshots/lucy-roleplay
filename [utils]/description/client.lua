@@ -69,7 +69,7 @@ function togglePinVD()
 		if enableOverlayDescriptionVehPin == "1" then
 			setElementData(localPlayer, "enableOverlayDescriptionVehPin", "0")
 			--exports.hud:sendBottomNotification(localPlayer, "Property Description", "You have UNPINED property description from your screen.")
-			--exports.account:appendSavedData("enableOverlayDescriptionVehPin", "0")
+			--exports.auth:appendSavedData("enableOverlayDescriptionVehPin", "0")
 			if isTimer(timerRefresh) then
 				killTimer(timerRefresh)
 				timerRefresh = nil
@@ -81,7 +81,7 @@ function togglePinVD()
 		else
 			setElementData(localPlayer, "enableOverlayDescriptionVehPin", "1")
 			--exports.hud:sendBottomNotification(localPlayer, "Property Description", "You have PINED property description on your screen.")
-			--exports.account:appendSavedData("enableOverlayDescriptionVehPin", "1")
+			--exports.auth:appendSavedData("enableOverlayDescriptionVehPin", "1")
 			
 			timerRefresh = setTimer(refreshNearByVehs, 1000*refreshingInterval, 0)
 			

@@ -18,10 +18,7 @@ local done = 0
 local debugmode = false
 local function dxDrawText() end
 function applyPickupClientConfigSettings()
-    local streamerDistance = tonumber( exports.account:loadSavedData("streamer-pickup", "25") )
-    if (streamerDistance) then
-        streamdistance = streamerDistance
-    end
+ 
 end
 addEventHandler("accounts:settings:loadGraphicSettings", getRootElement(), applyPickupClientConfigSettings)
 

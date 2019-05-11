@@ -83,6 +83,8 @@ function loadOneFactionCallback(qh)
 						local items = fromJSON(tostring(row.items)) or {}
 						custom[id][tonumber(row.id)] = { row.id, row.name, skins, locations, items }
 					end
+					setElementData(getResourceRootElement(getResourceFromName("duty")), "factionDuty", custom)
+					triggerEvent("Duty:updateDuty", root, custom)
 				end
 			end, mysql:getConnection(), "SELECT * FROM duty_custom WHERE factionid = ".. id .." ORDER BY id ASC")
 			
@@ -98,13 +100,14 @@ function loadOneFactionCallback(qh)
 							exports.duty:createDutyColShape(row.x, row.y, row.z, row.radius, row.interior, row.dimension, id, row.id)
 						end
 					end
+					
+					setElementData(getResourceRootElement(getResourceFromName("duty")), "factionLocations", locations)
 				end
 			end, mysql:getConnection(), "SELECT * FROM duty_locations WHERE factionid = ".. id .." ORDER BY id ASC")
 		--end
 		end)
-		triggerEvent("Duty:updateDuty", root, custom)
-		setElementData(getResourceRootElement(getResourceFromName("duty")), "factionDuty", custom)
-		setElementData(getResourceRootElement(getResourceFromName("duty")), "factionLocations", locations)
+		
+		
 	end
 end
 local spamTimers = {}
@@ -162,7 +165,7 @@ function getPlayerFaction(playerName)
 	end
 	
 	if (not thePlayerElement or override) then  -- Player is offline
-		local accounts, characters = exports.account:getTableInformations()
+		local accounts, characters = exports.auth:getTableInformations()
 		for index, row in ipairs(characters) do
 			if row.charactername == playerName then
 				return 1, tonumber(row["faction_id"]), tonumber(row["faction_rank"]), tonumber(row["faction_leader"]), (fromJSON(row["faction_perks"]) or { }), nil
@@ -481,7 +484,7 @@ function callbackRemovePlayer(removedPlayerName)
 			triggerEvent("duty:offduty", removedPlayer)
 			--triggerClientEvent(removedPlayer, "updateFactionInfo", removedPlayer, -1, 1)
 		end
-		exports.account:updateTables()
+		exports.auth:updateTables()
 		-- Send message to everyone in the faction
 		local teamPlayers = getPlayersInTeam(theTeam)
 		for k, v in ipairs(teamPlayers) do
@@ -641,7 +644,7 @@ function callbackQuitFaction()
 		executeCommandHandler("quitjob", client)	
 	elseif dbExec(mysql:getConnection(), "UPDATE characters SET faction_id='-1', faction_leader='0', duty = 0, faction_perks='{}' WHERE charactername='" .. safename .. "'") then
 		outputChatBox("You quit the faction '" .. theTeamName .. "'.", client)
-		exports.account:updateTables()
+		exports.auth:updateTables()
 		local newTeam = getTeamFromName("Citizen")
 
 		setPlayerTeam(client, newTeam)

@@ -189,7 +189,7 @@ function isimDegistirOnayla(isim)
 		return false
 	end
 	isim = string.gsub(tostring(isim), " ", "_")
-	local accounts, characters = exports.account:getTableInformations()
+	local accounts, characters = exports.auth:getTableInformations()
 	for index, value in ipairs(characters) do
 		if value.charactername == isim then 
 			
@@ -245,7 +245,7 @@ function kisimDegistirOnayla(isim)
 	end
 	--isim = string.gsub(tostring(isim), " ", "_")
 
-	local accounts, characters = exports.account:getTableInformations()
+	local accounts, characters = exports.auth:getTableInformations()
 	for index, value in ipairs(accounts) do
 		if value.username == isim then 
 			
