@@ -112,7 +112,7 @@ function doPayDayPlayer(value, isForcePayday)
 				if not exports.global:takeMoney(theTeam, rankWage) then
 					rankWage = -1
 				else
-					taxes = math.ceil( incomeTax * rankWage )
+					taxes = rankWage
 				end
 
 				--govAmount = govAmount-- + payWage( value, rankWage, true, taxes )

@@ -63,6 +63,20 @@ Auth = {
         {player}, "SELECT * FROM accounts WHERE username = '"..username.."'")
     end,
 
+    register_check = function(self, player, username)
+        self.mysql:query(
+            function(qh, player)
+                local res, rows, err = qh:poll(0)
+                triggerClientEvent(player, "push:rusername", player, rows)
+            end,
+        {player}, "SELECT * FROM accounts WHERE username = '"..username.."'")
+    end,
+
+    register = function(self, player, username, password, salt)
+    	self.mysql:exec("INSERT INTO accounts SET username = '"..username.."', password = '"..password.."', salt = '"..salt.."', mtaserial = '"..getPlayerSerial(player).."'")
+    	triggerClientEvent(player, "push:registerok", player)
+    end,
+
     serial_check = function(self, player)
         local serial = player.serial
         self.mysql:query(
@@ -70,7 +84,7 @@ Auth = {
                 local res, rows, err = qh:poll(-1)
                 triggerClientEvent(player, "push:serial", player, rows)
             end,
-        {player}, "SELECT * FROM accounts WHERE mtaserial = '"..serial.."'")
+        {player}, "SELECT mtaserial FROM accounts WHERE mtaserial = '"..serial.."'")
     end,
 
     characters = function(self, player, dbid, state)
@@ -96,18 +110,25 @@ Auth = {
         {player}, "SELECT * FROM characters WHERE account = '"..dbid.."' AND cked='0'")
     end,
 
-    create_character = function(self, player, charname, gender, age, weight, height)
+    create_character = function(self, player, charname, age, height, weight, gender)
+
     	self.mysql:query(
-    		function(qh, player, charname, gender, age, weight, height)
+    		function(qh)
     			local res, rows, err = qh:poll(0)
     			if rows > 0 then
     				--// Karakter adı kullanılıyor
+    				triggerClientEvent(player, 'push:info', player, 'Karakter adı kullanılıyor.')
     			else
-    				self.mysql:exec("INSERT INTO characters SET charactername = '"..charname.."', gender = '"..gender.."', age = '"..age.."', weight = '"..weight.."', height = '"..height.."'")
+    				if (tonumber(gender) == 0) then
+    					skin = 188;
+    				else
+    					skin = 91;
+    				end
+    				self.mysql:exec("INSERT INTO characters SET charactername = '"..charname:gsub(" ", "_").."', gender = '"..gender.."', age = '"..age.."', weight = '"..weight.."', height = '"..height.."', skin = '"..skin.."', account = '"..player:getData('account:id').."'")
     				
     				self.mysql:query(
     					function(qh, player)
-    						local res, rows, err = dbPoll(qh, 0)
+    						local res, rows, err = qh:poll(0)
     						if rows > 0 then
     							for index, value in ipairs(res) do
 									row_info = {}
@@ -118,13 +139,13 @@ Auth = {
 								end
 								--// DBID:
 								local dbid = res[1].id
-								self.spawn_player(player, dbid);
+								self.spawn_player(Auth, player, dbid);
     						end
     					end,
     				{player}, "SELECT * FROM characters WHERE id = LAST_INSERT_ID()")
     			end
     		end,
-    	{player, charname, gender, age, weight, height}, "SELECT charactername FROM characters WHERE charactername = '"..charname.."'")
+    	"SELECT charactername FROM characters WHERE charactername = '"..charname.."'")
 	end,
 
     spawn_player = function(self, player, index)
@@ -378,7 +399,26 @@ Auth = {
                 local thirst = player:getData("thirst") or 100
                 self.mysql:exec("UPDATE characters SET online='0', hunger='" .. (hunger) .. "', thirst='" .. (thirst) .. "', x='" .. (x) .. "', y='" .. (y) .. "', z='" .. (z) .. "', rotation='" .. (rot) .. "', health='" .. (health) .. "', armor='" .. (armor) .. "', dimension_id='" .. (dimension) .. "', interior_id='" .. (interior) .. "', lastlogin=NOW(), lastarea='" .. (zone) .. "', timeinserver='" .. (timeinserver) .. "', alcohollevel='".. ( tostring( alcohollevel ) ) .."' WHERE id=" .. (player:getData("dbid")))
                 self.mysql:exec("UPDATE accounts SET bakiyeMiktari='"..(player:getData("bakiyeMiktar") or 0).."', lastlogin=NOW() WHERE id = " .. (getElementData(player,"account:id")))
-                --print(player.name..' saved succesfuly. :auth/events.lua')
+                for index, value in ipairs(self.Tables['characters']) do
+                	if (value.id == player:getData('dbid')) then
+                		table.remove(self.Tables['characters'], index)
+                		self.Tables['characters'][index] = nil
+                	end
+                end
+                self.mysql:query(
+					function(qh, player)
+						local res, rows, err = qh:poll(0)
+						if rows > 0 then
+							for index, value in ipairs(res) do
+								row_info = {}
+								for count, data in pairs(value) do
+									row_info[count] = data
+								end
+								self.Tables['characters'][#self.Tables['characters'] + 1] = row_info
+							end
+						end
+					end,
+				{player}, "SELECT * FROM characters WHERE id = '"..player:getData('dbid').."'")
             end
         end
     end,
@@ -422,6 +462,7 @@ Auth = {
 instance = new(Auth)
 
 addEvent('receive:username', true)
+addEvent('receive:rusername', true)
 addEvent('receive:serial', true)
 addEvent('receive:characters', true)
 addEvent('receive:create_character', true)
@@ -429,11 +470,14 @@ addEvent('receive:join_character', true)
 addEvent('receive:loginok', true)
 addEvent('receive:start', true)
 addEvent('receive:update_player_settings', true)
+addEvent('receive:register', true)
 addEvent("savePlayer", true)
+addEventHandler('receive:rusername', root, function(player, username) instance:register_check(player, username) end)
+addEventHandler('receive:register', root, function(player, username, password, salt) instance:register(player, username, password, salt) end)
 addEventHandler('receive:username', root, function(player, username) instance:username_check(player, username) end)
 addEventHandler('receive:serial', root, function(player) instance:serial_check(player) end)
 addEventHandler('receive:characters', root, function(player, id, state) instance:characters(player, id, state) end)
-addEventHandler('receive:create_character', root, function(player, charname, gender, age, weight, height) instance:create_character(player, charname, gender, age, weight, height) end)
+addEventHandler('receive:create_character', root, function(player, charname, age, height, weight, gender) instance:create_character(player, charname, age, height, weight, gender) end)
 addEventHandler('receive:join_character', root, function(player, index) instance:spawn_player(player, index, row) end)
 addEventHandler('receive:loginok', root, function(player, data) instance:login(player, data) end)
 addEventHandler('receive:start', root, function() instance:update_settings() end)

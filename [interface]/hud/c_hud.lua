@@ -77,21 +77,9 @@ SAMP = {
         local health_stat = health/max_health
         
         local r1,g1,b1, r2,g2,b2, a
-        if (health_stat > 0.25) then
             r1,g1,b1 = 180,25,29
             r2,g2,b2 = 90,12,14
             a = 200
-        else
-            r1,g1,b1 = 180,25,29
-            r2,g2,b2 = 90,12,14
-            
-            local aT = getTimerDetails(healthTimer)
-            if (aT > 500) then
-                a = (aT-500)/500*200
-            else
-                a = (500-aT)/500*200
-            end
-        end
         
         local dX,dY,dW,dH = instance.screen.x - 150,0 + 55,150,15
         local dX,dY,dW,dH = instance.screen.x - 150 - instance.zone.x, dY + instance.zone.y + 55, dW, dH

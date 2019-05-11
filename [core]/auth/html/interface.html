@@ -28,10 +28,12 @@
                         <nav id="nav" style="display:none;">
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                 <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="false"></a>
+                                <a class="nav-item nav-link" id="nav-register-tab" data-toggle="tab" href="#nav-register" role="tab" aria-controls="nav-register" aria-selected="false"></a>
                                 <a class="nav-item nav-link" id="nav-home-2-tab" data-toggle="tab" href="#nav-home-2" role="tab" aria-controls="nav-home-2" aria-selected="false"></a>
                                 <a class="nav-item nav-link" id="nav-select-tab" data-toggle="tab" href="#nav-home-2" role="tab" aria-controls="nav-select" aria-selected="false"></a>
                                 <a class="nav-item nav-link" id="nav-login-tab" data-toggle="tab" href="#nav-login" role="tab" aria-controls="nav-login" aria-selected="false"></a>
                                 <a class="nav-item nav-link" id="nav-login-2-tab" data-toggle="tab" href="#nav-login-2" role="tab" aria-controls="nav-login-2" aria-selected="false"></a>
+                                <a class="nav-item nav-link" id="nav-register-2-tab" data-toggle="tab" href="#nav-login-2" role="tab" aria-controls="nav-register-2" aria-selected="false"></a>
                                 <a class="nav-item nav-link" id="nav-character-none-tab" data-toggle="tab" href="#nav-character-none" role="tab" aria-controls="nav-character-none" aria-selected="false"></a>
                                 <a class="nav-item nav-link" id="nav-character-none-list" data-toggle="tab" href="#nav-character-list" role="tab" aria-controls="nav-character-list" aria-selected="false"></a>
                                 <a class="nav-item nav-link" id="nav-create-character-tab" data-toggle="tab" href="#nav-create-character" role="tab" aria-controls="nav-create-character" aria-selected="false"></a>                                
@@ -47,12 +49,11 @@
                                         
                                             <div class="center-container">
                                                 <img tag="center-logo" src="http://mta/auth/components/images/logo.png"/>
-                                                <p class="dialog">Merhaba, öncelikle belirtmek isterim ki aramıza katılmandan gurur duyuyorum dostum ancak bu sunucuya ilk defa giriş yapmış
-                                                    gibisin, tabii bu sadece minik bir sistemsel hatada olabilir bu yüzden alta bir buton koyduk buna basarak benden kurtulabilirsin eğer kayıt olmak
-                                                    istiyorsan <font color="ffc358" style="opacity:0.8"><i>http://www.lucyrpg.com/kayitol</i></font> adresinden aramıza katılabilirsin.
+                                                <p class="dialog">Merhaba, öncelikle belirtmek isterim ki aramıza katılmandan gurur duyuyorum dostum. Ancak bu sunucuya ilk defa giriş yapmış gibisin, tabi bu sistemsel bir hata da olabilir. Eğer hesabın varsa aşağıdaki butondan giriş yapabilirsin hesabın yoksa da kayıt olabilirsin.
                                                 </p>
 
-                                                <a tag="next-step" onClick="set('5')">Yine de ilerle!</a>
+                                                <a tag="next-step" style="margin-right:5px;" onClick="set('5')">Yine de ilerle!</a>
+                                                <a tag="next-step-register" style="margin-left:5px;" onClick="set('11')">Kayıt Ol!</a>
                                             </div>
 
                                         </div>
@@ -87,7 +88,7 @@
                                         
                                             <div class="center-container">
                                                 <img tag="center-logo" src="http://mta/auth/components/images/logo.png"/>
-                                                <p class="dialog"><span class="chname"></span> ile oynamak istiyor musun?/p>
+                                                <p class="dialog"><span class="chname" style="font-weight:600"></span> ile oynamak istiyor musun?</p>
                                                 <div class="inline-character-select-2"></div>
                                                 
                                             </div>
@@ -120,6 +121,61 @@
                                             </div>
                                             
                                         </div>
+                                        <div style="top:97%; display:inline-block; position:absolute; transform:translateY(-100%); color:rgba(240,240,240,0.4); font-family:'SF Pro'; font-size:1.1vh;">© 2019 - Lucy RPG</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane animated fadeIn" id="nav-register" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                    <div class="container-fluid">
+                                        <div class="row h-100 justify-content-center">
+                                            <div class="col-12 text-center" style="margin-top:auto; margin-bottom:auto; margin-left:auto; margin-right:auto;">
+                                                
+                                                <div class="center-container">
+    
+                                                    <div style="width:100%; display:inline-block">
+                                                        <img tag="center-logo-2" style="float:none;" src="http://mta/auth/components/images/logo.png"/>
+                                                    </div>
+    
+                                                    <div style="width:100%; display:inline-block;">
+                                                        <div class="input-container--list">
+                                                            <div class="input-group mb-2">
+                                                                <input type="text" tag="input-login" name="reg-username" class="form-control" placeholder="Kullanıcı Adı" aria-label="Username" aria-describedby="basic-addon1">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                                
+                                            </div>
+                                        <div style="top:97%; display:inline-block; position:absolute; transform:translateY(-100%); color:rgba(240,240,240,0.4); font-family:'SF Pro'; font-size:1.1vh;">© 2019 - Lucy RPG</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane animated fadeIn" id="nav-register-2" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                    <div class="container-fluid">
+                                        <div class="row h-100 justify-content-center">
+                                            <div class="col-12 text-center" style="margin-top:auto; margin-bottom:auto; margin-left:auto; margin-right:auto;">
+                                                
+                                                <div class="center-container">
+    
+                                                    <div style="width:100%; display:inline-block">
+                                                        <img tag="center-logo-2" style="float:none;" src="http://mta/auth/components/images/logo.png"/>
+                                                    </div>
+    
+                                                    <div style="width:100%; display:inline-block">
+                                                        <div class="input-container--list">
+                                                            <div class="input-group mb-2">
+                                                                <input type="password" tag="input-login" name="reg-password" class="form-control" placeholder="Şifre" aria-label="Username" aria-describedby="basic-addon1">
+                                                            </div>
+                                                            <a tag="next-step" style="float:left; padding:5px; position:relative; top:-1.9vh; font-size:1.1vh; left:-4px;" style="float:left; font-size:1.2vh" onClick="set(13)">Geri dön</a>
+                                                        </div>
+                                                    </div>
+                                                
+                                                </div>
+                                                
+                                            </div>
                                         <div style="top:97%; display:inline-block; position:absolute; transform:translateY(-100%); color:rgba(240,240,240,0.4); font-family:'SF Pro'; font-size:1.1vh;">© 2019 - Lucy RPG</div>
                                     </div>
                                 </div>
@@ -189,8 +245,30 @@
                                                         <img tag="center-logo" src="http://mta/auth/components/images/logo.png"/>
                                                         
                                                         <div style="width:20vmax; display:inline-block; margin:auto;">
+                                                            <div class="input-group mb-2" style="margin-top:0px; padding-top:0px; padding-right:5px;">
+                                                                    <input type="text" tag="input-login" name="character-name" style="padding-right:0px !important;" class="form-control" maxlength="17" placeholder="Karakter_Ismi (bkz:Cesar_Villaluz)" aria-label="Username" aria-describedby="basic-addon1">
+                                                            </div>
+                                                            
                                                             <div class="input-group mb-2">
-                                                                <input type="text" tag="input-login" name="character-name" class="form-control" maxlength="17" placeholder="Karakter_Ismi (bkz:Cesar_Villaluz)" aria-label="Username" aria-describedby="basic-addon1">
+
+                                                                <side style="width:33%;">
+                                                                    <div class="input-group mb-2">
+                                                                        <input type="text" style="padding-right:0px !important;" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" style="margin-left:10px;" tag="input-age" name="character-age" maxlength="2" class="form-control" placeholder="Yaş" aria-label="Username" aria-describedby="basic-addon1">
+                                                                    </div>
+                                                                </side>
+
+                                                                <side style="width:33%;">
+                                                                    <div class="input-group mb-2">
+                                                                        <input type="text" style="padding-right:0px !important;" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" style="margin-left:10px;" tag="input-age" name="character-length" maxlength="3" class="form-control" placeholder="Boy" aria-label="Username" aria-describedby="basic-addon1">
+                                                                    </div>
+                                                                </side>
+
+                                                                <side style="width:33%;">
+                                                                    <div class="input-group mb-2">
+                                                                        <input type="text" style="padding-right:0px !important;" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" style="margin-left:10px;" tag="input-age" name="character-weight" maxlength="3" class="form-control" placeholder="Kilo" aria-label="Username" aria-describedby="basic-addon1">
+                                                                    </div>
+                                                                </side>
+
                                                             </div>
 
                                                             <div class="input-group mb-2">
@@ -199,14 +277,9 @@
                                                                     <a class="gender__selected male_select" style="color:rgba(240,240,240,0.9);" name="gender-male" onClick="male()">Erkek</a>
                                                                     <a class="female_select" name="gender-female" style="color:rgba(240,240,240,0.9);" onClick="female()">Kadın</a>
                                                                 </side>
-
-                                                                <side style="width:50%;">
-                                                                    <div class="input-group mb-2">
-                                                                        <input type="text" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" style="margin-left:10px;" tag="input-age" name="character-age" maxlength="2" class="form-control" placeholder="Yaşınızı girin" aria-label="Username" aria-describedby="basic-addon1">
-                                                                    </div>
-                                                                </side>
+                    
                                                             </div>
-                                                            
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -216,6 +289,8 @@
                                         </div>
                                         <div style="top:97%; display:inline-block; position:absolute; transform:translateY(-100%); color:rgba(240,240,240,0.4); font-family:'SF Pro'; font-size:1.1vh;">© 2019 - Lucy RPG</div>
                                     </div>
+                                    <a class="create--character--screen" onClick="create_character()"><i class="material-icons">how_to_reg</i></a>
+                                    <a class="create--character--screen" style="left:25px;" onClick="set(10)"><i class="material-icons">clear</i></a>
                                 </div>
                             </div>
 
@@ -262,7 +337,8 @@
 
                         </div>
 
-                </div>
+                    </div>
+
             </div>
         </div>
     </section>
@@ -410,6 +486,14 @@
         target.trigger('click');
     }
 
+    function _error(message,val) {
+        if (val) {
+            toastr.success(message);
+        } else { 
+            toastr.error(message); 
+        } 
+    }
+
     function activaTab(tab){
         $('.nav-tabs a[href="#' + tab + '"]').tab('show');
     };
@@ -421,7 +505,27 @@
            sections.openSection('#nav-login-2'); 
            document.getElementsByName('password')[0].placeholder= username + ' adlı hesabın şifresini gir';
         
-        } else if (val == 1) {
+        } else if (val == 12) {
+           step = 11;
+
+           nav('#nav-register-2');
+           sections.openSection('#nav-register-2'); 
+           document.getElementsByName('reg-password')[0].placeholder= username + ' adlı hesabın şifresini gir';
+        
+        } else if (val == 13) {
+            step = 10;
+
+            $("#nav-register-2-tab").removeClass("active");
+            sections.closeSection('#nav-register-2');
+
+            setTimeout(function() {nav('#nav-register'); sections.openSection('#nav-register');},500,1)
+
+        } else if (val == 14) {
+            step = 1;
+
+            nav('#nav-login'); sections.openSection('#nav-login');
+
+        }  else if (val == 1) {
             step = 1;
 
             $("#nav-login-2-tab").removeClass("active");
@@ -476,10 +580,48 @@
                 $("#nav-character-list").removeClass("active");
                 sections.closeSection('#nav-character-list');
                 setTimeout(function() {nav('#nav-create-character'); sections.openSection('#nav-create-character');},500,1)
+            } else {
+                toastr.error('4 karakterden fazla karaktere sahip olamazsınız.');
             }
 
-        }
+        } else if (val == 10) {
+            step = 4;
 
+            $("#nav-create-character").removeClass("active");
+            sections.closeSection('#nav-create-character');
+            setTimeout(function() {nav('#nav-character-list'); sections.openSection('#nav-character-list');},500,1)
+
+        } else if (val == 11) {
+            step = 10;
+
+            $("#nav-home-tab").removeClass("active");
+            sections.closeSection('#nav-home');
+            setTimeout(function() {nav('#nav-register'); sections.openSection('#nav-register');},500,1)
+        
+        } 
+
+    }
+
+    function create_character() {
+        if (escapeHtml($('input[name="character-name"]').val()).length > 0 ) {
+            if (escapeHtml($('input[name="character-age"]').val()).length > 0 ) {
+                if (escapeHtml($('input[name="character-length"]').val()).length > 0 ) {
+                    if (escapeHtml($('input[name="character-weight"]').val()).length > 0 ) {
+                        
+                        mta.triggerEvent('auth.javascript.html5.document.return.to.character.create',_.escape($('input[name="character-name"]').val()),_.escape($('input[name="character-age"]').val()),_.escape($('input[name="character-length"]').val()),_.escape($('input[name="character-weight"]').val()),$('.gender__selected').text());
+
+                    } else {
+                        toastr.error('Karakter kilosu boş bırakılamaz.');  
+                    }
+                } else {
+                    toastr.error('Karakter boyu boş bırakılamaz.');  
+                }
+            } else {
+                toastr.error('Karakter yaşı boş bırakılamaz.');  
+            }
+        } else {
+            toastr.error('Karakter adı hatalı.');
+        }
     }
 
     function enter() {
@@ -490,16 +632,41 @@
 
                 sections.closeSection('#nav-login');
                 mta.triggerEvent('auth.javascript.html5.document.return.to.username','auth.javascript.html5.document.return.to.username',_.escape($('input[name="username"]').val()));
-            
+            } else {
+                toastr.error('Kullanıcı adı boş bırakılamaz.');
             }
         } else if (step == 2) {
-            if (escapeHtml($('input[name="username"]').val()).length > 0 ) {
+            if (escapeHtml($('input[name="password"]').val()).length > 0 ) {
 
             $("#nav-login-2-tab").removeClass("active");
 
             sections.closeSection('#nav-login-2');
             mta.triggerEvent('auth.javascript.html5.document.return.to.password','auth.javascript.html5.document.return.to.password',_.escape($('input[name="password"]').val()));
+            
+            } else {
+                toastr.error('Şifre boş bırakılamaz.');
+            }
+        } else if (step == 10) {
+            if (escapeHtml($('input[name="reg-username"]').val()).length > 0 ) {
 
+            $("#nav-register-tab").removeClass("active");
+
+                sections.closeSection('#nav-register');
+                mta.triggerEvent('auth.javascript.html5.document.return.to.username.register','auth.javascript.html5.document.return.to.username.register',_.escape($('input[name="reg-username"]').val()));
+            } else {
+                toastr.error('Kullanıcı adı boş bırakılamaz.');
+            }
+
+        } else if (step == 11) {
+            if (escapeHtml($('input[name="reg-password"]').val()).length > 0 ) {
+
+            $("#nav-register-2-tab").removeClass("active");
+
+            sections.closeSection('#nav-register-2');
+            mta.triggerEvent('auth.javascript.html5.document.return.to.password.register','auth.javascript.html5.document.return.to.password.register',_.escape($('input[name="reg-password"]').val()));
+            
+            } else {
+                toastr.error('Şifre boş bırakılamaz.');
             }
         }
     }
@@ -509,11 +676,41 @@
             nav('#nav-login');
             $('input[name="username"]').val('');
             sections.openSection('#nav-login');
+
+        } else if (step == 10) {
+            nav('#nav-register');
+            sections.openSection('#nav-register');
         }
     }
 
     $(document).ready(function() {
         mta.triggerEvent('browser:ready');
-    });
+        
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+            }
+        });
+
+    function testInput(event) {
+        var value = String.fromCharCode(event.which);
+        var pattern = new RegExp(/[a-zåäö_]/i);
+        return pattern.test(value);
+    }
+
+    $('#character-name').bind('keypress', testInput);
 
   </script>

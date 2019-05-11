@@ -86,7 +86,7 @@ function getFirstDetails(element)
 	if element.type == "player" then
 		local table = {
 			['loggedin'] = getElementData(element, "loggedin"),
-			['reconx'] = getElementData(element, "reconx"),
+			['reconx'] = getElementData(element, "reconx") or false,
 			['writting'] = getElementData(element, "writting"),
 			['playerid'] = getElementData(element, "playerid"),
 			['hiddenadmin'] = getElementData(element, "hiddenadmin"),

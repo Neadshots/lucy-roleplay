@@ -33,6 +33,10 @@ p.dialog {color:rgba(240,240,240,0.8); width:calc(100% - 2vmax); display:inline-
 a[tag="next-step"] {display:inline-block; color:rgba(240,240,240,0.8) !important; font-family:"SF Pro" !important; transition:0.3s ease all; margin-top:1.5vh !important; text-decoration:none; font-size:1.4vh; margin:0px auto;}
 a[tag="next-step"]:hover {color:rgba(240,240,240,0.5) !important; transition:0.3s ease all;}
 
+a[tag="next-step-register"] {display:inline-block; color:rgba(255, 195, 88,0.9) !important; font-family:"SF Pro" !important; transition:0.3s ease all; margin-top:1.5vh !important; text-decoration:none; font-size:1.4vh; margin:0px auto;}
+a[tag="next-step-register"]:hover {color:rgba(255, 195, 88,0.5) !important; transition:0.3s ease all;}
+
+
 a[tag="get-back"] {display:inline-block; position:relative; font-family:"SF Pro"; font-size:1.2vh; transition:color 0.3s,margin-left 0.4s; top:-0.6vh; width:auto; float:right; color:rgba(240,240,240,0.8); text-decoration:none;}
 a[tag="get-back"]:hover {color:rgba(254, 196, 0,0.8) !important; transition:color 0.3s,margin-left 0.4s;}
 a[tag="get-back"] i {font-size:3vh;}
@@ -40,8 +44,9 @@ a[tag="get-back"] i {font-size:3vh;}
 a[tag="image-selection"] {width:6vh; height:6vh; display:inline-block; text-align:center; line-height:6vh; font-weight:600; font-family:"SF Pro" !important; font-size:1.5vh; color:rgba(240,240,240,0.8) !important; background:#ffc358; opacity:0.9; overflow:hidden; border-radius:100%;}
 
 input[tag="input-age"]::placeholder {color:rgba(240,240,240,0.8) !important; transition:0.3s ease all;}
-input[tag="input-age"] {width:calc(100% - 10px); margin-top:0.9vh; background:transparent !important; color:rgba(255, 195, 88,0.9) !important; text-align:center; border:none !important; transition:border 0.3s; border-bottom:none !important; text-indent:0px !important; padding-left:0px !important; border-radius:0px !important; display:inline-block; font-family:"SF Pro" !important; font-size:1.2vh;}
-input[tag="input-age"]:focus {box-shadow:none !important; border:none !important; border-bottom:none !important; transition:border 0.3s;}
+input[tag="input-age"] {width:calc(100% - 10px); margin-top:0.9vh; background:transparent !important; transition:0.3s ease all; color:rgba(240,240,240,0.8) !important; text-align:center; border:none !important; border-bottom:2px solid rgba(240,240,240,0.5) !important; transition:border 0.3s; text-indent:0px !important; padding-left:0px !important; border-radius:0px !important; display:inline-block; font-family:"SF Pro" !important; font-size:1.2vh;}
+input[tag="input-age"]:focus {color:rgba(255, 195, 88,0.9) !important; box-shadow:none !important; border:none !important; border-bottom:2px solid rgba(255, 195, 88,0.7)  !important; transition:border 0.3s;}
+input[tag="input-age"]:hover {color:rgba(255, 195, 88,0.9) !important; border-bottom:2px solid rgba(255, 195, 88,0.7)  !important; transition:border 0.3s;}
 input[tag="input-age"]:focus::placeholder {color:rgba(255, 195, 88,0.9) !important; transition:0.3s ease all;}
 input[tag="input-age"]:hover::placeholder {color:rgba(255, 195, 88,0.9) !important; transition:0.3s ease all;}
 
@@ -52,6 +57,8 @@ input[tag="input-login"]:focus {box-shadow:none !important; border:none !importa
 td {transition:background 0.3s;}
 .character:hover + td {background:#fff; transition:background 0.3s;}
 
+#toast-container>div {box-shadow:none !important; font-family:"SF Pro" !important; border-radius:5px !important; font-size:1.2vh !important;}
+
 .input-container--list {width:20vmax; display:inline-block; margin:auto;}
 
 .create--character--screen {position:fixed; background:#ffc358; opacity:0.9; border-radius:100%; width:50px; height:50px; bottom:25px; right:25px; line-height:55px; text-align:center; color:rgba(255,255,255,0.8);}
@@ -61,7 +68,7 @@ td {transition:background 0.3s;}
 .gender a {float:left; display:inline-block; width:50%; background:rgba(0,0,0,0.2); height:25px; line-height:25px; font-size:1.2vh; font-weight:500 !important; font-family:"SF Pro" !important;}
 .gender__selected {background:#ffc358 !important; opacity:0.9; color:#101111 !important; font-weight:600 !important; font-family:"SF Pro" !important;}
 
-@media only screen and (max-width: 1025px) {.input-container--list {width:25vmax !important} input[tag="input-age"] {margin-top:0.7vh !important;} .center-container {width:75% !important;} .gender {height:20px !important} .gender a {height:20px !important; line-height:20px !important;} .create--character--screen {height:40px !important; width:40px !important;} .create--character--screen i {line-height:43px !important} }
+@media only screen and (max-width: 1281px) {.input-container--list {width:25vmax !important} input[tag="input-age"] {margin-top:0.7vh !important;} .center-container {width:75% !important;} .gender {height:20px !important} .gender a {height:20px !important; line-height:20px !important;} .create--character--screen {height:40px !important; width:40px !important;} .create--character--screen i {line-height:43px !important} }
 
 table {border-collapse: separate !important; border-spacing: 0 8px !important;}
 

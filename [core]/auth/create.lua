@@ -9,6 +9,7 @@ Auth = {
     user = {},
     characters = {},
     cks = {},
+    currslot = 0,
 
     change = function(self,variable,value)
 
@@ -86,6 +87,23 @@ Auth = {
             end            
 
             return true
+        end
+
+        if event == 'auth.javascript.html5.document.return.to.password.register' then
+            local salt = math.random(100000, 999999)
+            local encryptedPW = string.lower(md5(string.lower(md5(value))..salt))
+            triggerServerEvent("receive:register", localPlayer, localPlayer, self.register.username, encryptedPW, salt)
+            
+            self.register.username = nil;
+
+            return true
+        end
+
+        if event == 'push:registerok' then 
+            if self.browser then 
+                self.browser:executeJavascript2('_error(`Buraya kullanıcı adınızı yazarak giriş yapabilirsiniz.`,true)');
+                self.browser:executeJavascript2('set(14)');
+            end
         end
 
         --[[
@@ -193,6 +211,45 @@ Auth = {
         end
 
         --[[
+            @method: push:info
+            @desc: hata mesajları
+        ]]--
+        if event == "push:info" then 
+            if self.browser then 
+                self.browser:executeJavascript2('_error(`'..value..'`)');
+            end
+        end
+
+        --[[
+            @method: auth.javascript.html5.document.return.to.username.register
+            @desc: Kullanıcı adı.
+        ]]--
+        if event == "auth.javascript.html5.document.return.to.username.register" then 
+            self.register = {}
+            self.register.username = value;
+
+            triggerServerEvent("receive:rusername", localPlayer, localPlayer, value)
+        end
+
+        --[[
+            @method: auth.javascript.html5.document.return.to.username.register
+            @desc: Kullanıcı adı.
+        ]]--
+        if event == "push:rusername" then 
+            if tonumber(value) > 0 then 
+                if self.browser then 
+                    self.browser:executeJavascript2('_error(`Kullanıcı adı kullanılıyor.`)');
+                    self.browser:executeJavascript2('reload()');
+                end
+            else 
+                if self.browser then
+                    self.browser:executeJavascript2('set(12,`'..self.register.username..'`)');            
+                end
+            end
+        end
+
+
+        --[[
             @method: push:login_character
             @desc: Karaktere giriş, client işleme
         ]]--
@@ -223,28 +280,50 @@ Auth = {
                 if #self.characters == 0 then
                     triggerServerEvent('receive:characters',localPlayer,localPlayer,localPlayer:getData('account:id'),'f10')
                 end
+                self.currslot = 0;
+                local i = 1
+		        for index, value in ipairs(self.characters) do
+		            if i <= 4 then
+		                if value.id == localPlayer:getData('dbid') then
+		                    self.currslot = i
+		                end
+		                i = i + 1
+		            end
+		        end
                 addEventHandler('onClientRender',root,self.characterlist)
+                addEventHandler('onClientKey',root,self.characterkey)
             else
                 localPlayer:setData('f10', false)
                 removeEventHandler('onClientRender',root,self.characterlist)
+                removeEventHandler('onClientKey',root,self.characterkey)
             end
     	end
     end,
+
+    characterkey = function(key, state)
+    self = Auth
+    	if state then
+	    	if (key == 'mouse_wheel_up') or (key == 'pgup') then
+	    		self.currslot = self.currslot + 1
+	    		if self.currslot > 4 then
+	    			self.currslot = 1
+	    		end
+	    	elseif (key == 'mouse_wheel_down') or (key == 'pgdn') then
+    			self.currslot = self.currslot - 1
+    			if self.currslot < 1 then
+    				self.currslot = 4
+    			end
+	    	elseif (key == 'enter') then
+	    		if (self.currslot > 0) then
+
+	    		end
+	    	end
+	    end
+	end,
     
     characterlist = function()
     instance = Auth
-        local i = 1
-        local selected = 1
-        for index, value in ipairs(instance.characters) do
-            if i <= 4 then
-                if value.id == localPlayer:getData('dbid') then
-                    selected = i
-                end
-               
-                i = i + 1
-            end
-        end
-        dxDrawImage(instance.screen.x-215, instance.screen.y-210, 200, 200, "components/images/slots/slot"..selected..".png")
+        dxDrawImage(instance.screen.x-215, instance.screen.y-210, 200, 200, "components/images/slots/slot"..instance.currslot..".png")
         -- #4 of list one:
         list_positions = {
             [1] = {instance.screen.x-145, instance.screen.y-190},
@@ -268,25 +347,45 @@ Auth = {
     end,
 }
 instance = new(Auth)
---localPlayer:setData('loggedin', 0)
+
 addEvent('push:serial',true)
 addEvent('push:username',true)
+addEvent('push:rusername',true)
 addEvent('push:characters',true)
 addEvent('push:characters:list',true)
 addEvent('push:start_login',true)
 addEvent('push:login_character',true)
+addEvent('push:info',true)
+addEvent('push:registerok',true)
 addEvent('auth.javascript.html5.document.return.to.username',true)
 addEvent('auth.javascript.html5.document.return.to.password',true)
 addEvent('auth.javascript.html5.document.return.to.character.select',true)
+addEvent('auth.javascript.html5.document.return.to.character.create',true)
+addEvent('auth.javascript.html5.document.return.to.username.register',true)
+addEvent('auth.javascript.html5.document.return.to.password.register',true)
 
 addEventHandler('push:serial',root,function(callback) instance:events('push:serial',callback) end)
 addEventHandler('push:username',root,function(callback) instance:events('push:username',callback) end)
+addEventHandler('push:rusername',root,function(callback) instance:events('push:rusername',callback) end)
+addEventHandler('push:registerok',root,function(callback) instance:events('push:registerok',callback) end)
 addEventHandler('push:characters',root,function(callback) instance:events('push:characters',callback) end)
 addEventHandler('push:characters:list',root,function(callback) instance:events('push:characters:list',callback) end)
 addEventHandler('push:login_character',root,function(callback) instance:events('push:login_character',callback) end)
+addEventHandler('push:info',root,function(message) instance:events('push:info',tostring(message)) end)
 addEventHandler('auth.javascript.html5.document.return.to.username',root,function(event,callback) instance:events(event,callback) end)
 addEventHandler('auth.javascript.html5.document.return.to.password',root,function(event,callback) instance:events(event,callback) end)
 addEventHandler('auth.javascript.html5.document.return.to.character.select',root,function(event,callback) instance:events(event,callback) end)
+addEventHandler('auth.javascript.html5.document.return.to.username.register',root,function(event,callback) instance:events(event,callback) end)
+addEventHandler('auth.javascript.html5.document.return.to.password.register',root,function(event,callback) instance:events(event,callback) end)
+
+addEventHandler('auth.javascript.html5.document.return.to.character.create',root,function(chname,chage,chlength,chweight,chgender)
+    if chgender == 'Erkek' then 
+        chgender = 0;
+    else 
+        chgender = 1;
+    end
+    triggerServerEvent('receive:create_character', localPlayer, localPlayer, chname, chage, chlength, chweight, chgender)
+end)
 
 function enter(button,press)
     if press and button == 'enter' then
