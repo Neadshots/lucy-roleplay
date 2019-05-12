@@ -105,6 +105,8 @@ Auth = {
                     else
                         triggerClientEvent(player, "push:characters", player, characters)
                     end
+                else
+                	triggerClientEvent(player, "push:characters", player, false)
                 end
             end,
         {player}, "SELECT * FROM characters WHERE account = '"..dbid.."' AND cked='0'")
@@ -398,7 +400,7 @@ Auth = {
                 local hunger = player:getData("hunger") or 100
                 local thirst = player:getData("thirst") or 100
                 self.mysql:exec("UPDATE characters SET online='0', hunger='" .. (hunger) .. "', thirst='" .. (thirst) .. "', x='" .. (x) .. "', y='" .. (y) .. "', z='" .. (z) .. "', rotation='" .. (rot) .. "', health='" .. (health) .. "', armor='" .. (armor) .. "', dimension_id='" .. (dimension) .. "', interior_id='" .. (interior) .. "', lastlogin=NOW(), lastarea='" .. (zone) .. "', timeinserver='" .. (timeinserver) .. "', alcohollevel='".. ( tostring( alcohollevel ) ) .."' WHERE id=" .. (player:getData("dbid")))
-                self.mysql:exec("UPDATE accounts SET bakiyeMiktari='"..(player:getData("bakiyeMiktar") or 0).."', lastlogin=NOW() WHERE id = " .. (getElementData(player,"account:id")))
+                self.mysql:exec("UPDATE accounts SET bakiyeMiktari='"..(player:getData("bakiyeMiktar") or 0).."', lastlogin=NOW() WHERE id = '" .. (getElementData(player,"account:id")).."'")
                 for index, value in ipairs(self.Tables['characters']) do
                 	if (value.id == player:getData('dbid')) then
                 		table.remove(self.Tables['characters'], index)
@@ -424,6 +426,8 @@ Auth = {
     end,
 
     get_tables = function(self)
+    	self.Tables['accounts'] = {};
+    	self.Tables['characters'] = {};
         self.mysql:query(
 			function(qh)
 				local res, rows, err = dbPoll(qh, 0)
@@ -487,3 +491,4 @@ addEventHandler('savePlayer', root, function() instance:save(source) end)
 addEventHandler('onResourceStart', resourceRoot, function() instance:get_tables() end)
 addCommandHandler('saveme', function(p) instance:save(p) end)
 function getTableInformations() return instance:informations() end
+function updateTables() instance:get_tables() return true end

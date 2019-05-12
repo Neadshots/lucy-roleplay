@@ -1314,7 +1314,7 @@ function megaphoneShout(thePlayer, commandName, ...)
 						end
 					end
 				end
-				exports.logs:dbLog(thePlayer, 20, affectedElements, langname.." "..message)
+
 			end
 		else
 			outputChatBox("İster inan ister inanma, sahip olmadığın bir megafonla bağırmak zor.", thePlayer, 255, 0 , 0)
@@ -2647,8 +2647,12 @@ addEventHandler("onResourceStart", resourceRoot,
 	function()
 		for index, player in ipairs(getElementsByType("player")) do
 			if getElementData(player, "loggedin") and getElementData(player, "muted") then
-				setTimer(startMuteForPlayer, 1000*60, getElementData(player, "mute_time"), player)
+				--setTimer(startMuteForPlayer, 1000*60, getElementData(player, "mute_time"), player)
 			end
 		end
 	end
 )
+
+function isThisFreqRestricted()
+	return false
+end

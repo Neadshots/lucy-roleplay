@@ -268,8 +268,8 @@ local function openElementInventory( ax, ay )
 		ax = math.max( 10, math.min( sx - 410, ax ) )
 		ay = math.max( 10, math.min( sy - 310, ay ) )
 
-		wInventory = guiCreateStaticImage(ax-w/2, ay-h/2, w, h, ":resources/window_body.png",false)--type .. " Inventory", false)
-		--guiWindowSetSizable(wInventory, false)
+		wInventory = guiCreateWindow(ax-w/2, ay-h/2, w, h, "Envanter",false)--type .. " Inventory", false)
+		guiWindowSetSizable(wInventory, false)
 		lYou = guiCreateLabel(0.25, 0.1, 0.87, 0.05, "Sen", true, wInventory)
 		guiSetFont(lYou, "default-bold-small")
 

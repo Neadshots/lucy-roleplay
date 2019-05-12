@@ -21,6 +21,7 @@ SAMP = {
     opened_1 = false,
 	opened_2 = false,
     opened_3 = false,
+    font = DxFont('fonts/BentonSansRegural.otf', 8),
     
     _rectangle = function(x, y, rx, ry, color, radius)
 	    rx = rx - radius * 2
@@ -76,10 +77,6 @@ SAMP = {
         local max_health = (((max_health-569)/(1000-569))*100)+100
         local health_stat = health/max_health
         
-        local r1,g1,b1, r2,g2,b2, a
-            r1,g1,b1 = 180,25,29
-            r2,g2,b2 = 90,12,14
-            a = 200
         
         local dX,dY,dW,dH = instance.screen.x - 150,0 + 55,150,15
         local dX,dY,dW,dH = instance.screen.x - 150 - instance.zone.x, dY + instance.zone.y + 55, dW, dH
@@ -87,8 +84,8 @@ SAMP = {
 
         local dX,dY,dW,dH = instance.screen.x - 147,3 + 55,144,9
         local dX,dY,dW,dH = instance.screen.x - 147 - instance.zone.x, dY + instance.zone.y + 55, dW, dH
-        dxDrawRectangle( dX + 10 - 110, dY + instance.extraY,dW - 10, dH, tocolor(r2,g2,b2,255) )
-        dxDrawRectangle( dX + 10 - 110 + dW - (health_stat * dW),dY + instance.extraY, health_stat * dW - 10, dH, tocolor(231, 76, 60,a) )
+        dxDrawRectangle( dX + 10 - 110, dY + instance.extraY,dW - 10, dH, tocolor(255, 195, 88,150) )
+        dxDrawRectangle( dX + 10 - 110 + dW - (health_stat * dW),dY + instance.extraY, health_stat * dW - 10, dH, tocolor(255, 195, 88,200) )
 
     end,
 
@@ -191,6 +188,10 @@ SAMP = {
     		if (i == 1) then data = localPlayer:getData('hunger') or 100 elseif (i == 2) then data = localPlayer:getData('thirst') or 100 elseif (i == 3) then data = 1 end
     		dxDrawRectangle(x+((w+5)*i)+3, y+3, (w-6)*data/100, h-6, tocolor(colors[i][1], colors[i][2], colors[i][3], 160))
     		dxDrawImage(x+((w+5)*i)-5, y, 16, 16, "images/"..icons[i]..".png")
+    		if (i == 3) then
+    			x, y, w, h = x+((w+5)*i)+3, y+3, w-6, h-6
+    			dxDrawText(currentExprance(getElementData(localPlayer, "level"),1).."/"..currentExprance(getElementData(localPlayer, "level"),2),x,y,w+x,y+h,tocolor(255,255,255),1,'sans','center','center')
+    		end
     	end
     	local vehicle = localPlayer.vehicle
     	local x, y = sx*0.770, sy*0.35
@@ -201,11 +202,19 @@ SAMP = {
     
     drawmta = function()
     SAMP = instance;
-        for i=1, 4 do
-            SAMP._rectangle(sx-198, (i*22), 195, 15, tocolor(220, 220, 220, 70), 7)
-            if i == 1 then data = localPlayer.health elseif i == 2 then data = localPlayer.armor elseif i == 3 then data = localPlayer:getData('hunger') elseif i == 4 then data = localPlayer:getData('thirst') end
-            SAMP._rectangle(sx-198, (i*22), 195*data/100, 15, tocolor(color_mta[i][1], color_mta[i][2], color_mta[i][3], 170), 7)
-        end
+        local x, y, w, h = sx-145, 10, 141, 144
+        local clip = localPlayer:getAmmoInClip()
+        local ammo = localPlayer:getTotalAmmo()
+
+        dxDrawImage(x, y, w, h, 'components/images/hud_bg.png', 0, 0, 0, tocolor(255, 255, 255, 255))
+        
+        dxDrawImageSection(x + 22.5, y + 1, 97 * getElementData(localPlayer, "hunger") / 100, 32, 0, 0, 97 * getElementData(localPlayer, "hunger") / 100, 32, 'components/images/hud_stamina.png', 0, 0, 0, tocolor(240,204,90, 255))
+        dxDrawImageSection(x + 1, y + 23.7, 32, 97 * getElementHealth(localPlayer) / 100, 0, 0, 32, 97 * getElementHealth(localPlayer) / 100, 'components/images/hud_hp.png', 0, 0, 0, tocolor(255, 255, 255, 255))
+        dxDrawImageSection(x + 23, y + 111, 97 * getElementData(localPlayer, "thirst") / 100, 32, 0, 0, 97 * getElementData(localPlayer, "thirst") / 100, 32, 'components/images/hud_armour.png', 0, 0, 0, tocolor(255, 255, 255, 255))
+        dxDrawText(clip, x + 123, y + 95, _, _, tocolor(255, 255, 255, 255), 1, SAMP.font)
+        dxDrawImage(x - 56, y + 50, 170, 79, 'components/images/weapons/weapon'..getPedWeapon(localPlayer)..'.png', 0, 0, 0, tocolor(255, 255, 255, 255))
+        dxDrawImage(x + 22, y + 16, 16, 16, 'images/hunger.png')
+        dxDrawImage(x + 22, y + 110, 16, 16, 'images/thirst.png')
     end,
 
     create = function(self,id)
@@ -330,12 +339,14 @@ addEventHandler('hud:load',root,load)
 addCommandHandler("samp",
 	function(cmd, mode)
 		if localPlayer:getData("loggedin") == 1 then
-			if mode and (tonumber(mode) >= 2 and tonumber(mode) <= 3) then
+			--if not mode then mode = 2 end
+			if mode and (tonumber(mode) >= 1 and tonumber(mode) <= 2) then
+				mode = mode + 1
 				saveJSON['mode'] = mode
-				outputChatBox(exports.pool:getServerSyntax(false, "s").."Arayüz modu başarıyla seçildi. ("..mode..")", 255, 255, 255, true)
+				outputChatBox(exports.pool:getServerSyntax(false, "s").."Arayüz modu başarıyla seçildi. ("..(mode-1)..")", 255, 255, 255, true)
 				triggerEvent('hud:changeInterface', localPlayer, mode)
 			else
-				outputChatBox(exports.pool:getServerSyntax(false, "s").."Aktif SAMP Arayüz Modları: /samp 2, /samp 3", 255, 255, 255, true)
+				outputChatBox(exports.pool:getServerSyntax(false, "s").."Aktif SAMP Arayüz Modları: /samp 1, /samp 2", 255, 255, 255, true)
 			end
 		end
 	end
@@ -395,14 +406,13 @@ function isInSlot(dX, dY, dSZ, dM)
 	end
 end
 
-local components = { "weapon", "ammo", "health", "clock", "money", "breath", "armour", "wanted", "radar"}
+local components = { "weapon", "ammo", "health", "clock", "money", "breath", "armour", "radar"}
 addEvent('hud:changeInterface', true)
 addEventHandler('hud:changeInterface', root, function(data)
 	if (tonumber(data) == 1) then
         for i, v in ipairs(components) do
             setPlayerHudComponentVisible(v, false)
         end
-        setPlayerHudComponentVisible("radar", true)
         instance:destroy()
         instance:create(1)
 	elseif (tonumber(data) == 2) then 

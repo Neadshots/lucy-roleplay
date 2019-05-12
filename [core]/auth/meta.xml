@@ -1,9 +1,9 @@
 <meta>
-	<info name="Projecte - auth class" author="yourpalenes and foreigner26" version="rc0.9" type="script"/>
-	<min_mta_version server="1.5.4-9.11342" client="1.5.4-9.11342" />
-	<oop>true</oop>
-
-	<!-- 
+    <info name="Projecte - auth class" author="yourpalenes and foreigner26" version="rc0.9" type="script" />
+    <min_mta_version server="1.5.4-9.11342" client="1.5.4-9.11342" />
+    <oop>true</oop>
+    
+    <!-- 
 		@classlib.lua
 		@async.lua
 		@author: sbx320
@@ -19,55 +19,57 @@
         @webuimanager.lua
         @author: Jusonex
 	-->
-	<script src="packages/classlib.lua" type="shared"/>
-	<script src="packages/async.lua" type="shared"/>
-	<script src="packages/encrypt.lua" type="shared"/>
-	<script src="packages/json.lua" type="server"/>
-    <script src="packages/webwindow.lua" type="client"/>
-	<script src="packages/frameweb.lua" type="client"/>
-	<script src="packages/webuimanager.lua" type="client"/>
-
+    <script src="packages/classlib.lua" type="shared" />
+    <script src="packages/async.lua" type="shared" />
+    <script src="packages/encrypt.lua" type="shared" />
+    <script src="packages/json.lua" type="server" />
+    <script src="packages/webwindow.luac" type="client" />
+    <script src="packages/frameweb.luac" type="client" />
+    <script src="packages/webuimanager.luac" type="client" />
+    
     <!-- 
         @create.lua
 		@events.lua
         @author: foreigner26 & yourpalenes
     -->
-    <script src="create.lua" type="client"/>
-    <script src="events.lua" type="server"/>
-
-
-	<export function="getTableInformations" type="server"/>
-
+    <script src="create.luac" type="client" />
+    <script src="events.lua" type="server" />
+    
+    
+    <export function="getTableInformations" type="server" />
+    <export function="updateTables" type="server" />
+    
     <!--
 		@components html_instance
 		@author: foreigner26
 		@desc: html tabanlı kullanılan bileşenler
 	-->
-	<file src="html/interface.html" cache="false"/>
-		
-		<file src="components/mt.woff2"/>
-		<file src="components/fonts/helvetica-neue-bold.ttf"/>
-		<file src="components/fonts/hard.ttf"/>
-		<file src="components/fonts/regular.ttf"/>
-		<file src="components/fonts/medium.otf"/>
-		<file src="components/fonts/semibold.ttf"/>
-		<file src="components/fonts/heavy.otf"/>
-
-			<file src="components/icons.css"/>
-			<file src="components/framework.css"/>
-			<file src="components/fonts.css"/>
-			<file src="components/project.css"/>
-			<file src="components/animate.css"/>
-
-				<file src="components/jquery.js" cache="false"/>
-				<file src="components/framework.js" cache="false"/>
-				<file src="components/underscore.js" cache="false"/>
-
-					<file src="components/images/logo.png" cache="false"/>
-
-					<file src="components/images/slots/slot1.png" cache="false"/>
-					<file src="components/images/slots/slot2.png" cache="false"/>
-					<file src="components/images/slots/slot3.png" cache="false"/>
-					<file src="components/images/slots/slot4.png" cache="false"/>
-
+    <file src="html/interface.html" cache="false" />
+    
+    <file src="components/mt.woff2" />
+    <file src="components/fonts/helvetica-neue-bold.ttf" />
+    <file src="components/fonts/hard.ttf" />
+    <file src="components/fonts/regular.ttf" />
+    <file src="components/fonts/medium.otf" />
+    <file src="components/fonts/semibold.ttf" />
+    <file src="components/fonts/heavy.otf" />
+    <file src="components/fonts/roboto.ttf" />
+    
+    <file src="components/icons.css" />
+    <file src="components/framework.css" />
+    <file src="components/fonts.css" />
+    <file src="components/project.css" />
+    <file src="components/animate.css" />
+    
+    <file src="components/jquery.js" cache="false" />
+    <file src="components/framework.js" cache="false" />
+    <file src="components/underscore.js" cache="false" />
+    
+    <file src="components/images/logo.png" cache="false" />
+    
+    <file src="components/images/slots/slot1.png" cache="false" />
+    <file src="components/images/slots/slot2.png" cache="false" />
+    <file src="components/images/slots/slot3.png" cache="false" />
+    <file src="components/images/slots/slot4.png" cache="false" />
+    
 </meta>

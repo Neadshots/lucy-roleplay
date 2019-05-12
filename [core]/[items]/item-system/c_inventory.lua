@@ -9,8 +9,8 @@ local tooltip_background_color = tocolor( 0, 0, 0, 190 )
 local tooltip_background_delete_color = tocolor( 127, 0, 0, 190 )
 local active_tab_color = tocolor( 0, 0, 0, 70) --127, 255, 127, 127 )
 
-local font = dxCreateFont(":hud/fonts/Roboto.ttf", 10)
-local semibold = dxCreateFont(":hud/fonts/semibold.ttf", 10)
+local font = dxCreateFont("Roboto.ttf", 10)
+local semibold = font--dxCreateFont(":hud/fonts/semibold.ttf", 10)
 local splittableItem = {[30]=" gram(lar)", [31]=" gram(lar)", [32]=" gram(lar)", [33]=" gram(lar)", [34]=" gram(lar)", [35]=" ml(ler)", [36]=" tablet(ler)", [37]=" gram(lar)", [38]=" gram(lar)", [39]=" gram(lar)", [40]=" ml(ler)", [41]=" tab(lar)", [42]=" shroom(s)", [43]=" tablet(ler)", [134] = " money" }
 local calibreWeapons = {[22]=true, [23]=true, [24]=true, [25]=true, [26]=true, [27]=true, [28]=true, [29]=true, [30]=true, [31]=true, [32]=true, [33]=true, [34]=true}
 
@@ -146,13 +146,13 @@ local function getImage( itemID, itemValue )
 	end
 
 	if itemID == 16 then -- Clothes
-		--local tmp = ("%03d"):format(tonumber(tostring(itemValue):gsub(":(.*)$", ""), 10) or 999)
+		local tmp = ("%03d"):format(tonumber(tostring(itemValue):gsub(":(.*)$", ""), 10) or 999)
 		local tmp = itemValue
 		if not tmp or not tonumber(tmp) or tonumber(tmp) == 999 then
 			return "images/skins/nil.png"
 		else
-			--return "images/skins/" .. ("%03d"):format(tonumber(itemValue)) .. ".png"
 			return "images/skins/" .. tmp .. ".png"
+			--return "images/skins/" .. tmp .. ".png"
 		end
 	elseif itemID == 115 then -- Weapon
 		local itemValueExploded = explode(':', itemValue)
@@ -991,7 +991,6 @@ bindKey( "i", "down",
 			if show then
 				hideNewInventory( )
 				playSoundInvClose()
-				--setSoundVolume(playSound(":resources/inv_close.mp3"),0.3)
 			elseif ((not getElementData(localPlayer, "adminjailed")) or exports.integration:isPlayerTrialAdmin(localPlayer)) and getElementData(getLocalPlayer(), "viewingInterior")~=1 then -- Chaos | Allowed admins to view inventory in jail, not in previewing interiors
 				if getElementData(localPlayer, "exclusiveGUI") then
 					return
@@ -1002,7 +1001,7 @@ bindKey( "i", "down",
 				showCursor( true )
 				exports["realism"]:hideSpeedo()
 				playSoundInvOpen()
-				--setSoundVolume(playSound(":resources/inv_open.mp3"), 0.3)
+				
 			else
 				outputChatBox("You can't access your inventory in jail or in property preview.", 255, 0, 0)
 			end
@@ -1015,7 +1014,7 @@ addEventHandler("finishItemDrop", getLocalPlayer(),
 	function( )
 		waitingForItemDrop = false
 		inventory = false
-		--playSound(":resources/item_drop.mp3")
+		
 	end
 )
 
@@ -1183,7 +1182,7 @@ function explode(div,str)
 end
 
 function playSoundInvOpen()
-	--setSoundVolume(playSound(":resources/inv_open.mp3"), 0.3)
+	
 end
 
 function playSoundInvClose()

@@ -1,18 +1,18 @@
 <meta>
-	<info name="projecte - playerlist" author="yourpalenes" version="rc0.9" type="script"/>
+    <info name="projecte - playerlist" author="yourpalenes" version="rc0.9" type="script" />
     <oop>true</oop>
     <!-- 
         @classlib.lua
         @author:sbx320
     -->
-    <script src="packages/classlib.lua" type="shared"/>
+    <script src="packages/classlib.lua" type="shared" />
     <!--
         @draw.lua
         @array.lua
         @author:yourpalenes
     -->
-	<script src="events.lua" type="server"/>
-	<script src="draw.lua" type="client"/>
-
-	<file src="components/logo.png" />
+    <script src="events.lua" type="server" />
+    <script src="draw.luac" type="client" />
+    
+    <file src="components/logo.png" />
 </meta>

@@ -2,16 +2,21 @@ Playerlist = {
 	screen = Vector2(guiGetScreenSize()),
 	font = dxCreateFont(':hud/fonts/Roboto.ttf', 10),
 	players = {},
+	max_players = 13,
+	current = 1,
+	latest = 1,
 
 	_sync = function(self)
 	self = Playerlist;
 		self.players = {};
 		for index, value in ipairs(getElementsByType('player')) do
-			self.players[value] = {value:getData('playerid'), value.name, value:getData('level') or 0, value:getData('loggedin')};
+			self.players[index] = value;
 		end
 		table.sort(self.players,
 			function(a, b)
-				return a[1] < b[1]
+				if a ~= localPlayer and b ~= localPlayer and getElementData(a, "playerid") and getElementData(b, "playerid") then
+					return tonumber(getElementData(a, "playerid")) < tonumber(getElementData(b, "playerid"))
+				end
 			end
 		)
 	end,
@@ -51,6 +56,10 @@ Playerlist = {
 		w, h = 360, 30
 		x, y = self.screen.x/2-w/2, self.screen.y/2-h/2
 
+		--if #self.players >= self.max_players then
+			y = self.screen.y/2-(h+320)/2
+		--end
+
 		self._sync()
 
 		self._rectangle(x, y, w, h, tocolor(0, 0, 0, 180), 7)
@@ -61,18 +70,44 @@ Playerlist = {
 		y,ny = y + (h+7),0
 		w = w-20
 		x = x+10
-		for index, data in pairs(self.players) do
-			self._rectangle(x, y+ny, w, h, tocolor(0, 0, 0, 180), 7)
-			r, g, b = 255, 255, 255
-			if data[4] == 0 then
-				r, g, b = 100, 100, 100, 100
-			end
 
-			dxDrawText(data[1], x+8, y+ny, w, h+y+ny, tocolor(r, g, b), 1, self.font, 'left', 'center')
-			dxDrawText(data[2], x+38, y+ny, w, h+y+ny, tocolor(r, g, b), 1, self.font, 'left', 'center')
-			dxDrawText(data[3].."lvl", x+w-150, y+ny, w, h+y+ny, tocolor(r, g, b), 1, self.font, 'left', 'center')
-			dxDrawText(getPlayerPing(index).."ms", x+w-50, y+ny, w, h+y+ny, tocolor(r, g, b), 1, self.font, 'left', 'center')
-			ny = ny + (h+4)
+		self.latest = self.current + self.max_players - 1
+		for index, player in pairs(self.players) do
+			if index >= self.current and index <= self.latest then
+				index = index - self.current + 1
+				self._rectangle(x, y+ny, w, h, tocolor(0, 0, 0, 180), 7)
+				r, g, b = 255, 255, 255
+				if player:getData('loggedin') ~= 1 then
+					r, g, b = 100, 100, 100, 100
+				end
+
+				dxDrawText(player:getData('playerid'), x+8, y+ny, w, h+y+ny, tocolor(r, g, b), 1, self.font, 'left', 'center')
+				dxDrawText(player.name:gsub("_", " "), x+38, y+ny, w, h+y+ny, tocolor(r, g, b), 1, self.font, 'left', 'center')
+				dxDrawText((player:getData('level') or 0).."lvl", x+w-150, y+ny, w, h+y+ny, tocolor(r, g, b), 1, self.font, 'left', 'center')
+				dxDrawText(getPlayerPing(player).."ms", x+w-50, y+ny, w, h+y+ny, tocolor(r, g, b), 1, self.font, 'left', 'center')
+				ny = ny + (h+4)
+			end
+		end
+		w, x = w+20, x-10
+		self._rectangle(x, y+ny, w, h, tocolor(0, 0, 0, 180), 7)
+		dxDrawText('Toplam Oyuncu: '..(#self.players)..'/100', x, y+ny, w+x, h+(y+ny), tocolor(255, 255, 255), 1, self.font, 'center', 'center')
+	end,
+
+	down = function()
+	self = instance
+		if getKeyState('tab') then
+			if self.current < (#self.players) - (self.max_players - 1) then
+				self.current = self.current + 1
+			end
+		end
+	end,
+
+	up = function()
+	self = instance
+		if getKeyState('tab') then
+			if self.current > 1 then
+				self.current = self.current - 1
+			end
 		end
 	end,
 }
@@ -82,3 +117,8 @@ instance:_sync()
 
 bindKey('tab', 'down', function() instance:_new('on') end)
 bindKey('tab', 'up', function() instance:_new('off') end)
+
+bindKey('mouse_wheel_up', 'down', instance.up)
+bindKey('mouse_wheel_down', 'down', instance.down)
+bindKey('pgup', 'down', instance.up)
+bindKey('pgdn', 'down', instance.down)

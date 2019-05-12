@@ -65,8 +65,6 @@ local function closeWindow()
 	if window then
 		destroyElement(window)
 		window = nil
-
-		setSoundVolume(playSound(":resources/inv_close.mp3"), 0.3)
 	end
 
 	closeEditingWindow()
@@ -215,7 +213,7 @@ addEventHandler('clothing:list', resourceRoot,
 				end, false)
 		end
 
-		setSoundVolume(playSound(":resources/inv_open.mp3"), 0.3)
+
 	end, false)
 
 -- editing window

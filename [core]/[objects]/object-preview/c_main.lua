@@ -18,7 +18,7 @@ function objectPreview:create(element,rotX,rotY,rotZ,projPosX,projPosY,projSizeX
 		projPosX, projPosY, projSizeX, projSizeY = projPosX / scx, projPosY / scy, projSizeX / scx, projSizeY / scy
 	end
 	local elementType = getElementType(element)
-	outputDebugString('objPrev: Identified element as: '..tostring(elementType))
+	--outputDebugString('objPrev: Identified element as: '..tostring(elementType))
 	if elementType =="ped" or elementType =="player" then 
 		elementType = "ped"
 	end
@@ -63,17 +63,17 @@ function objectPreview:create(element,rotX,rotY,rotZ,projPosX,projPosY,projSizeX
 
 	if new.isSecondRT then
 		if not isMRTShaderSupported then
-			outputDebugString('objPrev: Can not create a preview. MRT in shaders not supported')
+			--outputDebugString('objPrev: Can not create a preview. MRT in shaders not supported')
 			return false
 		end
-		outputDebugString('objPrev: Creating fx_pre_'..elementType..'.fx')
+		--outputDebugString('objPrev: Creating fx_pre_'..elementType..'.fx')
 		new.shader = dxCreateShader("fx/fx_pre_"..elementType..".fx", 0, 0, false, "all")
 		if not glRenderTarget then
 			glRenderTarget = dxCreateRenderTarget( scx, scy, true )
-			outputDebugString('objPrev : MRT objects visible - created RT')
+			--outputDebugString('objPrev : MRT objects visible - created RT')
 		end
 	else
-		outputDebugString('objPrev: Creating fx_pre_'..elementType..'_noMRT.fx')
+		--outputDebugString('objPrev: Creating fx_pre_'..elementType..'_noMRT.fx')
 		new.shader = dxCreateShader("fx/fx_pre_"..elementType.."_noMRT.fx", 0, 0, false, "all")	
 	end
 	if not new.shader then 
@@ -98,7 +98,7 @@ function objectPreview:create(element,rotX,rotY,rotZ,projPosX,projPosY,projSizeX
 	end
 	addEventHandler( "onClientPreRender", root, new.onPreRender, true, "low-5" )
     setmetatable(new, objectPreview_mt)
-	outputDebugString('objPrev: Created ID: '..new.renID..' for: '..tostring(elementType)) 
+	--outputDebugString('objPrev: Created ID: '..new.renID..' for: '..tostring(elementType)) 
 	return new
 end
 
@@ -127,7 +127,7 @@ function objectPreview:destroy()
 		destroyElement(self.shader)
 		self.shader = nil
 	end
-	outputDebugString('objPrev: Destroyed ID: '..renID) 
+	--outputDebugString('objPrev: Destroyed ID: '..renID) 
 	self.element = nil
 end
 
@@ -192,7 +192,7 @@ end
 
 function objectPreview:saveToFile(filePath)
 	if not isMRTShaderSupported or not self.isSecondRT or not isElement(self.element) then
-			outputDebugString('objPrev : saveRTToFile fail (non MRT object or MRT not supported) !')
+			--outputDebugString('objPrev : saveRTToFile fail (non MRT object or MRT not supported) !')
 		return false 
 	end
 	if glRenderTarget then
@@ -200,7 +200,7 @@ function objectPreview:saveToFile(filePath)
 		projPosX, projPosY, projSizeX, projSizeY = toint(projPosX * scx), toint(projPosY * scy), toint(projSizeX * scx), toint(projSizeY * scy)
 		local rtPixels = dxGetTexturePixels ( glRenderTarget, projPosX, projPosY, projSizeX + projPosX, projSizeY + projPosY)
 		if not rtPixels then
-			outputDebugString('objPrev : saveRTToFile fail (could not get texture pixels) !')
+			--outputDebugString('objPrev : saveRTToFile fail (could not get texture pixels) !')
 			return false 
 		end
 		rtPixels = dxConvertPixels(rtPixels, 'png')
@@ -209,13 +209,13 @@ function objectPreview:saveToFile(filePath)
 		isValid = fileWrite(file, rtPixels) and isValid
 		isValid = fileClose(file) and isValid
 		if not isValid then
-			outputDebugString('objPrev : saveRTToFile fail (could not save pixels to file) !')
+			--outputDebugString('objPrev : saveRTToFile fail (could not save pixels to file) !')
 			return false
 		end
-		outputDebugString('objPrev : saveRTToFile to: '..filePath)
+		--outputDebugString('objPrev : saveRTToFile to: '..filePath)
 		return isValid
 	else
-		outputDebugString('objPrev : saveRTToFile fail (render target error) !')
+		--outputDebugString('objPrev : saveRTToFile fail (render target error) !')
 		return false	
 	end
 	return false
@@ -285,7 +285,7 @@ function getRTarget()
 	if glRenderTarget then
 		return glRenderTarget
 	else
-		outputDebugString('objPrev : getRenderTarget fail (no render target) !')
+		--outputDebugString('objPrev : getRenderTarget fail (no render target) !')
 		return false
 	end
 end	
@@ -324,7 +324,7 @@ addEventHandler( "onClientHUDRender", root, function()
 	if (isMRTUsed == false) and glRenderTarget then
 		destroyElement( glRenderTarget )
 		glRenderTarget = nil
-		outputDebugString('objPrev : no MRT objects visible - destroyed RT')
+		--outputDebugString('objPrev : no MRT objects visible - destroyed RT')
 	end
 end, true, "low-10" )
 

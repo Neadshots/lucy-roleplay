@@ -7,9 +7,11 @@ Auth = {
     debug = true,
     serial = false,
     user = {},
+    peds = {},
     characters = {},
-    cks = {},
+    slotchars = {},
     currslot = 0,
+    font = DxFont('components/fonts/roboto.ttf', 10),
 
     change = function(self,variable,value)
 
@@ -260,7 +262,7 @@ Auth = {
             local syntax = exports.pool:getServerSyntax(false, "e")
             outputChatBox(syntax.."Sunucuya hoş geldin.", 85, 155, 255, true)
             outputChatBox(syntax.."Herhangi bir sorunun olduğunda /rapor komutunu kullanabilirsin.", 85, 155, 255, true)
-
+            triggerServerEvent('receive:characters',localPlayer,localPlayer,localPlayer:getData('account:id'),'f10')
             self.browser:destroy();
             removeEventHandler('onClientKey',root,enter)
         end
@@ -270,6 +272,50 @@ Auth = {
     
         if localPlayer:getData('loggedin') ~= 1 then
            triggerServerEvent('receive:serial',localPlayer,localPlayer)
+        else
+            triggerServerEvent('receive:characters',localPlayer,localPlayer,localPlayer:getData('account:id'),'f10')
+        end
+    end,
+
+    characterkey = function(key, state)
+    self = instance
+        if state then
+            if (key == 'mouse_wheel_up') or (key == 'pgup') then
+                self.currslot = self.currslot + 1
+                if self.currslot > 4 then
+                    self.currslot = 1
+                end
+                guiStaticImageLoadImage(guiimage, "components/images/slots/slot"..self.currslot..".png")
+
+                if self.characters[self.slotchars[self.currslot]] then
+                    outputChatBox(exports.pool:getServerSyntax(false, 's').."Karakter Adı: "..self.characters[self.slotchars[self.currslot]].charactername:gsub("_", " ").." | Giriş yapmak için 'ENTER' basın.", 255, 255, 255, true)
+                end
+            elseif (key == 'mouse_wheel_down') or (key == 'pgdn') then
+                self.currslot = self.currslot - 1
+                if self.currslot < 1 then
+                    self.currslot = 4
+                end
+                guiStaticImageLoadImage(guiimage, "components/images/slots/slot"..self.currslot..".png")
+
+                if self.characters[self.slotchars[self.currslot]] then
+                    outputChatBox(exports.pool:getServerSyntax(false, 's').."Karakter Adı: "..self.characters[self.slotchars[self.currslot]].charactername:gsub("_", " ").." | Giriş yapmak için 'ENTER' basın.", 255, 255, 255, true)
+                end
+            elseif (key == 'enter') then
+                if (self.currslot > 0) then
+                    if self.characters[self.slotchars[self.currslot]] then
+                        if self.characters[self.slotchars[self.currslot]].id == localPlayer:getData('dbid') then
+                            outputChatBox(exports.pool:getServerSyntax(false, 'w').."İçinde bulunduğun karaktere geçiş yapamazsın.", 255, 255, 255, true)
+                        else
+                            localPlayer.frozen = true
+
+                            triggerServerEvent('savePlayer', localPlayer)
+                            triggerServerEvent('receive:join_character', localPlayer, localPlayer, self.characters[self.slotchars[self.currslot]].id)
+                        end
+                    else
+                        outputChatBox(exports.pool:getServerSyntax(false, 'e').."Boş slota geçiş yapamazsın.", 255, 255, 255, true)
+                    end
+                end
+            end
         end
     end,
 
@@ -277,73 +323,49 @@ Auth = {
     	if localPlayer:getData('loggedin') == 1 then
             if (state == 'on') then
                 localPlayer:setData('f10', true)
-                if #self.characters == 0 then
-                    triggerServerEvent('receive:characters',localPlayer,localPlayer,localPlayer:getData('account:id'),'f10')
-                end
                 self.currslot = 0;
+                self.slotchars = {};
+
+                self.peds = {};
                 local i = 1
-		        for index, value in ipairs(self.characters) do
-		            if i <= 4 then
-		                if value.id == localPlayer:getData('dbid') then
-		                    self.currslot = i
-		                end
-		                i = i + 1
-		            end
-		        end
-                addEventHandler('onClientRender',root,self.characterlist)
+                list_positions = {
+		            [1] = {self.screen.x-140, self.screen.y-215},
+		            [2] = {self.screen.x-80, self.screen.y-160},
+		            [3] = {self.screen.x-140, self.screen.y-110},
+		            [4] = {self.screen.x-190, self.screen.y-160},
+		        }
+                
+
+                for index, value in pairs(self.characters) do
+                    if i <= 4 then
+                        if value.id == localPlayer:getData('dbid') then
+                            self.currslot = i
+                        end
+                        ped = createPed(value.skin, 0, 0, 0)
+                        preview = exports['object-preview']:createObjectPreview(ped,0,0,180,list_positions[i][1],list_positions[i][2],64,64)
+                        ped.dimension = 999
+                        ped:setData('preview', preview)
+
+                        self.slotchars[i] = index
+                        i = i + 1
+                    end
+                end
+
+                guiimage = guiCreateStaticImage(instance.screen.x-205, instance.screen.y-230, 200, 200, "components/images/slots/slot"..self.currslot..".png", false)                
                 addEventHandler('onClientKey',root,self.characterkey)
             else
+            	for index, value in ipairs(getElementsByType('ped', resourceRoot)) do
+            		value:setAlpha(0)
+            		exports['object-preview']:destroyObjectPreview(value:getData('preview'))
+            		value:destroy()
+            	end
+                if isElement(guiimage) then
+                    guiimage:destroy()
+                end
                 localPlayer:setData('f10', false)
-                removeEventHandler('onClientRender',root,self.characterlist)
                 removeEventHandler('onClientKey',root,self.characterkey)
             end
     	end
-    end,
-
-    characterkey = function(key, state)
-    self = Auth
-    	if state then
-	    	if (key == 'mouse_wheel_up') or (key == 'pgup') then
-	    		self.currslot = self.currslot + 1
-	    		if self.currslot > 4 then
-	    			self.currslot = 1
-	    		end
-	    	elseif (key == 'mouse_wheel_down') or (key == 'pgdn') then
-    			self.currslot = self.currslot - 1
-    			if self.currslot < 1 then
-    				self.currslot = 4
-    			end
-	    	elseif (key == 'enter') then
-	    		if (self.currslot > 0) then
-
-	    		end
-	    	end
-	    end
-	end,
-    
-    characterlist = function()
-    instance = Auth
-        dxDrawImage(instance.screen.x-215, instance.screen.y-210, 200, 200, "components/images/slots/slot"..instance.currslot..".png")
-        -- #4 of list one:
-        list_positions = {
-            [1] = {instance.screen.x-145, instance.screen.y-190},
-            [2] = {instance.screen.x-195, instance.screen.y-140},
-            [3] = {instance.screen.x-85, instance.screen.y-140},
-            [4] = {instance.screen.x-145, instance.screen.y-140},
-        }
-        local i = 1
-        for index, value in ipairs(instance.characters) do
-            if i <= 4 then
-                local tmp = value.skin
-                
-                if value.id == localPlayer:getData('dbid') then
-                    selected = i
-                end
-                dxDrawImage(list_positions[i][1], list_positions[i][2], 48, 48, ":item-system/images/skins/"..tmp..".png")
-                i = i + 1
-            end
-        end
- 
     end,
 }
 instance = new(Auth)
@@ -397,7 +419,7 @@ end
 
 addEventHandler("onClientKey", root, enter)
 
-addEventHandler('onClientResourceStart',getResourceRootElement(getThisResource()),function() triggerServerEvent('receive:start',root,root) end)
+addEventHandler('onClientResourceStart',getResourceRootElement(getThisResource()),function() triggerServerEvent('receive:start',root,root) if localPlayer:getData('loggedin') == 1 then triggerServerEvent('receive:characters',localPlayer,localPlayer,localPlayer:getData('account:id'),'f10') end end)
 addEventHandler('push:start_login',root,function() instance:index() end)
 bindKey('f10', 'down', function(key, state) instance:f10('on') end)
 bindKey('f10', 'up', function(key, state) instance:f10('off') end)

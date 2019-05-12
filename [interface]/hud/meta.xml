@@ -1,26 +1,26 @@
 <meta>
-	<info name="lucy roleplay - hud" author="foreigner26" version="rc0.9" type="script"/>
-	<min_mta_version server="1.5.4-9.11342" client="1.5.4-9.11342" />
-	<oop>true</oop>
-
-	<!-- 
+    <info name="lucy roleplay - hud" author="foreigner26" version="rc0.9" type="script" />
+    <min_mta_version server="1.5.4-9.11342" client="1.5.4-9.11342" />
+    <oop>true</oop>
+    
+    <!-- 
 		@classlib.lua
 		@author: sbx320
 	-->
-	<script src="packages/classlib.lua" type="shared" cache="false"/>
-
-    <script src="c_hud.lua" type="client" cache="false"  />
-    <script src="c_nametags.lua" type="client" cache="false"  />
-
-    <script src="s_humanistic_functions.lua" type="server" />
-    <script src="c_humanistic_functions.lua" type="client" cache="false"  />
+    <script src="packages/classlib.lua" type="shared" cache="false" />
     
-    <script src="c_overlay_top_right.lua" type="client" cache="false"  />
-    <script src="c_overlay_bottom_center.lua" type="client" cache="false"  />
+    <script src="c_hud.luac" type="client" cache="false" />
+    <script src="c_nametags.luac" type="client" cache="false" />
+    
+    <script src="s_humanistic_functions.lua" type="server" />
+    <script src="c_humanistic_functions.luac" type="client" cache="false" />
+    
+    <script src="c_overlay_top_right.luac" type="client" cache="false" />
+    <script src="c_overlay_bottom_center.luac" type="client" cache="false" />
     <script src="s_overlay_basic_info.lua" type="server" />
     <script src="s_overlay_show_admins.lua" type="server" />
     
-    <script src="c_overlay_functions.lua" type="client" cache="false"  />
+    <script src="c_overlay_functions.luac" type="client" cache="false" />
     <script src="s_overlay_functions.lua" type="server" />
     
     <export function="sendBottomNotification" type="client" />
@@ -30,30 +30,37 @@
     <export function="sendTopRightNotification" type="server" />
     
     <export function="getPlayerInterfaceMode" type="client" />
-   
-    <script src="blur/blur_c.lua" type="client" cache="false" />
-    <file src="blur/blurshader.fx" type="client"/>
-
-    <file src="images/samp/writing.png" type="client"/>
-    <file src="images/pin.png" type="client"/>
-    <file src="images/pinned.png" type="client"/>
-    <file src="images/radio.png" type="client"/>
-   
+    
+    <script src="blur/blur_c.luac" type="client" cache="false" />
+    <file src="blur/blurshader.fx" type="client" />
+    
+    <file src="images/samp/writing.png" type="client" />
+    <file src="images/pin.png" type="client" />
+    <file src="images/pinned.png" type="client" />
+    <file src="images/radio.png" type="client" />
+    <file src="components/images/hud_armour.png" />
+    <file src="components/images/hud_hp.png" />
+    <file src="components/images/hud_bg.png" />
+    <file src="components/images/hud_stamina.png" />
+    
     <file src="fonts/nametags0.ttf" />
     <file src="fonts/Bebas.ttf" />
     <file src="fonts/old_school_united_stencil.ttf" />
-    <file src="fonts/Roboto.ttf"/>
-    <file src="fonts/gtaFont.ttf"/>
-    <file src="fonts/semibold.ttf"/>
-    <file src="fonts/font.ttf"/>
-    <file src="fonts/FontAwesome.ttf"/>
-
-    <file src="images/hunger.png"/>
-    <file src="images/thirst.png"/>
-    <file src="images/level.png"/>
-
-    <file src="images/samp/thirst.png"/>
-
+    <file src="fonts/Roboto.ttf" />
+    <file src="fonts/gtaFont.ttf" />
+    <file src="fonts/semibold.ttf" />
+    <file src="fonts/font.ttf" />
+    <file src="fonts/FontAwesome.ttf" />
+    <file src="fonts/BentonSansRegural.otf" />
+    <file src="fonts/BebasNeueBold.otf" />
+    <file src="fonts/OpenSans.ttf" />
+    
+    <file src="images/hunger.png" />
+    <file src="images/thirst.png" />
+    <file src="images/level.png" />
+    
+    <file src="images/samp/thirst.png" />
+    
     <file src="images/samp/a1_on.png" />
     <file src="images/samp/a2_on.png" />
     <file src="images/samp/a3_on.png" />
@@ -72,44 +79,44 @@
     <file src="images/samp/carlock.png" />
     <file src="images/samp/cc.png" />
     <file src="images/samp/cigarette.png" />
-    <file src="images/samp/developeradm.png"/>
+    <file src="images/samp/developeradm.png" />
     <file src="images/samp/dglock.png" />
     <file src="images/samp/engine.png" />
     <file src="images/samp/fuel.png" />
-    <file src="images/samp/fullfacehelmet.png"/>
-    <file src="images/samp/gasmask.png"/>
-    <file src="images/samp/genelyetkili.png"/>
-    <file src="images/samp/handcuffs.png"/>
-    <file src="images/samp/headadm.png"/>
-    <file src="images/samp/headlights.png"/>
-    <file src="images/samp/head_turning.png"/>
-    <file src="images/samp/health.png"/>
-    <file src="images/samp/helmet.png"/>
-    <file src="images/samp/isbasi.png"/>
-    <file src="images/samp/isimetiketleri1.png"/>
-    <file src="images/samp/isimetiketleri2.png"/>
-    <file src="images/samp/isimetiketleri3.png"/>
-    <file src="images/samp/isimetiketleri4.png"/>
-    <file src="images/samp/leadadm.png"/>
-    <file src="images/samp/lowhp.png"/>
-    <file src="images/samp/mask.png"/>
-    <file src="images/samp/mdc.png"/>
-    <file src="images/samp/minimized.png"/>
-    <file src="images/samp/phone.png"/>
-    <file src="images/samp/rehber.png"/>
-    <file src="images/samp/rehber_on.png"/>
-    <file src="images/samp/seatbelt.png"/>
-    <file src="images/samp/test.png"/>
-    <file src="images/samp/trialadm_on.png"/>
-    <file src="images/samp/udy_on.png"/>
-    <file src="images/samp/vip1.png"/>
-    <file src="images/samp/vip2.png"/>
-    <file src="images/samp/vip3.png"/>
-    <file src="images/samp/walkingstyle.png"/>
-    <file src="images/samp/window2.png"/>
-    <file src="images/samp/youtuberEtiketi.png"/>
-    <file src="images/samp/injury.png"/>
-
+    <file src="images/samp/fullfacehelmet.png" />
+    <file src="images/samp/gasmask.png" />
+    <file src="images/samp/genelyetkili.png" />
+    <file src="images/samp/handcuffs.png" />
+    <file src="images/samp/headadm.png" />
+    <file src="images/samp/headlights.png" />
+    <file src="images/samp/head_turning.png" />
+    <file src="images/samp/health.png" />
+    <file src="images/samp/helmet.png" />
+    <file src="images/samp/isbasi.png" />
+    <file src="images/samp/isimetiketleri1.png" />
+    <file src="images/samp/isimetiketleri2.png" />
+    <file src="images/samp/isimetiketleri3.png" />
+    <file src="images/samp/isimetiketleri4.png" />
+    <file src="images/samp/leadadm.png" />
+    <file src="images/samp/lowhp.png" />
+    <file src="images/samp/mask.png" />
+    <file src="images/samp/mdc.png" />
+    <file src="images/samp/minimized.png" />
+    <file src="images/samp/phone.png" />
+    <file src="images/samp/rehber.png" />
+    <file src="images/samp/rehber_on.png" />
+    <file src="images/samp/seatbelt.png" />
+    <file src="images/samp/test.png" />
+    <file src="images/samp/trialadm_on.png" />
+    <file src="images/samp/udy_on.png" />
+    <file src="images/samp/vip1.png" />
+    <file src="images/samp/vip2.png" />
+    <file src="images/samp/vip3.png" />
+    <file src="images/samp/walkingstyle.png" />
+    <file src="images/samp/window2.png" />
+    <file src="images/samp/youtuberEtiketi.png" />
+    <file src="images/samp/injury.png" />
+    
     <!-- 
       @components ui_instance
     -->
@@ -156,5 +163,49 @@
     <file src="components/weapon/44.png" />
     <file src="components/weapon/45.png" />
     <file src="components/weapon/46.png" />
+    <file src="components/images/weapons/weapon0.png" />
+    <file src="components/images/weapons/weapon1.png" />
+    <file src="components/images/weapons/weapon10.png" />
+    <file src="components/images/weapons/weapon11.png" />
+    <file src="components/images/weapons/weapon12.png" />
+    <file src="components/images/weapons/weapon13.png" />
+    <file src="components/images/weapons/weapon14.png" />
+    <file src="components/images/weapons/weapon15.png" />
+    <file src="components/images/weapons/weapon16.png" />
+    <file src="components/images/weapons/weapon17.png" />
+    <file src="components/images/weapons/weapon18.png" />
+    <file src="components/images/weapons/weapon2.png" />
+    <file src="components/images/weapons/weapon22.png" />
+    <file src="components/images/weapons/weapon23.png" />
+    <file src="components/images/weapons/weapon24.png" />
+    <file src="components/images/weapons/weapon25.png" />
+    <file src="components/images/weapons/weapon26.png" />
+    <file src="components/images/weapons/weapon27.png" />
+    <file src="components/images/weapons/weapon28.png" />
+    <file src="components/images/weapons/weapon29.png" />
+    <file src="components/images/weapons/weapon3.png" />
+    <file src="components/images/weapons/weapon30.png" />
+    <file src="components/images/weapons/weapon31.png" />
+    <file src="components/images/weapons/weapon32.png" />
+    <file src="components/images/weapons/weapon33.png" />
+    <file src="components/images/weapons/weapon34.png" />
+    <file src="components/images/weapons/weapon35.png" />
+    <file src="components/images/weapons/weapon36.png" />
+    <file src="components/images/weapons/weapon37.png" />
+    <file src="components/images/weapons/weapon38.png" />
+    <file src="components/images/weapons/weapon39.png" />
+    <file src="components/images/weapons/weapon4.png" />
+    <file src="components/images/weapons/weapon40.png" />
+    <file src="components/images/weapons/weapon41.png" />
+    <file src="components/images/weapons/weapon42.png" />
+    <file src="components/images/weapons/weapon43.png" />
+    <file src="components/images/weapons/weapon44.png" />
+    <file src="components/images/weapons/weapon45.png" />
+    <file src="components/images/weapons/weapon46.png" />
+    <file src="components/images/weapons/weapon5.png" />
+    <file src="components/images/weapons/weapon6.png" />
+    <file src="components/images/weapons/weapon7.png" />
+    <file src="components/images/weapons/weapon8.png" />
+    <file src="components/images/weapons/weapon9.png" />
     
 </meta>

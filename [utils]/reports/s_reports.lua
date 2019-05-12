@@ -2,6 +2,7 @@ mysql = exports.mysql
 reports = { }
 local reportsToAward = 30
 local gcToAward = 1
+local auxiliaryTeams = ""
 
 local getPlayerName_ = getPlayerName
 getPlayerName = function( ... )
@@ -59,7 +60,7 @@ function reportLazyFix(player, cmd)
 			groups = string.sub(groups,1, string.len(groups)-1)
 		end
 		--outputDebugString("[reportLazyFix] "..getElementData(player,"account:username").." - "..groups)
-	    setElementData(player, "forum_perms", groups, false, true)
+
 	--end
 end
 addCommandHandler("reportlazyfix", reportLazyFix)
@@ -163,7 +164,7 @@ function updateReportCount()
 				local staff, _, n, abrv = getReportInfo(value[7])
 				if staff then
 					for g, u in ipairs(staff) do
-						if (string.find(getElementData(v, "forum_perms"), u) or value[5] == v) and not alreadyTold[key] then
+						if (exports.integration:isPlayerSupporter(v) or value[5] == v) and not alreadyTold[key] then
 							open[v] = open[v] + 1
 							alreadyTold[key] = true
 							if value[5] then
@@ -438,7 +439,7 @@ function playerQuit()
 						if string.find(auxiliaryTeams, usergroup) then
 							for key, value in ipairs(getElementsByType("players")) do
 								if getElementData(value, "loggedin") == 1 then
-									if string.find(getElementData(value, "forum_perms"), usergroup) and not alreadyTold[value] then
+									if exports.integration:isPlayerSupporter(value) and not alreadyTold[value] then
 										outputChatBox(syntaxTable["w"].."["..abrv.." #" .. report .."] " .. getPlayerName(source) .. " adlı kullanıcı oyundan ayrıldı, görevinize dönün.", value, 255, 126, 0)--200, 240, 120)
 										alreadyTold[value] = true
 									end
@@ -447,7 +448,7 @@ function playerQuit()
 						else
 							for key, value in ipairs(getElementsByType("players")) do
 								if getElementData(value, "loggedin") == 1 then
-									if string.find(getElementData(value, "forum_perms"), usergroup) and not alreadyTold[value] then
+									if exports.integration:isPlayerSupporter(value) and not alreadyTold[value] then
 										local gmduty = getElementData(value, "duty_supporter")
 										local adminduty = getElementData(value, "duty_admin")
 										if adminduty == 1 or gmduty == 1 then
@@ -494,7 +495,7 @@ function playerQuit()
 					if string.find(auxiliaryTeams, usergroup) then
 						for key, value in ipairs(getElementsByType("players")) do
 							if getElementData(value, "loggedin") == 1 then
-								if string.find(getElementData(value, "forum_perms"), usergroup) and not alreadyTold[value] then
+								if exports.integration:isPlayerSupporter(value) and not alreadyTold[value] then
 									local adminName = getElementData(source, "account:username")
 									alreadyTold[value] = true
 									update = true
@@ -504,7 +505,7 @@ function playerQuit()
 					else
 						for key, value in ipairs(getElementsByType("players")) do
 							if getElementData(value, "loggedin") == 1 then
-								if string.find(getElementData(value, "forum_perms"), usergroup) and not alreadyTold[value] then
+								if exports.integration:isPlayerSupporter(value) and not alreadyTold[value] then
 									local gmduty = getElementData(value, "duty_supporter")
 									local adminduty = getElementData(value, "duty_admin")
 									if adminduty == 1 or gmduty == 1 then
@@ -527,7 +528,7 @@ function playerQuit()
 					if string.find(auxiliaryTeams, usergroup) then
 						for key, value in ipairs(getElementsByType("players")) do
 							if getElementData(value, "loggedin") == 1 then
-								if string.find(getElementData(value, "forum_perms"), usergroup) and not alreadyTold[value] then
+								if exports.integration:isPlayerSupporter(value) and not alreadyTold[value] then
 									local adminName = getElementData(source, "account:username")
 									alreadyTold[value] = true
 									update = true
@@ -537,7 +538,7 @@ function playerQuit()
 					else
 						for key, value in ipairs(getElementsByType("players")) do
 							if getElementData(value, "loggedin") == 1 then
-								if string.find(getElementData(value, "forum_perms"), usergroup) and not alreadyTold[value] then
+								if exports.integration:isPlayerSupporter(value) and not alreadyTold[value] then
 									local gmduty = getElementData(value, "duty_supporter")
 									local adminduty = getElementData(value, "duty_admin")
 									if adminduty == 1 or gmduty == 1 then
@@ -733,7 +734,7 @@ function handleReport(reportedPlayer, reportedReason, reportType)
 		elseif string.find(auxiliaryTeams, usergroup) then -- Auxiliary Teams
 			for key, value in ipairs(getElementsByType("player")) do
 				if getElementData(value, "loggedin") == 1 then
-					if string.find(getElementData(value, "forum_perms"), usergroup) then -- Opens up functionality to have reports ONLY go to leaders or only members
+					if exports.integration:isPlayerSupporter(value) then -- Opens up functionality to have reports ONLY go to leaders or only members
 						outputChatBox(" ["..abrv.." #" .. slot .."] (" .. playerID .. ") " .. tostring(getPlayerName(source)) .. " reported (" .. reportedID .. ") " .. tostring(getPlayerName(reportedPlayer)) .. " at " .. timestring .. ".", value, r, g, b, true)--200, 240, 120)
 						outputChatBox("Sebep: " .. reportedReason, value, 200, 240, 120)
 					end
@@ -752,8 +753,8 @@ function handleReport(reportedPlayer, reportedReason, reportType)
 			if not skipadmin then
 				for key, value in ipairs(admins) do
 					local adminduty = getElementData(value, "duty_admin")
-					local forum_perms = getElementData(value, "forum_perms")
-					if (adminduty==1) and string.find(forum_perms, usergroup) and not alreadyCalled[value] then
+	
+					if (adminduty==1) and not alreadyCalled[value] then
 						faggots = faggots + 1
 						outputChatBox(" ["..abrv.." #" .. slot .."] (" .. playerID .. ") " .. tostring(getPlayerName(source)) .. " reported (" .. reportedID .. ") " .. tostring(getPlayerName(reportedPlayer)) .. " at " .. timestring .. ".", value, r, g, b, true)--200, 240, 120)
 						outputChatBox("Reason: " .. reportedReason, value, 200, 240, 120)
@@ -820,7 +821,7 @@ function alertPendingReport(id)
 				if string.find(auxiliaryTeams, usergroup) then
 					for key, value in ipairs(getElementsByType("player")) do
 						if getElementData(value, "loggedin") == 1 then
-							if string.find(getElementData(value, "forum_perms"), usergroup) and not alreadyTold[value] then
+							if exports.integration:isPlayerSupporter(value) and not alreadyTold[value] then
 								outputChatBox(" [#" .. id .. "] is still not answered: (" .. playerID .. ") " .. tostring(getPlayerName(reportingPlayer)) .. " reported (" .. reportedID .. ") " .. tostring(getPlayerName(reportedPlayer)) .. " at " .. timestring .. ".", value, 200, 240, 120)
 								alreadyTold[value] = true
 							end
@@ -829,7 +830,7 @@ function alertPendingReport(id)
 				else
 					for key, value in ipairs(getElementsByType("player")) do
 						if getElementData(value, "loggedin") == 1 then
-							if string.find(getElementData(value, "forum_perms"), usergroup) and not alreadyTold[value] then
+							if exports.integration:isPlayerSupporter(value) and not alreadyTold[value] then
 								local gmduty = getElementData(value, "duty_supporter")
 								local adminduty = getElementData(value, "duty_admin")
 								if (gmduty==1) or (adminduty==1) then
@@ -940,7 +941,7 @@ function falseReport(thePlayer, commandName, id)
 
 					local found = false
 					for k, userg in ipairs(staff) do
-						if string.find(getElementData(thePlayer, "forum_perms"), userg) then
+						if exports.integration:isPlayerSupporter(thePlayer) then
 							found = true
 						end
 					end
@@ -986,7 +987,7 @@ function falseReport(thePlayer, commandName, id)
 							if string.find(auxiliaryTeams, usergroup) then
 								for key, value in ipairs(getElementsByType("player")) do
 									if getElementData(value, "loggedin") == 1 then
-										if string.find(getElementData(value, "forum_perms"), usergroup) and not alreadyTold[value] then
+										if exports.integration:isPlayerSupporter(value) and not alreadyTold[value] then
 											outputChatBox(" [#" .. id .. "] - "..adminTitle.." ".. getPlayerName(thePlayer) .. " ("..adminUsername..") has marked report #" .. id .. " as false. -", value, r, g, b, true)
 											alreadyTold[value] = true
 										end
@@ -995,7 +996,7 @@ function falseReport(thePlayer, commandName, id)
 							else
 								for key, value in ipairs(getElementsByType("player")) do
 									if getElementData(value, "loggedin") == 1 then
-										if string.find(getElementData(value, "forum_perms"), usergroup) and not alreadyTold[value] then
+										if exports.integration:isPlayerSupporter(value) and not alreadyTold[value] then
 											local adminduty = getElementData(value, "duty_admin")
 											local gmduty = getElementData(value, "duty_supporter")
 											if (adminduty==1) or (gmduty==1) then
@@ -1107,7 +1108,7 @@ function acceptReport(thePlayer, commandName, id)
 							if string.find(auxiliaryTeams, usergroup) then
 								for key, value in ipairs(getElementsByType("player")) do
 									if getElementData(value, "loggedin") == 1 then
-										if string.find(getElementData(value, "forum_perms"), usergroup) and not alreadyTold[value] then
+										if exports.integration:isPlayerSupporter(value) and not alreadyTold[value] then
 											outputChatBox(" ["..abrv.." #" .. id .. "] - "..adminTitle.." "..getPlayerName(thePlayer) .. " ("..adminName..") raporu kabul etti. #" .. id .. " -", value, r, g, b, true)
 											alreadyTold[value] = true
 										end
@@ -1116,7 +1117,7 @@ function acceptReport(thePlayer, commandName, id)
 							else
 								for key, value in ipairs(getElementsByType("player")) do
 									if getElementData(value, "loggedin") == 1 then
-										if string.find(getElementData(value, "forum_perms"), usergroup) and not alreadyTold[value] then
+										if exports.integration:isPlayerSupporter(value) and not alreadyTold[value] then
 											local adminduty = getElementData(value, "duty_admin")
 											local gmduty = getElementData(value, "duty_supporter")
 											if (adminduty==1) or (gmduty==1) then
@@ -1225,7 +1226,7 @@ function acceptAdminReport(thePlayer, commandName, id, ...)
 								if string.find(auxiliaryTeams, usergroup) then
 									for key, value in ipairs(getElementsByType("player")) do
 										if getElementData(value, "loggedin") == 1 then
-											if string.find(getElementData(value, "forum_perms"), usergroup) and not alreadyTold[value] then
+											if exports.integration:isPlayerSupporter(value) and not alreadyTold[value] then
 												outputChatBox(" ["..abrv.." #" .. id .. "] - " .. getPlayerName(theAdmin) .. " has accepted report #" .. id .. " (Assigned) -", value, r, g, b, true)
 												alreadyTold[value] = true
 											end
@@ -1234,7 +1235,7 @@ function acceptAdminReport(thePlayer, commandName, id, ...)
 								else
 									for key, value in ipairs(getElementsByType("player")) do
 										if getElementData(value, "loggedin") == 1 then
-											if string.find(getElementData(value, "forum_perms"), usergroup) and not alreadyTold[value] then
+											if exports.integration:isPlayerSupporter(value) and not alreadyTold[value] then
 												local adminduty = getElementData(value, "duty_admin")
 												local gmduty = getElementData(value, "duty_supporter")
 												if (adminduty==1) or (gmduty==1) then
@@ -1305,7 +1306,7 @@ function transferReport(thePlayer, commandName, id, ...)
 							if string.find(auxiliaryTeams, usergroup) then
 								for key, value in ipairs(getElementsByType("player")) do
 									if getElementData(value, "loggedin") == 1 then
-										if string.find(getElementData(value, "forum_perms"), usergroup) and not alreadyTold[value] then
+										if exports.integration:isPlayerSupporter(value) and not alreadyTold[value] then
 											outputChatBox(" [#" .. id .. "] - " .. getPlayerName(thePlayer) .. " handed report #" .. id .. " over to  ".. getPlayerName(targetAdmin) , value, r, g, b, true)
 											alreadyTold[value] = true
 										end
@@ -1314,7 +1315,7 @@ function transferReport(thePlayer, commandName, id, ...)
 							else
 								for key, value in ipairs(getElementsByType("player")) do
 									if getElementData(value, "loggedin") == 1 then
-										if string.find(getElementData(value, "forum_perms"), usergroup) and not alreadyTold[value] then
+										if exports.integration:isPlayerSupporter(value) and not alreadyTold[value] then
 											local adminduty = getElementData(value, "duty_admin")
 											local gmduty = getElementData(value, "duty_supporter")
 											if (adminduty==1) or (gmduty==1) then
@@ -1386,7 +1387,7 @@ function closeReport(thePlayer, commandName, id)
 						if string.find(auxiliaryTeams, usergroup) then
 							for key, value in ipairs(getElementsByType("player")) do
 								if getElementData(value, "loggedin") == 1 then
-									if string.find(getElementData(value, "forum_perms"), usergroup) and not alreadyTold[value] then
+									if exports.integration:isPlayerSupporter(value) and not alreadyTold[value] then
 										outputChatBox(" ["..abrv.." #" .. id .. "] - "..adminTitle.." " .. getPlayerName(thePlayer) .. " ("..adminName..") raporu kapattı. #" .. id .. ". -", value, r, g, b, true)
 										alreadyTold[value] = true
 									end
@@ -1395,7 +1396,7 @@ function closeReport(thePlayer, commandName, id)
 						else
 							for key, value in ipairs(getElementsByType("player")) do
 								if getElementData(value, "loggedin") == 1 then
-									if string.find(getElementData(value, "forum_perms"), usergroup) and not alreadyTold[value] then
+									if exports.integration:isPlayerSupporter(value) and not alreadyTold[value] then
 										local adminduty = getElementData(value, "duty_admin")
 										local gmduty = getElementData(value, "duty_supporter")
 										if (adminduty==1) or (gmduty==1) then
@@ -1487,7 +1488,7 @@ function dropReport(thePlayer, commandName, id)
 							if string.find(auxiliaryTeams, usergroup) then
 								for key, value in ipairs(getElementsByType("player")) do
 									if getElementData(value, "loggedin") == 1 then
-										if string.find(getElementData(value, "forum_perms"), usergroup) and not alreadyTold[value] then
+										if exports.integration:isPlayerSupporter(value) and not alreadyTold[value] then
 											outputChatBox(" ["..abrv.." #" .. id .. "] - "..adminTitle.." "..getPlayerName(thePlayer) .. " ("..adminName..") has dropped report #" .. id .. ". -", value, r, g, b, true)
 											alreadyTold[value] = true
 										end
@@ -1496,7 +1497,7 @@ function dropReport(thePlayer, commandName, id)
 							else
 								for key, value in ipairs(getElementsByType("player")) do
 									if getElementData(value, "loggedin") == 1 then
-										if string.find(getElementData(value, "forum_perms"), usergroup) and not alreadyTold[value] then
+										if exports.integration:isPlayerSupporter(value) and not alreadyTold[value] then
 											local adminduty = getElementData(value, "duty_admin")
 											local gmduty = getElementData(value, "duty_supporter")
 											if (adminduty==1) or (gmduty==1) then
@@ -1621,7 +1622,7 @@ function showUnansweredReports(thePlayer)
 						handler = "Yok."
 						if staff then
 							for k,v in ipairs(staff) do
-								if string.find(getElementData(thePlayer, "forum_perms"), v) and not seenReport[i] then
+								if not seenReport[i] then
 									outputChatBox("Report "..abrv.."#" .. tostring(i) .. ": '" .. tostring(getPlayerName(reporter)) .. "' reporting '" .. tostring(getPlayerName(reported)) .. "' at " .. timestring .. ".", thePlayer, r, g, b, true)
 									count = count + 1
 									seenReport[i] = true
@@ -1667,7 +1668,7 @@ function showReports(thePlayer)
 					end
 					if staff then
 						for k,v in ipairs(staff) do
-							if (string.find(getElementData(thePlayer, "forum_perms"), v) or exports.integration:isPlayerTrialAdmin(thePlayer)) and not seenReport[i] then
+							if exports.integration:isPlayerTrialAdmin(thePlayer) and not seenReport[i] then
 								outputChatBox("Report "..abrv.."#" .. tostring(i) .. ": '" .. tostring(getPlayerName(reporter)) .. "' reporting '" .. tostring(getPlayerName(reported)) .. "' at " .. timestring .. ". Handler: " .. handler .. "", thePlayer, r, g, b, true)
 								count = count + 1
 								seenReport[i] = true
@@ -1708,12 +1709,12 @@ end
 function saveReportCount()
 	local adminreports = getElementData(source, "adminreports")
 	if tonumber(adminreports) then
-		dbExec(mysql:getConnection(), "UPDATE `accounts` SET `adminreports`='"..adminreports.."' WHERE `id` = " .. (getElementData( source, "account:id" )) )
+	--	dbExec(mysql:getConnection(), "UPDATE `accounts` SET `adminreports`='"..adminreports.."' WHERE `id` = " .. (getElementData( source, "account:id" )) )
 	end
 
 	local adminreports_saved = getElementData(source, "adminreports_saved")
 	if tonumber(adminreports_saved) then
-		dbExec(mysql:getConnection(), "UPDATE `accounts` SET `adminreports_saved`='"..adminreports_saved.."' WHERE `id` = " .. (getElementData( source, "account:id" )) )
+	--	dbExec(mysql:getConnection(), "UPDATE `accounts` SET `adminreports_saved`='"..adminreports_saved.."' WHERE `id` = " .. (getElementData( source, "account:id" )) )
 	end
 end
 addEventHandler("onPlayerQuit", getRootElement(), saveReportCount)

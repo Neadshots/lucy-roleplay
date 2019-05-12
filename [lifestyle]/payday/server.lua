@@ -121,7 +121,7 @@ function doPayDayPlayer(value, isForcePayday)
 		end		
 		
 
-		exports.global:giveMoney(value, payday_money[getElementData(value, "vip") or 0] + taxes)
+		exports.global:giveMoney(value, payday_money[getElementData(value, "vip") or 0] + (taxes or 0))
 		setElementData(value, "timeinserver", math.max(0, timeinserver-60), false, true)
 		local hoursplayed = getElementData(value, "hoursplayed") or 0
 		local harfdurum = getElementData(value, "harfdurum") or 0

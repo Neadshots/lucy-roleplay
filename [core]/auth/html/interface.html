@@ -36,7 +36,8 @@
                                 <a class="nav-item nav-link" id="nav-register-2-tab" data-toggle="tab" href="#nav-login-2" role="tab" aria-controls="nav-register-2" aria-selected="false"></a>
                                 <a class="nav-item nav-link" id="nav-character-none-tab" data-toggle="tab" href="#nav-character-none" role="tab" aria-controls="nav-character-none" aria-selected="false"></a>
                                 <a class="nav-item nav-link" id="nav-character-none-list" data-toggle="tab" href="#nav-character-list" role="tab" aria-controls="nav-character-list" aria-selected="false"></a>
-                                <a class="nav-item nav-link" id="nav-create-character-tab" data-toggle="tab" href="#nav-create-character" role="tab" aria-controls="nav-create-character" aria-selected="false"></a>                                
+                                <a class="nav-item nav-link" id="nav-create-character-tab" data-toggle="tab" href="#nav-create-character" role="tab" aria-controls="nav-create-character" aria-selected="false"></a>  
+                                <a class="nav-item nav-link" id="nav-create-character-2-tab" data-toggle="tab" href="#nav-create-character-2" role="tab" aria-controls="nav-create-character-2" aria-selected="false"></a>                              
                             </div>
                         </nav>
 
@@ -230,8 +231,69 @@
                                         </div>
                                         <div style="top:97%; display:inline-block; position:absolute; transform:translateY(-100%); color:rgba(240,240,240,0.4); font-family:'SF Pro'; font-size:1.1vh;">© 2019 - Lucy RPG</div>
                                     </div>
+                                    <a class="create--character--screen" onClick="set(15)"><i class="material-icons">person_add</i></a>
                                 </div>
                             </div>
+
+                            <div class="tab-pane animated fadeIn" id="nav-create-character-2" role="tabpanel" aria-labelledby="nav-create-character-2-tab">
+                                    <div class="container-fluid">
+                                        <div class="row h-100 justify-content-center">
+                                            <div class="col-12 text-center" style="margin-top:auto; margin-bottom:auto; margin-left:auto; margin-right:auto;">
+                                                
+                                                <div class="center-container" style="width:45% !important;">
+    
+                                                    <div style="width:100%; display:inline-block">
+                                                        <div style="width:100%; display:inline-block; margin:auto;">
+                                                            <img tag="center-logo" src="http://mta/auth/components/images/logo.png"/>
+                                                            
+                                                            <div style="width:20vmax; display:inline-block; margin:auto;">
+                                                                <div class="input-group mb-2" style="margin-top:0px; padding-top:0px; padding-right:5px;">
+                                                                        <input type="text" tag="input-login" name="character-name-2" style="padding-right:0px !important;" class="form-control" maxlength="17" placeholder="Karakter_Ismi (bkz:Cesar_Villaluz)" aria-label="Username" aria-describedby="basic-addon1">
+                                                                </div>
+                                                                
+                                                                <div class="input-group mb-2">
+    
+                                                                    <side style="width:33%;">
+                                                                        <div class="input-group mb-2">
+                                                                            <input type="text" style="padding-right:0px !important;" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" style="margin-left:10px;" tag="input-age" name="character-age-2" maxlength="2" class="form-control" placeholder="Yaş" aria-label="Username" aria-describedby="basic-addon1">
+                                                                        </div>
+                                                                    </side>
+    
+                                                                    <side style="width:33%;">
+                                                                        <div class="input-group mb-2">
+                                                                            <input type="text" style="padding-right:0px !important;" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" style="margin-left:10px;" tag="input-age" name="character-length-2" maxlength="3" class="form-control" placeholder="Boy" aria-label="Username" aria-describedby="basic-addon1">
+                                                                        </div>
+                                                                    </side>
+    
+                                                                    <side style="width:33%;">
+                                                                        <div class="input-group mb-2">
+                                                                            <input type="text" style="padding-right:0px !important;" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" style="margin-left:10px;" tag="input-age" name="character-weight-2" maxlength="3" class="form-control" placeholder="Kilo" aria-label="Username" aria-describedby="basic-addon1">
+                                                                        </div>
+                                                                    </side>
+    
+                                                                </div>
+    
+                                                                <div class="input-group mb-2">
+    
+                                                                    <side class="gender">
+                                                                        <a class="gender__selected-2 male_select" style="color:rgba(240,240,240,0.9);" name="gender-male" onClick="male2()">Erkek</a>
+                                                                        <a class="female_select" name="gender-female" style="color:rgba(240,240,240,0.9);" onClick="female2()">Kadın</a>
+                                                                    </side>
+                        
+                                                                </div>
+    
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                
+                                                </div>
+                                                
+                                            </div>
+                                            <div style="top:97%; display:inline-block; position:absolute; transform:translateY(-100%); color:rgba(240,240,240,0.4); font-family:'SF Pro'; font-size:1.1vh;">© 2019 - Lucy RPG</div>
+                                        </div>
+                                        <a class="create--character--screen" onClick="create_character2()"><i class="material-icons">how_to_reg</i></a>
+                                    </div>
+                                </div>
 
                             <div class="tab-pane animated fadeIn" id="nav-create-character" role="tabpanel" aria-labelledby="nav-create-character-tab">
                                 <div class="container-fluid">
@@ -407,6 +469,19 @@
         $('.male_select').addClass('gender__selected');
     }
 
+    function female2() {
+
+        $('.male_select').removeClass('gender__selected-2'); 
+        $('.female_select').addClass('gender__selected-2');
+
+    }
+
+    function male2() {
+
+            $('.female_select').removeClass('gender__selected-2'); 
+            $('.male_select').addClass('gender__selected-2');
+    }
+
     function escapeHtml(string) {
         return String(string).replace(/[&<>"'`:+-;(),$#@|?=\/]/g, function (s) {
             return entityMap[s];
@@ -520,6 +595,14 @@
 
             setTimeout(function() {nav('#nav-register'); sections.openSection('#nav-register');},500,1)
 
+        } else if (val == 15) {
+            step = 14;
+
+            $("#nav-character-none").removeClass("active");
+            sections.closeSection('#nav-character-none');
+
+            setTimeout(function() {nav('#nav-create-character-2'); sections.openSection('#nav-create-character-2');},500,1)
+
         } else if (val == 14) {
             step = 1;
 
@@ -600,6 +683,28 @@
         
         } 
 
+    }
+
+    function create_character2() {
+        if (escapeHtml($('input[name="character-name-2"]').val()).length > 0 ) {
+            if (escapeHtml($('input[name="character-age-2"]').val()).length > 0 ) {
+                if (escapeHtml($('input[name="character-length-2"]').val()).length > 0 ) {
+                    if (escapeHtml($('input[name="character-weight-2"]').val()).length > 0 ) {
+                        
+                        mta.triggerEvent('auth.javascript.html5.document.return.to.character.create',_.escape($('input[name="character-name-2"]').val()),_.escape($('input[name="character-age-2"]').val()),_.escape($('input[name="character-length-2"]').val()),_.escape($('input[name="character-weight-2"]').val()),$('.gender__selected-2').text());
+
+                    } else {
+                        toastr.error('Karakter kilosu boş bırakılamaz.');  
+                    }
+                } else {
+                    toastr.error('Karakter boyu boş bırakılamaz.');  
+                }
+            } else {
+                toastr.error('Karakter yaşı boş bırakılamaz.');  
+            }
+        } else {
+            toastr.error('Karakter adı hatalı.');
+        }
     }
 
     function create_character() {
