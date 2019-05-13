@@ -11,6 +11,9 @@
 	
 	<script src="alkol/s_alcohol.lua" type="server"/>
 	<script src="alkol/c_alcohol.lua" type="client"/>
+
+	<script src="kamyon/s_kamyon.lua" type="server"/>
+	<script src="kamyon/c_kamyon.lua" type="client"/>
 	
 	<script src="cigaratte/s_cigar.lua" type="server"/>
 	<script src="cigaratte/c_cigar.lua" type="client" cache="false"/>

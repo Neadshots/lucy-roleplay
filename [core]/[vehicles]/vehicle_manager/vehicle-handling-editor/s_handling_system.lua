@@ -392,8 +392,7 @@ end
 function freeDimForTestVeh(veh, thePed)
 	if thePed then
 		destroyElement(veh)
-		--outputDebugString("Created")
-		createDepavlovPCs(getElementData(thePed, "name"))
+
 		destroyElement(thePed)
 	end
 	if (veh) then
@@ -410,15 +409,44 @@ function freeDimForTestVeh(veh, thePed)
 	end
 end
 
+local Tables = {
+	['vehicles_shop'] = {},
+}
+
+addEventHandler('onResourceStart', resourceRoot,
+	function()
+		dbQuery(
+			function(qh)
+				local res, rows, err = dbPoll(qh, 0)
+				if rows > 0 then
+					for index, value in ipairs(res) do
+						row_info = {}
+						for count, data in pairs(value) do
+							row_info[count] = data
+						end
+						Tables['vehicles_shop'][#Tables['vehicles_shop'] + 1] = row_info
+					end
+				end
+			end,
+		mysql:getConnection(), "SELECT * FROM `vehicles_shop`")
+	end
+)
+
 function getInfoFromVehShopID(vehShopID)
 	if not vehShopID then
 		outputDebugString("VEHICLE MANAGER / HANDLING / getMtaModelFromVehShopID / NO vehShopID FOUND")
 		return false
 	end
 	
-	local result = dbPoll(dbQuery(mysql:getConnection(), "SELECT * FROM `vehicles_shop` WHERE `id` ='"..exports.global:toSQL(vehShopID).."' LIMIT 1"), -1)
-	if result then
-		return result or false
+	--local query = dbQuery(exports.mysql:getConnection(), "SELECT * FROM `vehicles_shop` WHERE `id` ='"..vehShopID.."'")	
+	--local result = dbPoll(query, -1)
+	--if result then
+	--	return result or false
+	--end
+	for index, value in ipairs(Tables['vehicles_shop']) do
+		if value.id == vehShopID then
+			return Tables['vehicles_shop'][index]
+		end
 	end
 	return false
 end

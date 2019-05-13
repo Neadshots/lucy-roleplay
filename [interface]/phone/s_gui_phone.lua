@@ -6,52 +6,21 @@ end
 addEventHandler("phone:requestShowPhoneGUI", getRootElement(), requestPhoneGUI)
 --
 
-function requestContacts(fromNumber)
+function requestContacts(player, fromNumber)
     dbQuery(
-        function(qh, source)
+        function(qh, player)
             local res, rows, err = dbPoll(qh, 0)
+            local contacts = {}
             if rows > 0 then
-                local contacts, limit = {}, {}
                 for index, row in ipairs(res) do
-                    if not phoneSettings then
-                        dbExec(mysql:getConnection(),"INSERT INTO `phones` (`phonenumber`) VALUES ('".. (fromNumber) .."')")
-                        callerphoneIsSecretNumber = 0
-                        callerphoneIsTurnedOn = 1
-                        callerphoneRingTone = 1
-                        callerphonePhoneBook = 1
-                        callerphoneBoughtBy = -1
-                    else
-                        callerphoneIsSecretNumber = tonumber(phoneSettings["secretnumber"]) or 0
-                        callerphoneIsTurnedOn = tonumber(phoneSettings["turnedon"]) or 1
-                        callerphoneRingTone =  tonumber(phoneSettings["ringtone"]) or 1
-                        callerphonePhoneBook =  tonumber(phoneSettings["phonebook"]) or 1
-                        callerphoneBoughtBy =  tonumber(phoneSettings["boughtby"]) or -1
-                    end
-                    dbQuery(
-                        function(qh, source)
-                            local res, rows, err = dbPoll(qh, 0)
-                            if rows > 0 then
-                                for index, row in ipairs(res) do
-                                     table.insert(contacts, row )
-                                end
-                                dbQuery(
-                                    function(qh, source)
-                                        local res, rows, err = dbPoll(qh, 0)
-                                        if rows > 0 then
-                                            for index, row in ipairs(res) do
-                                                limit = tonumber(row["contact_limit"])
-                                            end
-                                            triggerClientEvent(source, "phone:receiveContacts", source, contacts, limit)
-                                        end
-                                    end,
-                                {source}, mysql:getConnection(), "SELECT `contact_limit` FROM `phones` WHERE `phonenumber`='"..(fromNumber).."' LIMIT 1")
-                            end
-                        end,
-                    {source}, mysql:getConnection(), "SELECT * from `phone_contacts` WHERE `phone`='".. ( fromNumber ) .."' ORDER BY `entryName` ")
+                     table.insert(contacts, row )
                 end
+                outputChatBox(toJSON({contacts}), player)
+                   
             end
+            triggerClientEvent(player, "phone:receiveContacts", player, contacts, 20)  
         end,
-    {source}, mysql:getConnection(), "SELECT * FROM `phones` WHERE `phonenumber`='"..(fromNumber).."' LIMIT 1")
+    {player}, mysql:getConnection(), "SELECT * from `phone_contacts` WHERE `phone`='".. ( fromNumber ) .."' ORDER BY `entryName` ")    
 end
 addEvent("phone:requestContacts", true)
 addEventHandler("phone:requestContacts", root, requestContacts)
@@ -67,7 +36,7 @@ function forceUpdateContactList(player, fromPhone)
                 local contacts, limit = {}, {}
                 for index, row in ipairs(res) do
                     if not phoneSettings then
-                        dbExec(mysql:getConnection(),"INSERT INTO `phones` (`phonenumber`) VALUES ('".. (fromNumber) .."')")
+                        dbExec(mysql:getConnection(),"INSERT INTO `phones` (`phonenumber`) VALUES ('".. (fromPhone) .."')")
                         callerphoneIsSecretNumber = 0
                         callerphoneIsTurnedOn = 1
                         callerphoneRingTone = 1
@@ -97,14 +66,14 @@ function forceUpdateContactList(player, fromPhone)
                                             triggerClientEvent(source, "phone:forceUpdateContactList", source, contacts, limit)
                                         end
                                     end,
-                                {source}, mysql:getConnection(), "SELECT `contact_limit` FROM `phones` WHERE `phonenumber`='"..(fromNumber).."' LIMIT 1")
+                                {source}, mysql:getConnection(), "SELECT `contact_limit` FROM `phones` WHERE `phonenumber`='"..(fromPhone).."' LIMIT 1")
                             end
                         end,
-                    {source}, mysql:getConnection(), "SELECT * from `phone_contacts` WHERE `phone`='".. ( fromNumber ) .."' ORDER BY `entryName` ")
+                    {source}, mysql:getConnection(), "SELECT * from `phone_contacts` WHERE `phone`='".. ( fromPhone ) .."' ORDER BY `entryName` ")
                 end
             end
         end,
-    {source}, mysql:getConnection(), "SELECT * FROM `phones` WHERE `phonenumber`='"..(fromNumber).."' LIMIT 1")
+    {source}, mysql:getConnection(), "SELECT * FROM `phones` WHERE `phonenumber`='"..(fromPhone).."' LIMIT 1")
 end
 addEvent("phone:forceUpdateContactList", true)
 addEventHandler("phone:forceUpdateContactList", root, forceUpdateContactList)

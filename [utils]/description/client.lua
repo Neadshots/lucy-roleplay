@@ -6,10 +6,10 @@ local heightOffset = 1.4
 local refreshingInterval = 1
 local showing = false
 local timerRefresh = nil
-local BizNoteFont18 = dxCreateFont ( "BizNote.ttf" , 18 )
-local fonte = dxCreateFont ( "font.ttf" , 18 )
-local plakaFont = dxCreateFont(":hud/fonts/nametags0.ttf", 15)
-local fontElement = dxCreateFont(":hud/fonts/FontAwesome.ttf", 9)
+local BizNoteFont18 = dxCreateFont ( ":fonts/components/BizNote.ttf" , 18 )
+local fonte = dxCreateFont ( ":fonts/components/font.ttf" , 18 )
+local plakaFont = dxCreateFont(":fonts/components/nametags0.ttf", 15)
+local fontElement = dxCreateFont(":fonts/components/FontAwesome.ttf", 9)
 local noPlateVehs = {
 	[481] = "BMX",
 	[509] = "Bike",
@@ -183,7 +183,7 @@ function showText()
 							lines = lines + 1
 						end
 					
-												--GET BRAND, MODEL, YEAR
+						
 						local brand, model, year = false, false, false
 						brand = getElementData(theVehicle, "brand") or false
 						if brand then
@@ -228,23 +228,10 @@ function showText()
 							end
 						end
 						]]
-						if getElementData(theVehicle, "show_plate") == 0 then
-							if getElementData(localPlayer, "duty_admin") == 1 then
-								toBeShowed = toBeShowed.."((Plaka: "..plate.."))\n"
-								lines = lines + 1
-							end
-						end
-						if getElementData(theVehicle, "show_vin") == 0 then
-							if getElementData(localPlayer, "duty_admin") == 1 then
-								toBeShowed = toBeShowed.."((ID: "..vin.."))"
-								lines = lines + 1
-							else
-								--toBeShowed = toBeShowed.."* NO VIN *"
-							end
-						else
-							toBeShowed = toBeShowed.."ID: "..vin
-							lines = lines + 1
-						end
+						
+						toBeShowed = toBeShowed.."ID: "..vin
+						lines = lines + 1
+						
 
 						--GET IMPOUND
 						if (exports["vehicle"]:isVehicleImpounded(theVehicle)) then
@@ -259,7 +246,7 @@ function showText()
 							toBeShowed = toBeShowed.."\nListe ID: "..(getElementData(theVehicle, "vehicle_shop_id") or "None")
 							lines = lines + 1
 
-							local ownerName = 'No-one'
+							local ownerName = 'Devlet'
 							if vowner > 0 then
 								ownerName = exports.cache:getCharacterNameFromID(vowner)
 							elseif vfaction > 0 then
@@ -382,7 +369,6 @@ function showText()
 					local marg = 20
 					local oneLineHeight = dxGetFontHeight(1, fontElement)
 					local fontHeight = oneLineHeight * (lines - 1)
-					--fontWidth = fontWidth*fontType[fontString][2] --Fix custom fonts
 					px = px-(fontWidth/2)
 					local recuzunluk = nil
 					local uzunluk = dxGetTextWidth(vehicleBrand,1,fontElement)
@@ -398,31 +384,13 @@ function showText()
 					dxDrawText(vehicleBrand, px + 5.5, py+marg-95, px +fontWidth+ 5.5, (py + 2000), textColor2, 1, fontElement, "center") -- burası
 					local own = getElementData(theVehicle,"owner")
 					if own == -2 then
-					dxDrawText(getVehicleName(theVehicle), px + 15, py+marg+44, px + fontWidth + 15, (py + 20), textColor2, 1, fontElement, "center")
+						dxDrawText(getVehicleName(theVehicle), px + 5.5, py+marg-95, px + fontWidth + 5.5, (py + 2000), textColor2, 1, fontElement, "center")
 					end
-					--exports.draw:gradient(px+5, py+marg - 90, recuzunluk, fontHeight+(marg*1) - 4,0,0,0,255,false,true)
 					
 					dxDrawText(toBeShowed, px+10, py+marg-75, px + fontWidth, (py + fontHeight)+24, textColor2, 1, fontElement, "center")
 				end
 			end
 		end
-	end
-end
-
---MAXIME
-function dxDrawRectangleBorder(x, y, width, height, borderWidth, color, out, postGUI)
-	if out then
-		--[[Left]]	dxDrawRectangle(x - borderWidth, y, borderWidth, height, color, postGUI)
-		--[[Right]]	dxDrawRectangle(x + width, y, borderWidth, height, color, postGUI)
-		--[[Top]]	dxDrawRectangle(x - borderWidth, y - borderWidth, width + (borderWidth * 2), borderWidth, color, postGUI)
-		--[[Botm]]	dxDrawRectangle(x - borderWidth, y + height, width + (borderWidth * 2), borderWidth, color, postGUI)
-	else
-		local halfW = width / 2
-		local halfH = height / 2
-		--[[Left]]	dxDrawRectangle(x, y, math.clip(0, borderWidth, halfW), height, color, postGUI)
-		--[[Right]]	dxDrawRectangle(x + width - math.clip(0, borderWidth, halfW), y, math.clip(0, borderWidth, halfW), height, color, postGUI)
-		--[[Top]]	dxDrawRectangle(x + math.clip(0, borderWidth, halfW), y, width - (math.clip(0, borderWidth, halfW) * 2), math.clip(0, borderWidth, halfH), color, postGUI)
-		--[[Botm]]	dxDrawRectangle(x + math.clip(0, borderWidth, halfW), y + height - math.clip(0, borderWidth, halfH), width - (math.clip(0, borderWidth, halfW) * 2), math.clip(0, borderWidth, halfH), color, postGUI)
 	end
 end
 
@@ -433,7 +401,7 @@ local descriptionLines = {}
 
 function showEditDescription()
 	if not exports.integration:isPlayerTrialAdmin(getLocalPlayer()) then
-		exports["vatanroleplay-bildirim"]:addNotification("Bu komutu sadece yetkililer kullanabilir. Yardım merkezinden rapor göndererek bir yetkiliden yardım alabilirsiniz.", "error")
+		--exports["vatanroleplay-bildirim"]:addNotification("Bu komutu sadece yetkililer kullanabilir. Yardım merkezinden rapor göndererek bir yetkiliden yardım alabilirsiniz.", "error")
 		return
 	end
 	if getPedOccupiedVehicle(getLocalPlayer()) then

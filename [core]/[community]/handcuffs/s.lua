@@ -1,5 +1,4 @@
-﻿--SCRIPT AUTHOR İSMİNİ DEĞİŞTİRMEYİNİZ--
-addEvent("cuff.getAnim",true)
+﻿addEvent("cuff.getAnim",true)
 local cuffed = {}
 local controls = {"fire", "next_weapon", "previous_weapon","jump","action","aim_weapon","vehicle_fire", "vehicle_secondary_fire","vehicle_left", "vehicle_right", "steer_forward", "steer_back", "accelerate", "brake_reverse", "sprint"}
 local cuffedFuncs = {}
@@ -52,8 +51,8 @@ addCommandHandler("kelepcele",
 								cuffed[player][target:getName()] = true
 								cuffedFuncs[player] = setTimer(
 									function ( )
-										target:setAnimationProgress("sword_block",1.0)
-										toggleControl(target, v, false)
+										--target:setAnimationProgress("sword_block",1.0)
+										
 									end	,
 								50,0)
 								

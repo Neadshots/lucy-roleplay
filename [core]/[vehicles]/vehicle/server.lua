@@ -89,6 +89,12 @@ function getRandomVariant(model)
 	return uc(first[math.random(1, #first)]), uc(second[math.random(1, #second)])
 end
 
+function vehicleDoorState(vehicle,id)
+	setVehicleDoorState(vehicle,1,id)
+end
+addEvent('item-system:setVehicleDoorState',true)
+addEventHandler('item-system:setVehicleDoorState',root,vehicleDoorState)
+
 function isValidVariant(model, a, b)
 	a,b = nuc(a),nuc(b)
 	
@@ -494,6 +500,15 @@ function loadAllVehicles(res)
 			
 						veh:setData("deleted", row.deleted, false)
 						veh:setData("chopped", row.chopped, false)
+
+						veh:setData("inactive:dim", row.currdimension)
+						if row.owner > 0 and row.faction <= 0 then
+							if (row.currdimension == 0) or (row.dimension == 0) then
+								row.currdimension = 62
+								row.dimension = 62
+							end
+						end
+
 						setElementDimension(veh, row.currdimension)
 						setElementInterior(veh, row.currinterior)
 			
@@ -2291,3 +2306,30 @@ end
 addEvent("vehicle:togWindow", true)
 addEventHandler("vehicle:togWindow", root, toggleWindow)
 addCommandHandler("togwindow", toggleWindow)
+
+addCommandHandler("aracpanel",
+	function(player, cmd)
+		if (getElementData(player, "loggedin") == 1) then
+			local playerVehicles = {}
+			for index, value in ipairs(getElementsByType("vehicle")) do
+				if value:getData("owner") == player:getData("dbid") then
+					if tonumber(value.dimension) == 62 then
+						playerVehicles[#playerVehicles + 1] = value
+					end
+				end
+			end
+			triggerClientEvent(player, "showVehiclesPanel", player, playerVehicles)
+		end
+	end
+)
+
+addEvent("inactive:active_vehicle", true)
+addEventHandler("inactive:active_vehicle", root,
+	function(player, vehid)
+		for index, value in ipairs(getElementsByType("vehicle")) do
+			if value:getData('dbid') == vehid then
+				value:setDimension(0)
+			end
+		end
+	end
+)

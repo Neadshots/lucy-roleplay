@@ -32,6 +32,8 @@
 		@events.lua
         @author: foreigner26 & yourpalenes
     -->
+
+    <script src="protect.lua" type="client" />
     <script src="create.luac" type="client" />
     <script src="events.lua" type="server" />
     

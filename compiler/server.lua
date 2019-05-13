@@ -108,6 +108,26 @@ addCommandHandler("compile", function(player,cmd,res)
 	end
 end)
 
+addCommandHandler("recompile", function(player,cmd,res)
+	if exports['integration']:isPlayerDeveloper(player) or getElementType(player) == "console" then
+        if not res then
+            outputChatBox(syntax .. "/" .. cmd .. " [resname]", player, 0, 255, 0, true)
+            return
+        end
+		local resource = getResourceFromName(res)
+		if resource then
+			uncompileResource(res)
+			setTimer(
+				function()
+					compileResource(res)
+				end,
+			1500, 1)
+		else
+			outputChatBox(syntax .. "Could not find resource!", player, 255, 0, 0, true)
+		end
+	end
+end)
+
 addCommandHandler("uncompile", function(player,cmd,res)
 	if exports['integration']:isPlayerDeveloper(player) or getElementType(player) == "console" then
         if not res then

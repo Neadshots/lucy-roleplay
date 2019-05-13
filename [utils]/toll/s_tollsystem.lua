@@ -280,30 +280,23 @@ function talkToPed(answer, answerStr)
 	end
 
 	local convState = getConvoState(thePlayer)
-	local currSlot = getElementData(thePlayer, "languages.current")
+	local currSlot = 'turkish'
 	local currLang = getElementData(thePlayer, "languages.lang" .. currSlot)
-	processMessage(thePlayer, answerStr, currLang)
-	if (convState == 1) then --  "Hey, want to pass? That'll be six dollar please."
-		local languageSkill = exports['language-system']:getSkillFromLanguage(thePlayer, 1)
-		if (languageSkill < 60) or (currLang ~= 1) then
-			processMessage(thePed, "Seni anlıyamıyorum, dilimizi konuşur musun?")
-			setConvoState(thePlayer, 0)
-			return
-		end
+	processMessage(thePlayer, answerStr)
 
 		if (answer == 1) then -- "Yes please."
 			local placeName = getElementData(thePed, "toll:name")
 			local isBusy = getElementData(thePed, "toll:busy")
 			if not isBusy then
 				local tollKey = getElementData(thePed, "toll:key")
-				processMessage(thePed, processOpenTolls(tollKey, thePed, thePlayer, false))
+				processOpenTolls(tollKey, thePed, thePlayer, false)
 			end
 			setConvoState(thePlayer, 0)
 		elseif (answer == 2) then -- "No thanks."
 			processMessage(thePed, "Peki sen bilirsin...")
 			setConvoState(thePlayer, 0)
 		end
-	end
+	--end
 end
 addEvent( "toll:interact", true )
 addEventHandler( "toll:interact", getRootElement(), talkToPed )
@@ -372,11 +365,8 @@ function setConvoState(thePlayer, state)
 	exports.anticheat:changeProtectedElementDataEx(thePlayer, "toll:convoState", state, false)
 end
 
-function processMessage(thePed, message, language)
-	if not (language) then
-		language = 1
-	end
-	exports['chat']:localIC(thePed, message, language)
+function processMessage(thePed, message)
+	exports['chat']:localIC(thePed, message)
 end
 
 function processRadio(thePed, message, source)

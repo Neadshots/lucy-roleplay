@@ -1,0 +1,17 @@
+<meta>
+    <info name="lucy roleplay - fonts" author="foreigner26" version="rc0.9" type="script" />
+    <min_mta_version server="1.5.4-9.11342" client="1.5.4-9.11342" />
+    
+    <file src="components/nametags0.ttf" />
+    <file src="components/Bebas.ttf" />
+    <file src="components/old_school_united_stencil.ttf" />
+    <file src="components/Roboto.ttf" />
+    <file src="components/gtaFont.ttf" />
+    <file src="components/semibold.ttf" />
+    <file src="components/font.ttf" />
+    <file src="components/FontAwesome.ttf" />
+    <file src="components/BentonSansRegural.otf" />
+    <file src="components/BebasNeueBold.otf" />
+    <file src="components/OpenSans.ttf" />
+    <file src="components/BizNote.ttf" />
+</meta>

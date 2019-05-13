@@ -1,14 +1,6 @@
 local dialingTimers = {}
 local tmpElement = {}
 function startDialing(to, from)
-
-    local powerOn, ringtone, isSecret, isInPhonebook, boughtBy  = getPhoneSettings(from)
-    if powerOn == 0 then
-        outputChatBox("Your phone is off.", source, 255,0,0)
-        triggerClientEvent(source, "phone:slidePhoneOut", source)
-        return false
-    end
-
     if not canPlayerCall(source) then
         outputChatBox("You can not use cellphone at the moment.", source, 255,0,0)
         triggerClientEvent(source, "phone:slidePhoneOut", source)
@@ -38,7 +30,7 @@ function startDialing(to, from)
         table.insert(dialingTimers[tonumber(from)], timer3)
         table.insert(dialingTimers[tonumber(from)], timer4)
         table.insert(dialingTimers[tonumber(from)], timer5)
-        addPhoneHistory(from, to, 1, isSecret)
+        --addPhoneHistory(from, to, 1, isSecret)
         
         return true
     end
@@ -46,7 +38,6 @@ function startDialing(to, from)
     local contact = getPhoneContact(to, from)
     if not contact then
         if not tonumber(to) then
-            --Provided name but not found in contacts.
             triggerClientEvent(source, "phone:updateDialingScreen", source, "start_invalid_or_busy_tone" , "not_existed")
             local timer1 = setTimer(triggerEvent,delay, 1, "phone:cancelPhoneCall", source, "not_existed")
             table.insert(dialingTimers[tonumber(from)], timer1)
@@ -57,26 +48,14 @@ function startDialing(to, from)
 
     exports.anticheat:changeProtectedElementDataEx(source, "callingContact", contact, false)
     
-    local t_powerOn, t_ringtone, t_isSecret, t_isInPhonebook, t_boughtBy, boughtByName, boughtDate, sms_tone, tone_volume = getPhoneSettings(contact.entryNumber, true)
-    if not t_powerOn then --not existed
-        triggerClientEvent(source, "phone:updateDialingScreen", source, "start_invalid_or_busy_tone" , "not_existed")
-        local timer1 = setTimer(triggerEvent,delay, 1, "phone:cancelPhoneCall", source, "not_existed")
-        table.insert(dialingTimers[tonumber(from)], timer1)
-        addPhoneHistory(from, contact.entryNumber, 2, isSecret)
-        return false
-    elseif t_powerOn ~= 1 then --turned off
-        triggerClientEvent(source, "phone:updateDialingScreen", source, "start_invalid_or_busy_tone", "out_of_service")
-        local timer1 = setTimer(triggerEvent,delay, 1, "phone:cancelPhoneCall", source, "out_of_service")
-        table.insert(dialingTimers[tonumber(from)], timer1)
-        addPhoneHistory(from, contact.entryNumber, 2, isSecret)
-        return false
-    else
-        local foundInGame, targetPlayer = searchForPhone(contact.entryNumber) 
+   		local isSecret = 0
+        local foundInGame, targetPlayer = searchForPhone(contact.entryNumber)
+
         if not foundInGame then
             triggerClientEvent(source, "phone:updateDialingScreen", source, "start_invalid_or_busy_tone", "out_of_service")
             local timer1 = setTimer(triggerEvent,delay, 1, "phone:cancelPhoneCall", source, "out_of_service")
             table.insert(dialingTimers[tonumber(from)], timer1)
-            addPhoneHistory(from, contact.entryNumber, 2, isSecret)
+            --addPhoneHistory(from, contact.entryNumber, 2, isSecret)
             return false
         else
             if not dialingTimers[tonumber(contact.entryNumber)] then
@@ -86,10 +65,10 @@ function startDialing(to, from)
                 triggerClientEvent(source, "phone:updateDialingScreen", source, "start_invalid_or_busy_tone", "out_of_service")
                 local timer1 = setTimer(triggerEvent,delay, 1, "phone:cancelPhoneCall", source, "out_of_service")
                 table.insert(dialingTimers[tonumber(from)], timer1)
-                addPhoneHistory(from, contact.entryNumber, 2, isSecret)
+                --addPhoneHistory(from, contact.entryNumber, 2, isSecret)
                 return false
             end
-            addPhoneHistory(from, contact.entryNumber, 1, isSecret)
+            --addPhoneHistory(from, contact.entryNumber, 1, isSecret)
             -- make sure the target phone is slided out before ringing him.
             if getElementData(targetPlayer, "cellphoneGUIStateSynced") then
                 triggerEvent("phone:applyPhone", targetPlayer, "phone_out") 
@@ -126,10 +105,9 @@ function startDialing(to, from)
             table.insert(dialingTimers[tonumber(from)], timer7)
             table.insert(dialingTimers[tonumber(contact.entryNumber)], timer8)
 
-            exports['logs']:dbLog(source, 29, { source, "ph"..tostring(from), targetPlayer, "ph"..tostring(contact.entryNumber) }, "**Starting call - " .. (contact.entryName or contact.entryNumber) .. "**")
+           
             return true
-            
-        end
+       
     end
     return false
 end
@@ -442,10 +420,6 @@ function talkPhone(thePlayer, commandName, ...)
     end
 end
 addCommandHandler("p", talkPhone)
-
-
-
-
 
 --Functions
 function getPhoneContact(clue, fromPhone)

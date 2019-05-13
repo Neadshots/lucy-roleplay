@@ -30,7 +30,7 @@ function addUpgrade( source, vehicle, itemSlot, itemID, itemValue )
 			end
 			exports.logs:dbLog(source, 6, { vehicle }, "MODDING ADDUPGRADE ".. itemValue .. " " .. getItemDescription(itemID, itemValue))
 			exports.global:sendLocalMeAction(source, "adds " .. getItemDescription(itemID, itemValue) .. " to their " .. exports.global:getVehicleName(vehicle).."("..getVehicleName(vehicle) .. ").")
-			exports['savevehicle']:saveVehicleMods(vehicle)
+			exports['vehicle']:saveVehicleMods(vehicle)
 			
 			if not data[vehicle] then
 				data[vehicle] = {}

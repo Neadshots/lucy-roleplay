@@ -192,7 +192,7 @@ function selectPackageGUI_open(availablePackages, allowList)
 				guiRadioButtonSetSelected(gui[guiTabName.."-radio-"..skinID], true)
 			end
 			
-			gui[guiTabName.."-skin-"..skinID] = guiCreateStaticImage (xAxis, yAxis, 75, 75, ":account/img/" .. skinImg..".png", false, gui[guiTabName] )
+			gui[guiTabName.."-skin-"..skinID] = guiCreateStaticImage (xAxis, yAxis, 75, 75, ":item-system/images/skins/" .. skinImg..".png", false, gui[guiTabName] )
 			setElementData(gui[guiTabName.."-skin-"..skinID], "button:action", "Radio")
 			setElementData(gui[guiTabName.."-skin-"..skinID], "button:element", gui[guiTabName.."-radio-"..skinID])
 			addEventHandler("onClientGUIClick", gui[guiTabName.."-skin-"..skinID], selectPackageGUI_process)

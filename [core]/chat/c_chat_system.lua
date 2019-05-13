@@ -66,7 +66,7 @@ addEventHandler("onClientKey", root,
 )
 
 function createBindKeys()
-	--bindKey("b", "down", "chatbox", "LocalOOC")
+	bindKey("b", "down", "chatbox", "LocalOOC")
 	--bindKey("b", "down",
 	--	function()
 	--		outputChatBox(exports.pool:getServerSyntax(false, "s").."Lütfen /b komutu ile OOC sohbeti kullanın.", 255, 255, 255, true)

@@ -36,7 +36,7 @@
     <script src="shared.lua" type="server" />
     <script src="shared.lua" type="client" />
     <script src="server.lua" type="server" />
-    <script src="client.lua" type="client" />
+    <script src="client.lua" type="client" cache="false" />
 
     <file src="components/sound/engine.wav" />
     <file src="components/sound/engineoff.mp3" />

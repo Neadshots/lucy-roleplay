@@ -14,6 +14,11 @@ getPlayerName = function( ... )
 	end
 end
 
+local outputChatBox_ = outputChatBox
+function outputChatBox(msg, player, r, g, b)
+	return outputChatBox_(msg, player, r, g, b, true)
+end
+
 local syntaxTable = {
 	["s"] = "#00a8ff[LUCY RPG]#ffffff ",
 	["e"] = "#e84118[LUCY RPG]#ffffff ",
@@ -635,7 +640,20 @@ function handleReport(reportedPlayer, reportedReason, reportType)
 		outputChatBox(syntaxTable["e"].."Karakter henüz giriş yapmamış!", source, 255, 0, 0)
 		return
 	end
-	-- Find a free report slot
+	
+	local report = false
+	for i=1, getMaxPlayers() do
+		if reports[i] and (reports[i][1] == source) then
+			report = i
+			break
+		end
+	end
+
+	if report then
+		outputChatBox(syntaxTable["e"].."Aynı anda birden fazla rapor atamazsın.", source, 255, 0, 0)
+		return
+	end
+
 	local slot = nil
 
 	sortReports(false)

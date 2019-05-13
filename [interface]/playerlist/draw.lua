@@ -1,6 +1,6 @@
 Playerlist = {
 	screen = Vector2(guiGetScreenSize()),
-	font = dxCreateFont(':hud/fonts/Roboto.ttf', 10),
+	font = dxCreateFont(':fonts/components/Roboto.ttf', 10),
 	players = {},
 	max_players = 13,
 	current = 1,
@@ -52,7 +52,7 @@ Playerlist = {
 	end,
 
 	_draw = function()
-	self = Playerlist;
+	self = instance
 		w, h = 360, 30
 		x, y = self.screen.x/2-w/2, self.screen.y/2-h/2
 
@@ -63,8 +63,7 @@ Playerlist = {
 		self._sync()
 
 		self._rectangle(x, y, w, h, tocolor(0, 0, 0, 180), 7)
-		dxDrawText(' Lucy RPG - Wilden Your World - www.lucyrpg.com', x, y, w+x, h+y-1, tocolor(255, 255, 255), 1, self.font, 'center', 'center')
-		--dxDrawImage(x+w/2-128/2+2, y-108, 128, 128, 'components/logo.png', 0, 0, 0, tocolor(255, 153, 0))
+		dxDrawText(' Lucy RPG - Widen Your World - www.lucyrpg.com', x, y, w+x, h+y-1, tocolor(255, 255, 255), 1, self.font, 'center', 'center')
 		dxDrawImage(x+w/2-(552/2)/2, y-110, 552/2, 222/2, 'components/logo.png')
 
 		y,ny = y + (h+7),0
@@ -81,10 +80,15 @@ Playerlist = {
 					r, g, b = 100, 100, 100, 100
 				end
 
+				ping = player:getPing()
+                    if ping > 80 then 
+                        ping = ping - 20
+                    end
+
 				dxDrawText(player:getData('playerid'), x+8, y+ny, w, h+y+ny, tocolor(r, g, b), 1, self.font, 'left', 'center')
 				dxDrawText(player.name:gsub("_", " "), x+38, y+ny, w, h+y+ny, tocolor(r, g, b), 1, self.font, 'left', 'center')
 				dxDrawText((player:getData('level') or 0).."lvl", x+w-150, y+ny, w, h+y+ny, tocolor(r, g, b), 1, self.font, 'left', 'center')
-				dxDrawText(getPlayerPing(player).."ms", x+w-50, y+ny, w, h+y+ny, tocolor(r, g, b), 1, self.font, 'left', 'center')
+				dxDrawText(ping.."ms", x+w-50, y+ny, w, h+y+ny, tocolor(r, g, b), 1, self.font, 'left', 'center')
 				ny = ny + (h+4)
 			end
 		end
@@ -118,7 +122,7 @@ instance:_sync()
 bindKey('tab', 'down', function() instance:_new('on') end)
 bindKey('tab', 'up', function() instance:_new('off') end)
 
-bindKey('mouse_wheel_up', 'down', instance.up)
-bindKey('mouse_wheel_down', 'down', instance.down)
-bindKey('pgup', 'down', instance.up)
-bindKey('pgdn', 'down', instance.down)
+bindKey('mouse_wheel_up', 'down', function() instance:up() end)
+bindKey('mouse_wheel_down', 'down', function() instance:down() end)
+bindKey('pgup', 'down', function() instance:up() end)
+bindKey('pgdn', 'down', function() instance:down() end)

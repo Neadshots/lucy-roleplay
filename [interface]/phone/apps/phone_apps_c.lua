@@ -116,16 +116,20 @@ end
 
 function clientClickApp()
 	if isPhoneGUICreated() then
+		print('1')
 		for i = 1, #apps do
+			print('2')
 			if source == guiApps[i][2] then
+				print('3')
 				local clickedAppName = apps[i]
+				print(clickedAppName)
 				if clickedAppName == "history" then
 					toggleOffEverything()
 					toggleHistory(true)
 				elseif clickedAppName == "contacts" then
-					guiSetEnabled(wPhoneMenu, false)
+					--guiSetEnabled(wPhoneMenu, false)
 					if not contactList[phone] then
-						triggerServerEvent("phone:requestContacts", localPlayer, phone)
+						triggerServerEvent("phone:requestContacts", localPlayer, localPlayer, phone)
 					else
 						openPhoneContacts(contactList[phone])
 					end

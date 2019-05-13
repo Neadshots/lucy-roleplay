@@ -193,6 +193,7 @@ SAMP = {
     			dxDrawText(currentExprance(getElementData(localPlayer, "level"),1).."/"..currentExprance(getElementData(localPlayer, "level"),2),x,y,w+x,y+h,tocolor(255,255,255),1,'sans','center','center')
     		end
     	end
+        setPlayerMoney((localPlayer:getData('money') or 0))
     	local vehicle = localPlayer.vehicle
     	local x, y = sx*0.770, sy*0.35
     	if vehicle then
@@ -308,7 +309,9 @@ addEventHandler("onClientResourceStart", resourceRoot,
     function()
         local data = jsonGET("@variable.json")
         saveJSON = data
-        --triggerEvent('hud:changeInterface', localPlayer, saveJSON['mode'])
+        if localPlayer:getData('loggedin') == 1 then
+            triggerEvent('hud:changeInterface', localPlayer, saveJSON['mode'])
+        end
     end
 )
 

@@ -3,7 +3,7 @@ local mysql = exports.mysql
 ------------------ Onaylı Tamirci Yapma -------------------------
 function tamirciver(thePlayer, commandName, targetPlayerName, tamirci)
 local targetName = exports.global:getPlayerFullIdentity(thePlayer, 1)
-	if getElementData(thePlayer,"account:username") == "pavlov" or getElementData(thePlayer,"account:username") == "pavlov" then 
+	if getElementData(thePlayer,"account:username") == "pavlov" or getElementData(thePlayer,"account:username") == "Militan" then 
 		if not targetPlayerName or not tonumber(tamirci)  then
 			outputChatBox("Sözdizimi: #ffffff/" .. commandName .. " [İsim/ID] [Seviye]", thePlayer, 255, 194, 14, true)
 		else

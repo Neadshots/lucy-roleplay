@@ -263,8 +263,11 @@ Auth = {
             outputChatBox(syntax.."Sunucuya hoş geldin.", 85, 155, 255, true)
             outputChatBox(syntax.."Herhangi bir sorunun olduğunda /rapor komutunu kullanabilirsin.", 85, 155, 255, true)
             triggerServerEvent('receive:characters',localPlayer,localPlayer,localPlayer:getData('account:id'),'f10')
-            self.browser:destroy();
-            removeEventHandler('onClientKey',root,enter)
+            
+            if self.browser then
+                self.browser:destroy();
+                removeEventHandler('onClientKey',root,enter)
+            end
         end
     end,
 

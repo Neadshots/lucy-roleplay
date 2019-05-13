@@ -574,10 +574,10 @@ function getCarriedWeight(element)
 	local success, error = getItems( element )
 	if success then
 		local weight = 0
-		for key, value in ipairs(saveditems[element]) do
-			weight = weight + getItemWeight(value[1], value[2])
-		end
-		return weight
+		--for key, value in ipairs(saveditems[element]) do
+		--	weight = weight + getItemWeight(value[1], value[2])
+		--end
+		return 1
 	else
 		return 1000000, "loadItems error: " .. error -- Obviously too large to pick anything further up :o Yet if it fails that might even be good since we assume "if not loaded, can't happen"
 	end

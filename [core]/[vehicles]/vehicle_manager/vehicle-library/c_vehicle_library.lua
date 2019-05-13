@@ -52,7 +52,6 @@ function showLibrary(vehs, thePed)
 	col.notes = guiGridListAddColumn(grid,"Notes",0.5)
 	col.spawnto = guiGridListAddColumn(grid,"Spawn to",0.2)
 	
-	carshops = exports["vehicle_shop"]:getCarShops()
 	
 	for i = 1, #vehs do
 		local row = guiGridListAddRow(grid)
@@ -70,9 +69,7 @@ function showLibrary(vehs, thePed)
 		guiGridListSetItemText(grid, row, col.updatedby, (vehs[i].updatedby or "No-one"), false, false)
 		guiGridListSetItemText(grid, row, col.updatedate, vehs[i].updatedate, false, true)
 		local spawntoText = ""
-		if vehs[i].spawnto ~= "0" and carshops[tonumber(vehs[i].spawnto)] then
-			spawntoText = carshops[tonumber(vehs[i].spawnto)].nicename
-		end
+		
 		guiGridListSetItemText(grid, row, col.spawnto, (spawntoText or vehs[i].spawnto), false, false)
 	end
 	if thePed and isElement(thePed) and getElementData(thePed, "carshop") then
@@ -245,11 +242,7 @@ function showLibrary(vehs, thePed)
 		
 		GUIEditor_Button[7] = guiCreateButton(0.6939,0.9181,0.1237,0.0587,"Restart Shops",true,GUIEditor_Window[1])
 		guiSetFont(GUIEditor_Button[7],"default-bold-small")
-		addEventHandler( "onClientGUIClick", GUIEditor_Button[7], function()
-			if source == GUIEditor_Button[7] then
-				triggerServerEvent("vehlib:refreshcarshops", localPlayer)
-			end
-		end)
+		
 		guiSetEnabled(GUIEditor_Button[7], false)
 		
 		
@@ -335,14 +328,11 @@ function addNewVehicle(veh)
 	GUIEditor_Label["spawnto"] = guiCreateLabel(0.0251,0.435,0.4292,0.0459,"Spawn to carshop:",true,GUIEditor_Window[2])
 	guiSetFont(GUIEditor_Label["spawnto"],"default-bold-small")
 	
-	carshops = exports["vehicle_shop"]:getCarShops()
 	
 	gui["spawnto"] =  guiCreateComboBox ( 0.0388,0.485,0.4155,0.06, "None", true, GUIEditor_Window[2])
-	guiComboBoxAdjustHeight(gui["spawnto"], #carshops+1)
+	
 	guiComboBoxAddItem(gui["spawnto"], "None")
-	for i = 1,  #carshops do
-		guiComboBoxAddItem(gui["spawnto"], carshops[i].nicename)
-	end
+	
 	guiComboBoxSetSelected(gui["spawnto"],tonumber(veh.spawnto) or -1 )
 
 	GUIEditor_Label["doortype"] = guiCreateLabel(0.516,0.435,0.4292,0.0459,"Doors:",true,GUIEditor_Window[2])

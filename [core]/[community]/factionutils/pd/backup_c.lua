@@ -31,7 +31,9 @@ function createBackupBlip( availableColourIndex, colourArray )
 					setBlipIcon(blip, 30)
 				end
 			else
-				killTimer(arrayTimer[blip])
+				if isTimer(arrayTimer[blip]) then
+					killTimer(arrayTimer[blip])
+				end
 			end
 		end,
 	600, 0, tempBackupBlip)

@@ -206,7 +206,6 @@ function drawnPhone()
 		if getElementData(memo, "inMessageGUI") then
 			if isElement(memo) and guiGetVisible(memo) == true then
 				inMessage = true
-				
 			else
 				inMessage = false
 			end

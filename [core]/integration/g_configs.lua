@@ -19,16 +19,16 @@ ADMIN_GROUPS = {14, 18, 17, 64, 15}
 staffTitles = {
 	[1] = {
 		[0] = "Oyuncu",
-		[1] = "Deneme Yetkili",
-		[2] = "Oyun İçi Yetkili I",
-		[3] = "Oyun İçi Yetkili II",
-		[4] = "Genel Yetkili",
-		[5] = "Developer"
+		[1] = "Admin I",
+		[2] = "Admin II",
+		[3] = "Admin Manager",
+		[4] = "Scripter",
+		[5] = "Community Owner"
 	}, 
 	[2] = {
 		[0] = "Oyuncu",
-		[1] = "Rehber",
-		[2] = "Genel Rehber",
+		[1] = "Supporter Team Member",
+		[2] = "Supporter Team Leader",
 	}, 
 	[3] = {
 		[0] = "Oyuncu",

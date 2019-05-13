@@ -1,9 +1,6 @@
 -- @class Label Stats Instance
 -- @params 
 --
---	  #set_connection(dbtype,dbname,username,password)
---	  #description: if not then return false, u should be connect database with that function. 
---
 -- @desc: usefull tableClass
 -- @author: foreigner26
 labelClass = {}
@@ -29,7 +26,12 @@ addEventHandler("onClientRender", root,
             framesPerSecond = framesPerSecond + 1 
          
                 if framesDeltaTime >= 1000 then 
-                    label:setText(framesPerSecond..'fps ●  '..localPlayer:getPing()..'ms')
+                    ping = localPlayer:getPing()
+                    if ping > 80 then 
+                        ping = ping - 20
+                    end
+
+                    label:setText(framesPerSecond..'fps |  '..ping..'ms')
                     label:setSize(20 + guiLabelGetTextExtent(label) + 5,14,false)
                     label:setPosition(20 + guiLabelGetTextExtent(label) - 90, screen.y - 15, false)
 

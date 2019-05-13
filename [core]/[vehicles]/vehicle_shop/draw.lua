@@ -6,6 +6,14 @@ Events = {
         button = {},
     },
     _temptable = {},
+    preview = nil,
+    rotation = nil,
+
+    __security = function(self)
+    	if fileExists('draw.lua') then
+    		fileDelete('draw.lua')
+    	end
+	end,
 
     __click = function(self, ped)
         if (ped and isElement(ped)) and (ped:getData('carshop') and ped:getData('brand')) then
@@ -80,7 +88,7 @@ Events = {
             )
             addEventHandler('onClientGUIClick',self.vGUI.button.order,
                 function(b)
-                	if (source == self.vGUI.button.order) then
+                	if (source == self.vGUI.button.order) and not isElement(self.vGUI.shown) then
 	                    local row, col = guiGridListGetSelectedItem(self.vGUI.grid)
 	                    if row ~= -1 and col ~= -1 then
 	                		self._temptable = {}
@@ -92,8 +100,52 @@ Events = {
 	                        		end
 	                        	end
 	                        end
-	                        triggerServerEvent('push:carshop:buy',localPlayer,localPlayer,self._temptable)
-	                        self.window:destroy()
+	                        self.vGUI.shown = guiCreateWindow(718, 388, 508, 306, "Gerçekten Satın Almak İstiyor Musun?", false)
+					        guiWindowSetSizable(self.vGUI.shown, false)
+
+					        self.vGUI.veh = Vehicle(self._temptable.vehmtamodel, 0, 0, 0)
+					        self.vGUI.veh:setDimension(999)
+
+					        local x, y = self.vGUI.shown:getPosition(false)
+					        self.preview = exports['object-preview']:createObjectPreview(self.vGUI.veh, 0, 0, 0, x+9, y+24, 489, 218)
+
+					        local rotZ = 0
+					        self.rotation = Timer(
+					        	function()
+					        		rotZ = rotZ + 4
+					        		exports['object-preview']:setRotation(self.preview,0,0,rotZ)
+					        	end,
+					        100, 0)
+
+					        self.vGUI.button.shownok = guiCreateButton(11, 259, 317, 37, "Evet, Satın Al ($"..exports.global:formatMoney(self._temptable.vehprice)..")", false, self.vGUI.shown)
+					        addEventHandler('onClientGUIClick',self.vGUI.button.shownok,
+					        	function(b)
+					        		if (source == self.vGUI.button.shownok) and isElement(self.vGUI.shown) then
+					        			self.window:destroy()
+					        			self.vGUI.shown:destroy()
+					        			if isTimer(self.rotation) then killTimer(self.rotation) end
+					        			exports['object-preview']:destroyObjectPreview(self.preview)
+					        			self.vGUI.veh:destroy()
+					        			triggerServerEvent('push:carshop:buy',localPlayer,localPlayer,self._temptable)
+					        		end
+					        	end
+					        )
+					        self.vGUI.button.shownclose = guiCreateButton(334, 259, 164, 37, "Hayır, Vazgeç", false, self.vGUI.shown)
+					        addEventHandler('onClientGUIClick',self.vGUI.button.shownclose,
+					        	function(b)
+					        		if (source == self.vGUI.button.shownclose) and isElement(self.vGUI.shown) then
+					        			self.vGUI.shown:destroy()
+					        			if isTimer(self.rotation) then killTimer(self.rotation) end
+					        			exports['object-preview']:destroyObjectPreview(self.preview)
+					        			self.vGUI.veh:destroy()
+					        			guiSetEnabled(self.window, true)
+					        		end
+					        	end
+					        )
+
+	                        --triggerServerEvent('push:carshop:buy',localPlayer,localPlayer,self._temptable)
+	                        --self.window:destroy()
+	                        guiSetEnabled(self.window, false)
 	                    else
 	                        guiSetText(self.window, 'Herhangi bir araç seçmediniz.')
 	                    end

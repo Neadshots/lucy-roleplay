@@ -59,7 +59,8 @@ function applyForNewATMCard(replacingOldATMCard, limitType)
 		return false
 	end
 	]]
-	
+		
+	--[[
 	if not replacingOldATMCard then
 		dbQuery(
 			function(qh, source)
@@ -77,7 +78,7 @@ function applyForNewATMCard(replacingOldATMCard, limitType)
 	else
 		triggerEvent("bank:cancelATMCard", source, true)
 	end
-	
+	]]--
 	local numSum = false
 	while true do 
 		local num1 = tostring(math.random(0,9999))

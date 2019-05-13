@@ -31,7 +31,7 @@ function givePlayerJob(thePlayer, commandName, targetPlayer, jobID, jobLevel, jo
 					
 					dbExec(mysql:getConnection(), "UPDATE `characters` SET `job`='" .. (jobID) .. "' WHERE `id`='"..tostring(getElementData(targetPlayer, "dbid")).."' " )
 					
-					exports["job-system"]:fetchJobInfoForOnePlayer(targetPlayer)
+					
 					
 					local hiddenAdmin = getElementData(thePlayer, "hiddenadmin")
 					local adminTitle = exports.global:getPlayerAdminTitle(thePlayer)
@@ -106,7 +106,7 @@ addCommandHandler("setjoblevel", setjobLevel, false, false)
 
 function setPlayerJobLevel(targetPlayer, jobID, level, progress)
 	if dbExec(mysql:getConnection(), "UPDATE `jobs` SET `jobLevel`='"..level.."', `jobProgress`='"..progress.."' WHERE `jobCharID`='"..getElementData(targetPlayer, "dbid").."' AND `jobID`='"..jobID.."' " ) then
-		exports["job-system"]:fetchJobInfoForOnePlayer(targetPlayer)
+		
 		return true, getPlayerName(targetPlayer):gsub("_", " ").." now has '"..getJobTitleFromID(jobID).."' job (Level: "..level..", Progress: "..progress..")"
 	else
 		return false, "Database Error, please report to Maxime"
@@ -121,7 +121,7 @@ function delJob( thePlayer, commandName, targetPlayerName )
 				if getElementData( targetPlayer, "loggedin" ) == 1 then
 					local result = dbExec(mysql:getConnection(), "UPDATE `characters` SET `job`='0' WHERE `id`='"..tostring(getElementData(targetPlayer, "dbid")).."' " )
 					
-					exports["job-system"]:fetchJobInfoForOnePlayer(targetPlayer)
+					
 					if result then
 						outputChatBox( "Deleted job for " .. targetPlayerName..".", thePlayer)
 						local hiddenAdmin = getElementData(thePlayer, "hiddenadmin")

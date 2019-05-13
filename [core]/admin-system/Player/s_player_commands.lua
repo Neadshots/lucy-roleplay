@@ -984,7 +984,7 @@ function setPlayerSkinCmd(thePlayer, commandName, targetPlayer, skinID, clothing
 						outputChatBox("Player " .. targetPlayerName .. " has received skin " .. skinID, thePlayer, 0, 255, 0)
 						setElementData(targetPlayer, 'clothing:id', tonumber(clothingID), true)
 						dbExec(mysql:getConnection(), "UPDATE characters SET skin = " .. (skinID) .. ", clothingid = " .. (clothingID) .. " WHERE id = " .. (getElementData( targetPlayer, "dbid" )) )
-						exports.logs:dbLog(thePlayer, 4, targetPlayer, "SETSKIN "..tostring(skinID).." CLOTHING "..tostring(clothingID))
+						
 					end
 				else
 					outputChatBox("Invalid skin ID.", thePlayer, 255, 0, 0)
@@ -1432,8 +1432,10 @@ function adminDuty(thePlayer, commandName)
 			setElementData(thePlayer, "duty_admin", 1)
 			exports.global:sendMessageToAdmins("AdmDuty: " .. username .. " came on duty.")
 			outputChatBox("(( Başarıyla göreve başladınız. ))", thePlayer, 255, 0, 0)
+			exports.global:updateNametagColor(thePlayer)
 		else
 			setElementData(thePlayer, "duty_admin", 0)
+			exports.global:updateNametagColor(thePlayer)
 			exports.global:sendMessageToAdmins("AdmDuty: " .. username .. " went off duty.")
 			outputChatBox("(( Başarıyla görevden ayrıldınız. ))", thePlayer, 255, 0, 0)
 			if getElementData(thePlayer, "supervising") == true then

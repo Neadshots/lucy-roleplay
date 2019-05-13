@@ -823,11 +823,10 @@ addCommandHandler("setpbname", setPhoneBook)
 function searchForPhone(phoneNumber)
     phoneNumber = tonumber(phoneNumber)
     if phoneNumber then
-        for key, value in ipairs(exports.pool:getPoolElementsByType("player")) do
+        for key, value in ipairs(getElementsByType("player")) do
             local logged = getElementData(value, "loggedin")
-            if (logged==1) then
-                if phoneNumber >= 10000 then -- players can only purchase 5 digit numbers
-                    -- Check the new system way, phoneNumber in value
+            if (tonumber(logged)==1) then
+                if phoneNumber >= 10000 then                 
                     local foundPhone,_,foundPhoneNumber = exports.global:hasItem(value, 2, tonumber(phoneNumber))
                     if foundPhone then
                         return true, value

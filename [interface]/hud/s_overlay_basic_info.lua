@@ -48,7 +48,7 @@ function showStats(thePlayer, commandName, targetPlayerName)
 	else
 		boatlicense = "Yok"
 	end
-	
+	--[[
 	local pilotLicenses = exports['mdc']:getPlayerPilotLicenses(thePlayer) or {}
 	local pilotlicense = ""
 	local maxShow = 5
@@ -89,7 +89,7 @@ function showStats(thePlayer, commandName, targetPlayerName)
 			end
 		end
 	end
-	
+	]]--
 	if (fishlicense==1) then
 		fishlicense = "Var"
 	else

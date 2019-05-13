@@ -2,7 +2,5 @@
 	<script src="client.lua" type="client" cache="false" />
 	<script src="server.lua" type="server"/>
 
-	<file src="BizNote.ttf"/>
-	<file src="font.ttf"/>
 	<file src="plaka.png"/>
 </meta>

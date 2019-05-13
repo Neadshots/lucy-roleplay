@@ -166,6 +166,7 @@ function getPlayerFaction(playerName)
 	
 	if (not thePlayerElement or override) then  -- Player is offline
 		local accounts, characters = exports.auth:getTableInformations()
+
 		for index, row in ipairs(characters) do
 			if row.charactername == playerName then
 				return 1, tonumber(row["faction_id"]), tonumber(row["faction_rank"]), tonumber(row["faction_leader"]), (fromJSON(row["faction_perks"]) or { }), nil
