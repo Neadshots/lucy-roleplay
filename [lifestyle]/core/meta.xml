@@ -1,0 +1,8 @@
+<meta>
+    <info name="projecte - core" author="yourpalenes" version="rc0.9" type="script" />
+    <!--
+        @events.lua
+        @author:yourpalenes
+    -->
+    <script src="events.lua" type="server" />
+</meta>

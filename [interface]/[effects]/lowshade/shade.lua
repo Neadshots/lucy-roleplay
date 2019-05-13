@@ -13,7 +13,6 @@ Lowshade = {
         {"components/3.png", "cloudhigh"},
         {"components/off.png", "vehiclelights128"},
         {"components/on.png", "vehiclelightson128"},
-        {"components/crosshair.png","sitem16"},
     },
 
     index = function(self)
