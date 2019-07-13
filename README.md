@@ -1,5 +1,6 @@
 Lucy Roleplay 2.0
 
-Yapımcılar;
- - Enes Bayraktar
+Developers;
  - Enes Akıllıok
+ - Enes Bayraktar
+
